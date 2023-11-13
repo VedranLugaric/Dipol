@@ -2,8 +2,6 @@
 		
 	\section{Funkcionalni zahtjevi}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
 			\noindent \textbf{Dionici:}
 			
 			\begin{packed_enum}
@@ -51,7 +49,8 @@
 				
 				\begin{packed_enum}
 					
-					\item ???
+					\item poslati odgovarajuće materijale voditelju putem e-maila
+					\item dobiti inforamcije o svom rangu na konferenciji putem e-maila
 					
 				\end{packed_enum}
 
@@ -95,175 +94,174 @@
 				
 			\subsection{Obrasci uporabe}
 				
-				\textbf{\textit{dio 1. revizije}}
-				
 				\subsubsection{Opis obrazaca uporabe}
 					
-					\noindent \underbar{\textbf{UC$<$1$>$ -$<$Registracija$>$}}
+					\noindent \underbar{\textbf{UC1 -Registracija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Autor, posjetitelj$>$
-						\item  \textbf{Cilj:} $<$stvoriti korisnički račun za prijavu u sustav$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$-$>$
+						\item \textbf{Glavni sudionik: }Autor, posjetitelj
+						\item  \textbf{Cilj:} stvoriti korisnički račun za prijavu u sustav
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Korisnik odabere opciju za registraciju$>$
-							\item $<$Unosi potrebne korisničke podatke$>$
-							\item $<$Obavještava ga se o uspješno registracijii$>$
+							\item Korisnik odabere opciju za registraciju
+							\item Unosi potrebne korisničke podatke
+							\item Obavještava ga se o uspješno registracijii
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] $<$Unos postojećeg ili nezadovoljavajuće e-maila$>$
+							\item Unos postojećeg ili nezadovoljavajuće e-maila
+
 							\item[] \begin{packed_enum}
 								
-								\item $<$Obavještavanje korisnika o neuspjeloj registraciji$>$
-								\item $<$Vraćanje korisnika na početak tj. ponovnu registraciju$>$
-								\item $<$Korisnik mijenja podatke ili odustaje od registracije$>$
+								\item Obavještavanje korisnika o neuspjeloj registraciji
+								\item Vraćanje korisnika na početak tj. ponovnu registracij
+								\item Korisnik mijenja podatke ili odustaje od registracije
 								
 							\end{packed_enum}
 							
 						\end{packed_item}
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC$<$2$>$ -$<$Pregled konferencija$>$}}
+					\noindent \underbar{\textbf{UC2 -Pregled konferencija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Autor, posjetitelj$>$
-						\item  \textbf{Cilj:} $<$Pregled konferencija$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$-$>$
+						\item \textbf{Glavni sudionik: }Autor, posjetitelj
+						\item  \textbf{Cilj:} Pregled konferencija
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Sve dostupne konferencije su prikazane prilikom otvaranja aplikacije$>$
-							\item $<$Korisnik odabire konferenciju koji hoće$>$
-							\item $<$Prije nego mu se dopusti pristup konferenciji korisnik treba biti registriran$>$
+							\item Sve dostupne konferencije su prikazane prilikom otvaranja aplikacije
+							\item Korisnik odabire konferenciju koji hoće
+							\item Prije nego mu se dopusti pristup konferenciji korisnik treba biti registriran
 						\end{packed_enum}
 						
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC$<$3$>$ -$<$Pregled radova$>$}}
+					\noindent \underbar{\textbf{UC3 -Pregled radova}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Autor, posjetitelj$>$
-						\item  \textbf{Cilj:} $<$Pregled konferencija$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$Registracija u sustav, prijavljen u konferenciju$>$
+						\item \textbf{Glavni sudionik: }Autor, posjetitelj
+						\item  \textbf{Cilj:} Pregled konferencija
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Registracija u sustav, prijavljen u konferenciju
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Ulazak na neku određenu konferenciju$>$
-							\item $<$Prikaz svih radova $>$
+							\item Ulazak na neku određenu konferenciju
+							\item Prikaz svih radova 
 						\end{packed_enum}
 						
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC$<$4$>$ -$<$Ocjenjivanje radova$>$}}
+					\noindent \underbar{\textbf{UC4 -Ocjenjivanje radova}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Posjetitelj$>$
-						\item  \textbf{Cilj:} $<$Davanje svog glasa jednom od radova$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka, posjetitelj$>$
-						\item  \textbf{Preduvjet:} $<$Uspješna prijava u konferenciju$>$
+						\item \textbf{Glavni sudionik: }Posjetitelj
+						\item  \textbf{Cilj:} Davanje svog glasa jednom od radova
+						\item  \textbf{Sudionici:} Baza podataka, posjetitelj
+						\item  \textbf{Preduvjet:} Uspješna prijava u konferenciju
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Odabir rada kojem se odlučuje dati glas $>$
-							\item $<$Davanje glasa odabranom radu$>$
+							\item Odabir rada kojem se odlučuje dati glas 
+							\item Davanje glasa odabranom radu
 						\end{packed_enum}
 						
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC$<$5$>$ -$<$Prijava u konferenciju$>$}}
+					\noindent \underbar{\textbf{UC5 -Prijava u konferenciju}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Autor, posjetitelj$>$
-						\item  \textbf{Cilj:} $<$Prijava u konferenciju radi pregleda radova$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$Registracija korisnika$>$
+						\item \textbf{Glavni sudionik: }Autor, posjetitelj
+						\item  \textbf{Cilj:} Prijava u konferenciju radi pregleda radova
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Registracija korisnik
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Odabir određene konferencije za koju želite pristup$>$
-							\item $<$Upisivanje lozinke za tu konferenciju uz uvjet da ste prijavljeni$>$
-							\item $<$Dobivanje pristupa konferenciji$>$
+							\item Odabir određene konferencije za koju želite pristup
+							\item Upisivanje lozinke za tu konferenciju uz uvjet da ste prijavljeni
+							\item Dobivanje pristupa konferenciji
 						\end{packed_enum}
 						
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC$<$6$>$ -$<$Dodavanje voditelja/otvaranje nove konferencije$>$}}
+					\noindent \underbar{\textbf{UC6-Dodavanje voditelja/otvaranje nove konferencije}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Administrator$>$
-						\item  \textbf{Cilj:} $<$Otvaranje konferencije$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka, Administrator, Voditelj$>$
-						\item  \textbf{Preduvjet:} $<$Odobrenje administratora$>$
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Otvaranje konferencije
+						\item  \textbf{Sudionici:} Baza podataka, Administrator, Voditelj
+						\item  \textbf{Preduvjet:} Odobrenje administratora
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Kontaktiranje administratora radi otvaranja nove konferencije$>$
-							\item $<$Otvaranje konferencije od strane administratora te dodjeljivanje voditelja$>$
+							\item Kontaktiranje administratora radi otvaranja nove konferencije
+							\item Otvaranje konferencije od strane administratora te dodjeljivanje voditelja
 						\end{packed_enum}
 						
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC$<$7$>$ -$<$Pregled vremenske prognoze$>$}}
+					\noindent \underbar{\textbf{UC7 -Pregled vremenske prognoze}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Autor, posjetitelj$>$
-						\item  \textbf{Cilj:} $<$Pregled vremenske prognoze za određenu konferenciju$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka$>$
-						\item  \textbf{Preduvjet:} $<$Registracija korisnika, odabir konferencije$>$
+						\item \textbf{Glavni sudionik: }Autor, posjetitelj
+						\item  \textbf{Cilj:} Pregled vremenske prognoze za određenu konferenciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Registracija korisnika, odabir konferencije
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Nakon odabrane konferencije na dnu stranice će biti moguće vidjeti vremensku prognozu za lokaciju te konferencije$>$
+							\item Nakon odabrane konferencije na dnu stranice će biti moguće vidjeti vremensku prognozu za lokaciju te konferencije$>$
 						\end{packed_enum}
 						
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC$<$8$>$ -$<$Dodavanje rada u konferenciju$>$}}
+					\noindent \underbar{\textbf{UC8-Dodavanje rada u konferenciju}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Autor, voditelj$>$
-						\item  \textbf{Cilj:} $<$Dodavanje/prijava rada na nekoj konferenciji$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka, Voditelj, Autor$>$
-						\item  \textbf{Preduvjet:} $<$-$>$
+						\item \textbf{Glavni sudionik: }Autor, voditelj
+						\item  \textbf{Cilj:} Dodavanje/prijava rada na nekoj konferenciji
+						\item  \textbf{Sudionici:} Baza podataka, Voditelj, Autor
+						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Autor šalje mail s radom voditelju konferencije$>$
-							\item $<$Voditelj konferencije dodaje rad u konferenciju kako bi se mogao prikazati$>$
+							\item Autor šalje mail s radom voditelju konferencije
+							\item Voditelj konferencije dodaje rad u konferenciju kako bi se mogao prikazati
 						\end{packed_enum}
 						
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC$<$9$>$ -$<$Video praćenje konferencije$>$}}
+					\noindent \underbar{\textbf{UC9-Video praćenje konferencije}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$Posjetitelj$>$
-						\item  \textbf{Cilj:} $<$Praćenje konferencije online$>$
-						\item  \textbf{Sudionici:} $<$Baza podataka, posjetitelj$>$
-						\item  \textbf{Preduvjet:} $<$Registracija korisnika$>$
+						\item \textbf{Glavni sudionik: }Posjetitelj
+						\item  \textbf{Cilj:} Praćenje konferencije online
+						\item  \textbf{Sudionici:} Baza podataka, posjetitelj
+						\item  \textbf{Preduvjet:} Registracija korisnika
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$Korisnik se mora registrirati$>$
-							\item $<$Nakon što je korisnik registriran može odabrati online praćenje$>$
+							\item Korisnik se mora registrirati
+							\item Nakon što je korisnik registriran može odabrati online praćenje
 						\end{packed_enum}
 						
 					\end{packed_item}
@@ -272,15 +270,28 @@
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
-					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
-				\eject		
+		\begin{figure}[H]
+			\includegraphics[scale=0.55]{slike/UML1.JPG} 
+			\centering
+			\caption{Slika 3.1: }
+			\label{UML1}
+		\end{figure}		
 				
 			\subsection{Sekvencijski dijagrami}
 				
-				\textbf{\textit{dio 1. revizije}}\\
-				
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
-				\eject
+		\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/UC1.PNG} 
+			\centering
+			\caption{Slika 3.2: Sekvencijski dijagram za UC1}
+			\label{fig:UC1}
+		\end{figure}	
+
+		\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/UC5.PNG} 
+			\centering
+			\caption{Slika 3.3: Sekvencijski dijagram za UC5}
+			\label{fig:UC5}
+		\end{figure}	
 	
 		\section{Ostali zahtjevi}
 		
