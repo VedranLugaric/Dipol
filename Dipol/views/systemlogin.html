@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/index.css">
+    <link rel="stylesheet" href="../public/css/systemlogin.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+</head>
+<body>
+    <div class="topcontents">
+        <h1>Main page</h1>
+        <div class="btnnavigators">
+            <button class="navbtn">Button1</button>
+            <button class="navbtn">Button2</button>
+            <button class="navbtn">Button3</button>
+            <button class="navbtn">Button4</button>
+            <button class="navbtn">Button5</button>
+        </div>
+        <div class="systemaccess">
+            <button class="login">Login</button>
+            <button class="login">Register</button>
+        </div>
+    </div>
+    <div class="loginbox">
+        <div class="logintab">
+            <p class="logintext">Ulogirajte se</p>
+            <form action="/public/scripts/loginhandler.js" class="loginform">
+                <div class="inputs">
+                    <label for="email">Unesite e-mail adresu:</label><br>
+                    <input type="text" id="email" name="email"><br><br>
+                </div>
+                <div class="inputs">
+                    <label for="fname">Unesite lozinku:</label><br>
+                    <input type="text" id="lname" name="lname"><br><br><br>
+                </div>
+                <input type="submit" value="Ulogiraj se" class="submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
