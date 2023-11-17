@@ -114,7 +114,7 @@
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
-						\item[] \begin{packed_item}
+						\item[] \begin{packed_enum}
 	
 							\item Unos postojećeg ili nezadovoljavajuće e-maila
 
@@ -126,7 +126,7 @@
 								
 							\end{packed_enum}
 							
-						\end{packed_item}
+						\end{packed_enum}
 					\end{packed_item}
 
 					\noindent \underbar{\textbf{UC2 -Pregled konferencija}}
@@ -265,7 +265,59 @@
 						\end{packed_enum}
 						
 					\end{packed_item}
-				
+
+					\noindent \underbar{\textbf{UC10 -Glasanje}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Posjetitelj
+						\item  \textbf{Cilj:} Oređivanje najboljeg rada
+						\item  \textbf{Sudionici:} Baza podataka, posjetitelj
+						\item  \textbf{Preduvjet:} Registracija korisnika, Prijava u konferenciju
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Prijava na željenu konferenciju
+							\item Odabir rada kojem se želi dati glas za najbolji rad
+							\item Dodjeljivanje glasa
+							\item Potvrđivanje glasa
+						\end{packed_enum}
+						
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11 -Dodavanje radova}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Voditelj
+						\item  \textbf{Cilj:} Dodavanje radova koji se predstavljaju na konferenciji
+						\item  \textbf{Sudionici:} Baza podataka, voditelj
+						\item  \textbf{Preduvjet:} Autor na konferenciji
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Voditelj zaprima mail s radom nekog autora
+							\item Voditelj dodaje rad u konferenciju kako bi se rad moga predstaviti
+						\end{packed_enum}
+						
+					\end{packed_item}		
+
+					\noindent \underbar{\textbf{UC12 -Preuzimanje fotografija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Posjetitelj, Autor
+						\item  \textbf{Cilj:} Preuzimanje fotografija fotografiranih na odrzanoj konferenciji
+						\item  \textbf{Sudionici:} Baza podataka, posjetitelj, autor
+						\item  \textbf{Preduvjet:} Registracija korisnika, prijava u određenu konferenciju
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Konferencija završava/voditelj zakljucava konferenciju
+							\item Nakon završetka konferencije omogućuje se preuzimanje slika fotografiranih na istoj
+						\end{packed_enum}
+						
+					\end{packed_item}		
 				
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
@@ -291,14 +343,28 @@
 			\centering
 			\caption{Slika 3.3: Sekvencijski dijagram za UC5}
 			\label{fig:UC5}
-		\end{figure}	
-	
+		\end{figure}
+
+		\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/UC10.PNG} 
+			\centering
+			\caption{Slika 3.4: Sekvencijski dijagram za UC10}
+			\label{fig:UC10}
+		\end{figure}		
+		\newpage
 		\section{Ostali zahtjevi}
-		
-			\textbf{\textit{dio 1. revizije}}\\
-		 
-			 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
-			 
-			 
+		\begin{packed_item}
+
+			\item Sustav mora omogućiti održavanje više konefencija u isto vrijeme
+			\item Izvršavanje dijela programa u kojem se pristupa bazi podataka ne smije trajati više od nekoliko sekundi
+			\item Neispravno korištenje korisničkog sučelja ne smije narušiti funkcionalnost i rad sustava
+			\item Sustav mora biti jaednostavan za korisštenje i sudionici se moraju moći koristiti njime bez uputa
+			\item Nadogradnja sustava ne smije narušavati postojeće funkcionalnosti
+			\item Veza s bazom podataka mora biti sigurna
+			\item Sustav treba biti implementran kao web aplikacija
+			\item Pristup sustavu mora biti omogućen iz javne mreže pomoću HTTPS
+
+		\end{packed_item}
+
 			 
 	
