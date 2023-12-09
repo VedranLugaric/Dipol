@@ -1,0 +1,90 @@
+
+.navBar{
+  height: 55px;
+  display: flex;
+  font-family: Tahoma;
+}
+
+.logo{
+  margin-left: 20%;
+  color: white;
+  text-decoration: none;
+  float: left;
+  align-self: center
+}
+
+
+.navBtns{
+  margin-left: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 15%;
+}
+
+.navButton{
+  background-color: transparent;
+  border: none;
+  color: white;
+  height: 55px;
+  width: 100px;
+}
+
+.mid{
+  font-family: Geneva, Verdana, sans-serif;
+  height: 500px;
+  background-image: url(slike/coffee-break-1177540_1280.jpg);
+  background-size: cover;
+  display: flex;
+}
+
+.midContents{
+  color: white;
+  margin: auto;
+  text-align: center;
+  width: 500px;
+}
+
+.midBtns{
+    margin: 20px;
+}
+
+.midBtn1{
+  font-family: Geneva, Verdana, sans-serif;
+  border: 2px solid white;
+  padding: 10px;
+  margin-right: 10px;
+  width: 125px;
+  color: white;
+  background-color: transparent;
+  transition: background-color 0.2s ease-in;
+  transition: color 0.2s ease-in;
+}
+.midBtn2{
+  font-family: Geneva, Verdana, sans-serif;
+  border: 2px solid rgb(65, 49, 87);
+  padding: 10px;
+  margin-left: 10px;
+  width: 125px;
+  background-color: rgb(65, 49, 87);
+  color: white;
+  transition: background-color 0.2s ease-in;
+}
+
+.midBtn1:hover{
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+  color: rgb(65, 49, 87);
+}
+
+.midBtn2:hover{
+  font-weight: bold;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.navButton:hover{
+  cursor: pointer;
+  font-weight: bold;
+}
