@@ -20,7 +20,7 @@
     border-radius: 30px;
 }
 
-.first{
+.firsts{
     width: 40%;
 }
 
@@ -78,6 +78,9 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.offscreen{
+    opacity: 0;
+}
 
 @media screen and (max-width: 800px) {
     .loginBody{
@@ -103,7 +106,7 @@
         flex-direction: column;
         justify-content: center;
     }
-    .first{
+    .firsts{
         width: 100%;
     }
 }

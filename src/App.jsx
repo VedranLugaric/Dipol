@@ -1,4 +1,4 @@
-import './pages/Home.css'
+import './pages/Home/Home.css'
 import Main from './index'
 import { Link } from 'react-router-dom'
 
@@ -22,8 +22,10 @@ const NavBar = () => {
             <NavigationButton name="UŽIVO" />
           </Link>
           <NavigationButton name="O NAMA" />
-          <NavigationButton name="REGISTRACIJA" />
-          <Link to='/Login'>
+          <Link to='/registracija'>
+            <NavigationButton name="REGISTRACIJA" />
+          </Link>
+          <Link to='/login'>
             <NavigationButton name="LOGIN" />
           </Link>
         </div>
@@ -34,6 +36,7 @@ const NavBar = () => {
 
 
 const App = () => {
+
   return (
     <>
       <NavBar />
