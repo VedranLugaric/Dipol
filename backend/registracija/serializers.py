@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from . import models
+from .models import RegistracijaModel
 
 class RegistracijaModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.RegistracijaModel
-        fields = '__all__'
+        model = RegistracijaModel
+        fields = ['ime', 'prezime', 'username', 'password']

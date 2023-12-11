@@ -16,11 +16,23 @@ const Registracija = () => {
         e.preventDefault()
         console.log(ime, prezime, user, pwd)
 
-        try{
+        try {
             const response = await axios({
                 method: 'post',
-                url: 'http://localhost:5173/login'
-            })
+                url: 'http://localhost:8000/api/registracija/',
+                data: {
+                    ime: ime,
+                    prezime: prezime,
+                    username: user,
+                    password: pwd,
+                },
+            });
+            setUser('');
+            setPwd('');
+            setIme('');
+            setPrezime('');
+
+            setSuccess(true);
             console.log(response.data)
         } catch (err) {
             console.error('An error occurred:', error);
@@ -38,7 +50,7 @@ const Registracija = () => {
                             <input type='text' 
                             className='registrationInputText'
                             id='name'
-                            placeholder='Unesite ime'
+                            placeholder='Ime'
                             onChange={(e) => setIme(e.target.value)}
                             value={ime}
                             ></input>
@@ -47,7 +59,7 @@ const Registracija = () => {
                             <input type='text' 
                             className='registrationInputText'
                             id='prezime'
-                            placeholder='Unesite prezime'
+                            placeholder='Prezime'
                             onChange={(e) => setPrezime(e.target.value)}
                             value={prezime}
                             ></input>
@@ -70,7 +82,7 @@ const Registracija = () => {
                             value={pwd}
                             ></input>
                         </label>
-                        <button className='registrationInputSubmit'>Log in</button>
+                        <button className='registrationInputSubmit'>Registriraj se</button>
                     </div>
 
                 </form>  

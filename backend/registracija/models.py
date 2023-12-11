@@ -4,5 +4,8 @@ from django.db import models
 class RegistracijaModel(models.Model):
     ime = models.CharField(max_length=255)
     prezime = models.CharField(max_length=255)
-    korisnicko_ime = models.CharField(max_length=255)
-    lozinka = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.ime
