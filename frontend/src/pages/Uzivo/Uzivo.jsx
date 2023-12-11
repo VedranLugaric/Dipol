@@ -1,12 +1,13 @@
 import YouTube from "react-youtube";
 import './Uzivo.css'
+import FallingAnimation from '../../FallingAnimation';
 
 const Uzivo = () => {
     const opts = {
         height: '500px',
         width: '700px',
         playerVars: {
-          autoplay: 1,
+          autoplay: 0,
           controls: 1,
         }
     }
@@ -15,11 +16,11 @@ const Uzivo = () => {
     }
 
     return (
-        <>
-        <div className="video">
-            <YouTube className='lofigirl' videoId="lHpYyYtkmrw" opts={opts} onReady={_onReady}/>
-        </div>
-        </>
+        <FallingAnimation>
+            <div className="video">
+                <YouTube className='lofigirl' videoId="lHpYyYtkmrw" opts={opts} onReady={_onReady}/>
+            </div>
+        </FallingAnimation>
     )
 
 }

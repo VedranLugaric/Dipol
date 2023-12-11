@@ -1,5 +1,4 @@
 .background{
-    background-image: url(/slike/office-1516329_1280.jpg);
     background-repeat: no-repeat;
     background-size:cover;
     height: 780px;
@@ -14,8 +13,8 @@
     display: flex;
     flex-direction: row;
     width: 70%;
-    margin: auto;
-    height: 600px;
+    margin-top: -100px;
+    height: 550px;
     box-shadow: rgb(37, 28, 51) 0 0 5rem ;
     border-radius: 30px;
 }
