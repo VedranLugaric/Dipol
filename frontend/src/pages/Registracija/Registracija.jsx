@@ -5,7 +5,6 @@ import './Registracija.css';
 
 const Registracija = () => {
   const [user, setUser] = useState('');
-  const [pwd, setPwd] = useState('');
   const [ime, setIme] = useState('');
   const [prezime, setPrezime] = useState('');
   const [success, setSuccess] = useState(false);
@@ -13,24 +12,21 @@ const Registracija = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(ime, prezime, user, pwd);
 
     try {
       const response = await axios({
         method: 'post',
-        url: 'http://localhost:8000/api/registracija/',
+        url: 'http://localhost:5000/api/registracija/',
         data: {
           ime: ime,
           prezime: prezime,
-          username: user,
-          password: pwd,
+          email: user
         },
       });
 
 
       //obriši formu za registraciju
       setUser('');
-      setPwd('');
       setIme('');
       setPrezime('');
 
@@ -74,22 +70,12 @@ const Registracija = () => {
                 </label>
                 <label htmlFor='username'>
                   <input
-                    type='text'
+                    type='email'
                     id='username'
                     className='registrationInputText'
-                    placeholder='Korisničko ime'
+                    placeholder='Korisničko ime/Email'
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
-                  ></input>
-                </label>
-                <label htmlFor='password'>
-                  <input
-                    type='password'
-                    className='registrationInputText'
-                    id='password'
-                    placeholder='Lozinka'
-                    onChange={(e) => setPwd(e.target.value)}
-                    value={pwd}
                   ></input>
                 </label>
                 <button className='registrationInputSubmit'>Registriraj se</button>
@@ -97,11 +83,9 @@ const Registracija = () => {
             </form>
           </div>
           <div className='seconds'>
-            {/* Display the error message */}
             {error && <div className="error-message">{error}</div>}
-            {/* Display the success message */}
             {success && <div className="success-message">Uspješna registracija!</div>}
-            <h1 className='welcome'>Bok!</h1>
+            <h1 className='welcome'>Dobrodošli!</h1>
           </div>
         </div>
       </div>

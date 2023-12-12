@@ -8,23 +8,26 @@ const Login = () => {
   const errRef = useRef();
 
   const [user, setUser] = useState('');
-  const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user, pwd);
+
     try {
-      const response = await axios({
-        method: 'post',
-        url: 'http://localhost:5173/registracija',
+      const response = await axios.post('http://localhost:5000/api/login', {
+        email: user,
       });
-      console.log(response.data);
+
+      // Ako prijava uspije, postavljamo odgovarajuće stanje
+      setSuccess(true);
+      setErrMsg('');
     } catch (error) {
-      console.error('An error occurred:', error);
+      // Ako prijava ne uspije, postavljamo odgovarajuće stanje i prikazujemo poruku o pogrešci
+      setSuccess(false);
+      setErrMsg('Pogrešan e-mail.');
     }
-  };
+  }; 
 
   return (
     <FallingAnimation>
@@ -47,16 +50,6 @@ const Login = () => {
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
                     required
-                  ></input>
-                </label>
-                <label htmlFor='password'>
-                  <input
-                    type='password'
-                    className='loginInputText'
-                    id='password'
-                    onChange={(e) => setPwd(e.target.value)}
-                    placeholder='Lozinka'
-                    value={pwd}
                   ></input>
                 </label>
               </div>
