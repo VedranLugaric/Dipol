@@ -9,6 +9,7 @@ const Registracija = () => {
   const [ime, setIme] = useState('');
   const [prezime, setPrezime] = useState('');
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,15 +26,22 @@ const Registracija = () => {
           password: pwd,
         },
       });
+
+
+      //obriši formu za registraciju
       setUser('');
       setPwd('');
       setIme('');
       setPrezime('');
 
+      setError(false)
       setSuccess(true);
       console.log(response.data);
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error('Morate unijeti sve podatke!', error);
+
+      setError(error.response.data.message || 'Morate unijeti sve podatke!');
+      setSuccess(false);
     }
   };
 
@@ -72,7 +80,6 @@ const Registracija = () => {
                     placeholder='Korisničko ime'
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
-                    required
                   ></input>
                 </label>
                 <label htmlFor='password'>
@@ -90,6 +97,10 @@ const Registracija = () => {
             </form>
           </div>
           <div className='seconds'>
+            {/* Display the error message */}
+            {error && <div className="error-message">{error}</div>}
+            {/* Display the success message */}
+            {success && <div className="success-message">Uspješna registracija!</div>}
             <h1 className='welcome'>Bok!</h1>
           </div>
         </div>
