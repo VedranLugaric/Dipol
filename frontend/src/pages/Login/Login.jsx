@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import FallingAnimation from '../../FallingAnimation';
 import './Login.css';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../AuthContext';
 
 const Login = () => {
   const userRef = useRef();
@@ -11,23 +13,25 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/login', {
-        email: user,
-      });
+      //poziv funkcije iz AuthContext
+      await login(user);
 
-      // Ako prijava uspije, postavljamo odgovarajuće stanje
       setSuccess(true);
       setErrMsg('');
+
+      navigate('/UserPage');
     } catch (error) {
-      // Ako prijava ne uspije, postavljamo odgovarajuće stanje i prikazujemo poruku o pogrešci
       setSuccess(false);
       setErrMsg('Pogrešan e-mail.');
     }
-  }; 
+  };
 
   return (
     <FallingAnimation>
