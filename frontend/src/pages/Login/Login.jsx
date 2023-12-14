@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
-import axios from 'axios';
 import FallingAnimation from '../../FallingAnimation';
 import './Login.css';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../AuthContext';
 
 const Login = () => {
+
+  let ulogirani = false
   const userRef = useRef();
   const errRef = useRef();
 
@@ -24,14 +25,30 @@ const Login = () => {
       await login(user);
 
       setSuccess(true);
+
       setErrMsg('');
 
-      navigate('/UserPage');
+      navigate('/login');
     } catch (error) {
       setSuccess(false);
       setErrMsg('Pogrešan e-mail.');
     }
   };
+
+  const Verification = () => {
+    if (ulogirani == true) {
+      return (
+        <>
+        <span>Ulogirani ste!</span>
+        </>
+      )
+    } else {
+      return (
+        <>
+        </>
+      )
+    }
+  }
 
   return (
     <FallingAnimation>
@@ -41,7 +58,9 @@ const Login = () => {
           <div className='firsts'>
             <h1 className='welcome'>Dobrodošli natrag!</h1>
           </div>
+          
           <div className='second'>
+            <Verification />
             <form className='loginForm' onSubmit={handleSubmit}>
               <div className='textInputs'>
                 <label htmlFor='username'>
@@ -65,5 +84,7 @@ const Login = () => {
     </FallingAnimation>
   );
 };
+
+
 
 export default Login;

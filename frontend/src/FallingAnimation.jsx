@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 
 const FallingAnimation = ({ children }) => {

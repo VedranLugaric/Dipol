@@ -18,6 +18,9 @@ const NavBar = () => {
           </a>
         </Link>
         <div className='navBtns'>
+          <Link to='/konferencije'>
+            <NavigationButton name="KONFERENCIJE" />
+          </Link>
           <Link to='/uzivo'>
             <NavigationButton name="UŽIVO" />
           </Link>
