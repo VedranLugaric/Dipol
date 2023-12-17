@@ -6,7 +6,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:bazepodataka@localhost:5432/progi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:asd123@localhost:5432/progi'
 db = SQLAlchemy(app)
 secret_key = secrets.token_hex(16)
 app.secret_key = secret_key
@@ -19,6 +19,7 @@ class Sudionik(db.Model):
     ime = db.Column(db.String(50))
     prezime = db.Column(db.String(50))
     email = db.Column(db.String(100), unique=True, nullable=False)
+    lozinka = db.Column(db.String(50))
 
     def get_id(self):
         return str(self.id_sud)
@@ -34,11 +35,22 @@ def registracija():
     try:
         data = request.get_json()
 
+        required_fields = ['ime', 'prezime', 'email', 'lozinka', 'lozinkaPotvrda']
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({'poruka': 'Sva polja moraju biti popunjena!'}), 400
+            
+        if data.get('lozinkaPotvrda') != data.get('lozinka'):
+            return jsonify({'poruka': 'Lozinke se ne podudaraju!'}), 400
+
         novi_sudionik = Sudionik(
             ime=data['ime'],
             prezime=data['prezime'],
-            email=data['email']
+            email=data['email'],
+            lozinka=data['lozinka']
         )
+
+        
 
         db.session.add(novi_sudionik)
         db.session.commit()
@@ -46,7 +58,7 @@ def registracija():
         return jsonify({'poruka': 'Registracija uspješna'}), 201
     except Exception as e:
         print(f'Greška pri registraciji: {str(e)}')
-        return jsonify({'poruka': 'Pogreška prilikom registracije'}), 500
+        return jsonify({'poruka': 'Email se već koristi!'}), 500
 
 @login_manager.user_loader
 def load_user(user_id):

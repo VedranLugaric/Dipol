@@ -7,6 +7,8 @@ const Registracija = () => {
   const [user, setUser] = useState('');
   const [ime, setIme] = useState('');
   const [prezime, setPrezime] = useState('');
+  const [lozinka, setLozinka] = useState('');
+  const [lozinkaPotvrda, setLozinkaPotvrda] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
 
@@ -20,7 +22,9 @@ const Registracija = () => {
         data: {
           ime: ime,
           prezime: prezime,
-          email: user
+          email: user,
+          lozinka: lozinka,
+          lozinkaPotvrda: lozinkaPotvrda
         },
       });
 
@@ -29,14 +33,16 @@ const Registracija = () => {
       setUser('');
       setIme('');
       setPrezime('');
+      setLozinka('');
+      setLozinkaPotvrda('');
 
       setError(false)
       setSuccess(true);
       console.log(response.data);
     } catch (error) {
-      console.error('Morate unijeti sve podatke!', error);
+      //console.error('Morate unijeti sve podatke!', error);
 
-      setError(error.response.data.message || 'Morate unijeti sve podatke!');
+      setError(error.response.data.poruka);
       setSuccess(false);
     }
   };
@@ -77,6 +83,26 @@ const Registracija = () => {
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
                   ></input>
+                </label>
+                <label htmlFor='lozinka'>
+                  <input
+                  type='password'
+                  className='registrationInputText'
+                  id='lozinka'
+                  placeholder='Lozinka'
+                  onChange={(e) => setLozinka(e.target.value)}
+                  value={lozinka}
+                  />
+                </label>
+                <label htmlFor='lozinkaPotvrda'>
+                  <input
+                  type='password'
+                  className='registrationInputText'
+                  id='lozinkaPotvrda'
+                  placeholder='Potvrdi lozinku'
+                  onChange={(e) => setLozinkaPotvrda(e.target.value)}
+                  value={lozinkaPotvrda}
+                  />
                 </label>
                 <button className='registrationInputSubmit'>Registriraj se</button>
               </div>
