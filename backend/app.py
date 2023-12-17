@@ -1,8 +1,10 @@
 import secrets
+import bcrypt
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+
 
 app = Flask(__name__)
 CORS(app)
@@ -20,6 +22,13 @@ class Sudionik(db.Model):
     prezime = db.Column(db.String(50))
     email = db.Column(db.String(100), unique=True, nullable=False)
     lozinka = db.Column(db.String(50))
+
+    def set_password(self, raw_password):
+        self.lozinka = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt())
+
+    def check_password(self, raw_password):
+        return bcrypt.checkpw(raw_password.encode('utf-8'), self.lozinka)
+
 
     def get_id(self):
         return str(self.id_sud)
@@ -47,8 +56,9 @@ def registracija():
             ime=data['ime'],
             prezime=data['prezime'],
             email=data['email'],
-            lozinka=data['lozinka']
         )
+
+        novi_sudionik.set_password(data['lozinka'])
 
         
 
