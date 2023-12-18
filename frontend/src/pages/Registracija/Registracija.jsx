@@ -7,6 +7,8 @@ const Registracija = () => {
   const [user, setUser] = useState('');
   const [ime, setIme] = useState('');
   const [prezime, setPrezime] = useState('');
+  const [lozinka, setLozinka] = useState('');
+  const [lozinkaPotvrda, setLozinkaPotvrda] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
 
@@ -20,7 +22,9 @@ const Registracija = () => {
         data: {
           ime: ime,
           prezime: prezime,
-          email: user
+          email: user,
+          lozinka: lozinka,
+          lozinkaPotvrda: lozinkaPotvrda
         },
       });
 
@@ -56,6 +60,7 @@ const Registracija = () => {
                     placeholder='Ime'
                     onChange={(e) => setIme(e.target.value)}
                     value={ime}
+                    required
                   ></input>
                 </label>
                 <label htmlFor='prezime'>
@@ -66,6 +71,7 @@ const Registracija = () => {
                     placeholder='Prezime'
                     onChange={(e) => setPrezime(e.target.value)}
                     value={prezime}
+                    required
                   ></input>
                 </label>
                 <label htmlFor='username'>
@@ -76,7 +82,30 @@ const Registracija = () => {
                     placeholder='Korisničko ime/Email'
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
+                    required
                   ></input>
+                </label>
+                <label htmlFor='lozinka'>
+                  <input
+                  type='password'
+                  className='registrationInputText'
+                  id='lozinka'
+                  placeholder='Lozinka'
+                  onChange={(e) => setLozinka(e.target.value)}
+                  value={lozinka}
+                  required
+                  />
+                </label>
+                <label htmlFor='lozinkaPotvrda'>
+                  <input
+                  type='password'
+                  className='registrationInputText'
+                  id='lozinkaPotvrda'
+                  placeholder='Potvrdi lozinku'
+                  onChange={(e) => setLozinkaPotvrda(e.target.value)}
+                  value={lozinkaPotvrda}
+                  required
+                  />
                 </label>
                 <button className='registrationInputSubmit'>Registriraj se</button>
               </div>

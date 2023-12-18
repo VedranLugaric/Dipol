@@ -6,29 +6,22 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
-
-  const [currentUser, setCurrentUser] = useState(() => {
-    return JSON.parse(localStorage.getItem('currentUser'));
-  });
-
+  
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  }, [isAuthenticated, currentUser]);
+  }, [isAuthenticated]);
 
-  const login = async (email) => {
+  const login = async (email, lozinka) => {
     try {
       const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, lozinka }),
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setCurrentUser(data.user);
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
@@ -37,39 +30,36 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Authentication error:', error.message);
       setIsAuthenticated(false);
+      throw new Error('Authentication failed');
     }
   };
 
   const logout = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user: currentUser }),
-      });
+      // const response = await fetch('http://localhost:5000/api/logout', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
 
-      if (response.ok) {
-        setCurrentUser(null);
-        localStorage.removeItem('currentUser');
+      // if (response.ok) {
         setIsAuthenticated(false);
         localStorage.removeItem('isAuthenticated');
-      } else {
-        throw new Error('Logout failed');
-      }
+      // } else {
+      //   throw new Error('Logout failed');
+      // }
     } catch (error) {
       console.error('Logout error:', error.message);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, currentUser, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
 
 export const useAuth = () => {
   return useContext(AuthContext);

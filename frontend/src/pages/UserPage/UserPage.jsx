@@ -12,7 +12,7 @@ const UserPage = () => {
   useEffect(() => {
     //provjeri je li korisnik prijavljen
     if (!isAuthenticated) {
-      //ako prijavljen, preusmjeri ga na login
+      //ako nije prijavljen, preusmjeri ga na login
       navigate('/login');
     }
   }, [isAuthenticated, navigate]);
