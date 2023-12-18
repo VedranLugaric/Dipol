@@ -1,8 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
+
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
@@ -49,6 +52,7 @@ export const AuthProvider = ({ children }) => {
       // } else {
       //   throw new Error('Logout failed');
       // }
+      navigate('/login');
     } catch (error) {
       console.error('Logout error:', error.message);
     }

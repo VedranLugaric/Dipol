@@ -1,6 +1,7 @@
 import './pages/Home/Home.css'
 import Main from './index'
 import { Link } from 'react-router-dom'
+import { useAuth } from './AuthContext';
 
 const NavigationButton = (props) => {
   return (
@@ -9,6 +10,13 @@ const NavigationButton = (props) => {
 }
 
 const NavBar = () => {
+  const { isAuthenticated, logout } = useAuth();
+
+  const handleLogout = () => {
+    //pozovi funkciju za odjavu iz AuthContext
+    logout();
+  };
+
   return (
     <>
       <div className='navBar'>
@@ -25,17 +33,28 @@ const NavBar = () => {
             <NavigationButton name="UŽIVO" />
           </Link>
           <NavigationButton name="O NAMA" />
-          <Link to='/registracija'>
-            <NavigationButton name="REGISTRACIJA" />
-          </Link>
-          <Link to='/login'>
-            <NavigationButton name="LOGIN" />
-          </Link>
+
+          {/* Conditionally render the buttons based on authentication status */}
+          {!isAuthenticated && (
+            <>
+              <Link to='/registracija'>
+                <NavigationButton name="REGISTRACIJA" />
+              </Link>
+              <Link to='/login'>
+                <NavigationButton name="LOGIN" />
+              </Link>
+            </>
+          )}
+          {isAuthenticated && (
+            <>
+              <button className='navButton' onClick={handleLogout}>ODJAVA</button>
+            </>
+          )}
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 
 const App = () => {

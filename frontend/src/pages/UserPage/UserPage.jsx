@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './UserPage.css';
 import { useAuth } from '../../AuthContext';
 
+
 const UserPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();

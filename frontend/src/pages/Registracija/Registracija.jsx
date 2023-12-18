@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FallingAnimation from '../../FallingAnimation';
 import './Registracija.css';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../AuthContext';
 
 const Registracija = () => {
+  const { isAuthenticated } = useAuth();
   const [user, setUser] = useState('');
   const [ime, setIme] = useState('');
   const [prezime, setPrezime] = useState('');
@@ -11,6 +14,14 @@ const Registracija = () => {
   const [lozinkaPotvrda, setLozinkaPotvrda] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  // Redirect to another route if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('../konferencije'); // Change this to the route you want to redirect to
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,14 +44,18 @@ const Registracija = () => {
       setUser('');
       setIme('');
       setPrezime('');
+      setLozinka('');
+      setLozinkaPotvrda('');
 
       setError(false)
-      setSuccess(true);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Morate unijeti sve podatke!', error);
+      //setSuccess(true);
 
-      setError(error.response.data.message || 'Morate unijeti sve podatke!');
+
+      navigate('/login')
+      
+    } catch (error) {
+
+      setError(error.response.data.poruka);
       setSuccess(false);
     }
   };
@@ -113,7 +128,7 @@ const Registracija = () => {
           </div>
           <div className='seconds'>
             {error && <div className="error-message">{error}</div>}
-            {success && <div className="success-message">Uspješna registracija!</div>}
+            {/* {success && <div className="success-message">Uspješna registracija!</div>} */}
             <h1 className='welcome'>Dobrodošli!</h1>
           </div>
         </div>

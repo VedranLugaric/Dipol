@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import FallingAnimation from '../../FallingAnimation';
 import './Login.css';
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,15 @@ const Login = () => {
 
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  const { isAuthenticated } = useAuth();
+
+  // Redirect to another route if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('../konferencije'); // Change this to the route you want to redirect to
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +60,7 @@ const Login = () => {
               <div className='textInputs'>
                 <label htmlFor='username'>
                   <input
-                    type='text'
+                    type='email'
                     id='username'
                     className='loginInputText'
                     placeholder='Korisničko ime'
