@@ -2,7 +2,7 @@ import './Konferencije.css'
 import FallingAnimation from '../../FallingAnimation';
 
 const Konferencije = () => {
-
+    console.log(localStorage.getItem('currentUser'))
     return(
         <>
         <FallingAnimation>

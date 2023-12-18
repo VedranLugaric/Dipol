@@ -6,10 +6,15 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
-  
+
+  const [currentUser, setCurrentUser] = useState(() => {
+    return JSON.parse(localStorage.getItem('currentUser'));
+  });
+
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
-  }, [isAuthenticated]);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }, [isAuthenticated, currentUser]);
 
   const login = async (email) => {
     try {
@@ -22,6 +27,8 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        setCurrentUser(data.user);
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
@@ -40,9 +47,12 @@ export const AuthProvider = ({ children }) => {
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ user: currentUser }),
       });
 
       if (response.ok) {
+        setCurrentUser(null);
+        localStorage.removeItem('currentUser');
         setIsAuthenticated(false);
         localStorage.removeItem('isAuthenticated');
       } else {
@@ -54,11 +64,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, currentUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 
 export const useAuth = () => {
   return useContext(AuthContext);

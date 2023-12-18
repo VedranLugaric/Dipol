@@ -63,7 +63,7 @@ def login():
 
         if korisnik:
             login_user(korisnik)
-            return jsonify({'poruka': 'Prijava uspješna'}), 200
+            return jsonify({'poruka': 'Prijava uspješna', 'user': korisnik.ime}), 200
         else:
             return jsonify({'poruka': 'Pogrešan e-mail'}), 401
 
@@ -74,9 +74,12 @@ def login():
 @app.route('/api/logout', methods=['POST'])
 def logout():
     try:
-        # Logout the current user
+        data = request.get_json()
+        user = data.get('user')
+
         logout_user()
         return jsonify({'poruka': 'Odjava uspješna'}), 200
+
     except Exception as e:
         app.logger.error(f'Greška pri odjavi: {str(e)}')
         return jsonify({'poruka': 'Pogreška prilikom odjave'}), 500

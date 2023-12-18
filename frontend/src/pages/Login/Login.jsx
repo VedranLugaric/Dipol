@@ -28,7 +28,7 @@ const Login = () => {
 
       setErrMsg('');
 
-      navigate('/login');
+      navigate('/konferencije');
     } catch (error) {
       setSuccess(false);
       setErrMsg('Pogrešan e-mail.');
