@@ -1,9 +1,10 @@
 import './Konferencije.css'
 import FallingAnimation from '../../FallingAnimation';
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../AuthContext';
 
 const Konferencije = () => {
-
+    const { isAuthenticated } = useAuth();
 
     return(
         <>
@@ -19,12 +20,14 @@ const Konferencije = () => {
                         <span className='mjesto'>Varaždin</span>
                         <span className='opis'>Ovo je prva na popisu aktivnih konferencija</span>
                     </div>
-                    <div className='pristupi'>
+                    {isAuthenticated && (
+                        <div className='pristupi'>
                         <Link to='/poster'>
                             <button className='pristupibutton'>PRISTUPI
                             </button>
                         </Link>
-                    </div>
+                        </div>
+                    )}                    
                 </div>
                 <div className='konferencija'>
                     <div className='konfImg'></div>

@@ -22,8 +22,9 @@ export const AuthProvider = ({ children }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, lozinka }),
+        credentials: 'include',
       });
-
+  
       if (response.ok) {
         setIsAuthenticated(true);
       } else {
@@ -36,22 +37,21 @@ export const AuthProvider = ({ children }) => {
       throw new Error('Authentication failed');
     }
   };
+  
 
   const logout = async () => {
     try {
-      // const response = await fetch('http://localhost:5000/api/logout', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
+      const response = await fetch('http://localhost:5000/api/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
 
-      // if (response.ok) {
+      if (response.ok) {
         setIsAuthenticated(false);
         localStorage.removeItem('isAuthenticated');
-      // } else {
-      //   throw new Error('Logout failed');
-      // }
+      } else {
+        throw new Error('Logout failed');
+      }
       navigate('/login');
     } catch (error) {
       console.error('Logout error:', error.message);
