@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import FallingAnimation from '../../FallingAnimation';
 import './Registracija.css';
+import { useNavigate } from 'react-router-dom';
 
 const Registracija = () => {
   const [user, setUser] = useState('');
@@ -11,6 +12,8 @@ const Registracija = () => {
   const [lozinkaPotvrda, setLozinkaPotvrda] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,15 +33,18 @@ const Registracija = () => {
 
 
       //obriši formu za registraciju
-      setUser('');
-      setIme('');
-      setPrezime('');
-      setLozinka('');
-      setLozinkaPotvrda('');
+      //setUser('');
+      // setIme('');
+      // setPrezime('');
+      // setLozinka('');
+      // setLozinkaPotvrda('');
 
-      setError(false)
-      setSuccess(true);
-      console.log(response.data);
+      //setError(false)
+      //setSuccess(true);
+      // console.log(response.data);
+
+      navigate('/login')
+
     } catch (error) {
       //console.error('Morate unijeti sve podatke!', error);
 
@@ -79,7 +85,7 @@ const Registracija = () => {
                     type='email'
                     id='username'
                     className='registrationInputText'
-                    placeholder='Korisničko ime/Email'
+                    placeholder='Email'
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
                   ></input>
@@ -110,7 +116,7 @@ const Registracija = () => {
           </div>
           <div className='seconds'>
             {error && <div className="error-message">{error}</div>}
-            {success && <div className="success-message">Uspješna registracija!</div>}
+            {/* {success && <div className="success-message">Uspješna registracija!</div>} */}
             <h1 className='welcome'>Dobrodošli!</h1>
           </div>
         </div>

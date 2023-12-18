@@ -5,50 +5,39 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../AuthContext';
 
 const Login = () => {
-
-  let ulogirani = false
-  const userRef = useRef();
-  const errRef = useRef();
-
   const [user, setUser] = useState('');
+  const [lozinka, setLozinka] = useState('');
   const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
-
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      //poziv funkcije iz AuthContext
-      await login(user);
-
-      setSuccess(true);
-
-      setErrMsg('');
-
-      navigate('/login');
+      const response = await fetch('http://localhost:5000/api/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user,
+          lozinka: lozinka,
+        }),
+      });
+  
+      if (response.status === 200) {
+        // Redirect only if login is successful
+        navigate('/konferencije');
+      } else {
+        // Handle other response statuses, e.g., display an error message
+        setErrMsg('Pogrešan email ili lozinka');
+      }
     } catch (error) {
-      setSuccess(false);
-      setErrMsg('Pogrešan e-mail.');
+      // Handle other errors
+      setErrMsg('Pogreška prilikom prijave');
     }
   };
-
-  const Verification = () => {
-    if (ulogirani == true) {
-      return (
-        <>
-        <span>Ulogirani ste!</span>
-        </>
-      )
-    } else {
-      return (
-        <>
-        </>
-      )
-    }
-  }
 
   return (
     <FallingAnimation>
@@ -60,20 +49,27 @@ const Login = () => {
           </div>
           
           <div className='second'>
-            <Verification />
             <form className='loginForm' onSubmit={handleSubmit}>
               <div className='textInputs'>
-                <label htmlFor='username'>
+              <label htmlFor='username'>
                   <input
-                    type='text'
+                    type='email'
                     id='username'
-                    className='loginInputText'
-                    placeholder='Korisničko ime'
-                    ref={userRef}
+                    className='registrationInputText'
+                    placeholder='Email'
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
-                    required
                   ></input>
+                </label>
+                <label htmlFor='lozinka'>
+                  <input
+                  type='password'
+                  className='registrationInputText'
+                  id='lozinka'
+                  placeholder='Lozinka'
+                  onChange={(e) => setLozinka(e.target.value)}
+                  value={lozinka}
+                  />
                 </label>
               </div>
               <button className='loginInputSubmit'>Log in</button>
