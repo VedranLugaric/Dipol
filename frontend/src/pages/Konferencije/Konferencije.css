@@ -1,7 +1,8 @@
 .konfContainer{
     display: block;
 }
-p{
+.tekst{
+    padding: 1rem;
     margin-left: 75px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
@@ -15,7 +16,7 @@ p{
     height: 125px;
     display: flex;
     background-color: rgb(46, 46, 54);
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 .konfImg{
     width: 125px;
@@ -29,8 +30,11 @@ p{
 }
 .naziv{
     color: white;
-    padding: 15px;
     font-size: 20px;
+    text-decoration: none;
+    width: max-content;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 .opis{
     padding: 15px;
@@ -46,17 +50,36 @@ p{
     margin-left: 20px;
     color: rgb(100, 100, 116);
 }
-.footer{
-    height: 70px;
-    margin: -7px;
-    margin-top: 50px;
-    background-color: rgb(16, 16, 19);
-    color: rgb(63, 63, 75);
-    text-align: center;
-}
 hr{
     height: 2px;
     background-color: rgb(53, 53, 65);  
     border: none;
     width: 80%;
+}
+
+.mjesto{
+    color: rgb(100, 80, 114);
+    margin-left: 20px;
+    margin-top: 5px;
+}
+.pristupi{
+    height: 60px;
+    width: 120px;
+    margin-left: auto;
+    align-self: center;
+    margin-right: 40px;
+}
+.pristupibutton{
+    width: 120px;
+    height: 60px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(47, 35, 63);
+    color: white;
+    font-family:system-ui, -apple-system;
+    font-weight: 400;
+}
+.pristupibutton:hover{
+    cursor: pointer;
+    box-shadow: rgb(65, 49, 87) 0 0 20px;
 }

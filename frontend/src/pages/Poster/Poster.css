@@ -1,0 +1,89 @@
+.postercontainer{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.poster-middle{
+    box-shadow: 0 0 20px rgb(58, 51, 66);
+    height: inherit;
+    width: 50%;
+    background-color: rgb(33, 33, 44);
+    z-index: 1;
+}
+.poster-right{
+    box-shadow: 0 0 20px rgb(49, 41, 59);
+    width: 25%;
+    height: 75%;
+    align-self: center;
+    background-color: rgb(28, 28, 36);
+    z-index: 0;
+}
+.poster-left{
+    box-shadow: 0 0 20px rgb(49, 41, 59);
+    width: 25%;
+    height: 75%;
+    align-self: center;
+    background-color: rgb(28, 28, 36);
+}
+
+hr{
+    height: 2px;
+    background-color: rgb(53, 53, 65);  
+    border: none;
+    width: 80%;
+}
+.posternaziv{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    margin: auto;
+    margin-top: 30px;
+}
+.contents{
+    display: flex;
+    flex-direction: wrap;
+
+}
+.prev{
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    margin-left: auto;
+    background-color: rgb(65, 49, 87);
+    font-size: 35px;
+    color: white;
+    font-family: system-ui;
+}
+.next{
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    margin-right: auto;
+    background-color: rgb(65, 49, 87);
+    font-size: 35px;
+    color: white;
+    font-family: system-ui;
+}
+.prev:hover{
+    cursor: pointer;
+    box-shadow: rgb(57, 46, 71) 0 0 1rem;
+}
+.next:hover{
+    cursor: pointer;
+    box-shadow: rgb(57, 46, 71) 0 0 1rem;
+}
+p{
+    text-align: center;
+    font-size: 18px;
+    margin: auto;
+    width: 50%;
+    color: rgb(190, 190, 190);
+}

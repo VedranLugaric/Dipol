@@ -7,6 +7,7 @@ import Uzivo from './pages/Uzivo/Uzivo';
 import Registracija from './pages/Registracija/Registracija';
 import UserPage from './pages/UserPage/UserPage';
 import Konferencije from './pages/Konferencije/Konferencije'
+import Poster from './pages/Poster/Poster'
 
 const Main = () => {
   return (
@@ -18,6 +19,7 @@ const Main = () => {
         <Route exact path='/registracija' element={<Registracija />} />
         <Route exact path='/UserPage' element={<UserPage />} />
         <Route exact path='/konferencije' element={<Konferencije />}/>
+        <Route exact path='/poster' element={<Poster />}/>
       </Routes>
     </>
   );

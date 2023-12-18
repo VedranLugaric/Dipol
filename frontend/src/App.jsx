@@ -9,6 +9,12 @@ const NavigationButton = (props) => {
   )
 }
 
+const Footer = () => {
+  return (
+    <div className='footer'>footer</div>
+  )
+}
+
 const NavBar = () => {
   const { isAuthenticated, logout } = useAuth();
 
@@ -63,6 +69,7 @@ const App = () => {
     <>
       <NavBar />
       <Main />
+      <Footer />
     </> 
   )
 }

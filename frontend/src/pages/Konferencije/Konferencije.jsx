@@ -1,5 +1,6 @@
 import './Konferencije.css'
 import FallingAnimation from '../../FallingAnimation';
+import { Link } from 'react-router-dom'
 
 const Konferencije = () => {
 
@@ -7,34 +8,55 @@ const Konferencije = () => {
     return(
         <>
         <FallingAnimation>
-            <hr></hr>
+        <hr></hr>
         <div className='konfContainer'>
-            <p>Aktivne konferencije: </p>
+        <div className='tekst'>Aktivne konferencije: </div>
             <div className='aktivne'>
                 <div className='konferencija'>
                     <div className='konfImg'></div>
                     <div className='texts'>
                         <span className='naziv'>Konferencija 1</span>
+                        <span className='mjesto'>Varaždin</span>
                         <span className='opis'>Ovo je prva na popisu aktivnih konferencija</span>
+                    </div>
+                    <div className='pristupi'>
+                        <Link to='/poster'>
+                            <button className='pristupibutton'>PRISTUPI
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 <div className='konferencija'>
                     <div className='konfImg'></div>
                     <div className='texts'>
                         <span className='naziv'>Konferencija 2</span>
+                        <span className='mjesto'>Zagreb</span>
                         <span className='opis'>Ovo je druga na popisu aktivnih konferencija</span>
+                    </div>
+                    <div className='pristupi'>
+                        <Link to='/poster'>
+                            <button className='pristupibutton'>PRISTUPI
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 <div className='konferencija'>
                     <div className='konfImg'></div>
                     <div className='texts'>
                         <span className='naziv'>Konferencija 3</span>
+                        <span className='mjesto'>Split</span>
                         <span className='opis'>Ovo je treca na popisu aktivnih konferencija</span>
+                    </div>
+                    <div className='pristupi'>
+                        <Link to='/poster'>
+                            <button className='pristupibutton'>PRISTUPI
+                            </button>
+                        </Link>
                     </div>
                 </div>
             <div/>
             <div className='nadolazece'>
-            <p>Nadolazeće konferencije: </p>
+            <div className='tekst'>Nadolazeće konferencije: </div>
                 <div className='konferencija'>
                     <div className='konfImg'></div>
                     <div className='texts'>
@@ -62,7 +84,7 @@ const Konferencije = () => {
             </div>
             </div>
         </div>
-        <div className='footer'>footer</div>
+        <hr></hr>
         </FallingAnimation>
         </>
     )
