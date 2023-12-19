@@ -5,28 +5,38 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 .poster-middle{
     box-shadow: 0 0 20px rgb(58, 51, 66);
     height: inherit;
-    width: 50%;
+    width: 40%;
     background-color: rgb(33, 33, 44);
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
 }
 .poster-right{
     box-shadow: 0 0 20px rgb(49, 41, 59);
-    width: 25%;
+    width: 20%;
     height: 75%;
     align-self: center;
     background-color: rgb(28, 28, 36);
     z-index: 0;
+    display: flex;
+    justify-content: center;
 }
 .poster-left{
     box-shadow: 0 0 20px rgb(49, 41, 59);
-    width: 25%;
+    width: 20%;
     height: 75%;
     align-self: center;
     background-color: rgb(28, 28, 36);
+    z-index: 0;
+    display: flex;
+    justify-content: center;
 }
 
 hr{
@@ -56,9 +66,8 @@ hr{
     border-radius: 10px;
     margin-left: auto;
     background-color: rgb(65, 49, 87);
-    font-size: 35px;
-    color: white;
-    font-family: system-ui;
+    background-image: url(/public/slike/arrow_prev.png);
+    background-size: contain;
 }
 .next{
     width: 60px;
@@ -67,10 +76,9 @@ hr{
     border: none;
     border-radius: 10px;
     margin-right: auto;
-    background-color: rgb(65, 49, 87);
-    font-size: 35px;
-    color: white;
-    font-family: system-ui;
+    background-image: url(/public/slike/arrow_next.png);
+    background-size: contain;
+    ;
 }
 .prev:hover{
     cursor: pointer;
@@ -80,10 +88,57 @@ hr{
     cursor: pointer;
     box-shadow: rgb(57, 46, 71) 0 0 1rem;
 }
+
 p{
     text-align: center;
     font-size: 18px;
     margin: auto;
     width: 50%;
     color: rgb(190, 190, 190);
+}
+
+.glasaj{
+    margin-top: auto;
+    height: 70px;
+    width: 100%;
+    background-color: black;
+    opacity: 0.1;
+    border: none;
+    color: white;
+    font-family: system-ui;
+    font-size: 25px;
+}
+
+.glasaj:hover{
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.empty{
+    height: 60px;
+}
+.poster1{
+    width: max-content;
+    max-height: 600px;
+    margin: auto;
+    position: fixed;
+}
+.poster2{
+    width: max-content;
+    max-height: 450px;
+    margin: auto;
+    position: fixed;
+}
+.poster3{
+    width: max-content;
+    max-height: 450px;
+    position: fixed;
+}
+.sideblur{
+    height: 450px;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    background-color: rgb(29, 29, 34);
+    opacity: 0.7;
 }
