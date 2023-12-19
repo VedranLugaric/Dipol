@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import secrets
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
@@ -6,8 +7,8 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:bazepodataka@localhost:5432/progi'
+CORS(app, supports_credentials=True,)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:uzumaki@localhost:5432/progi'
 db = SQLAlchemy(app)
 secret_key = secrets.token_hex(16)
 app.secret_key = secret_key
@@ -22,9 +23,10 @@ class Konferencija(db.Model):
     id_konf = db.Column(db.Integer, primary_key=True)
     naziv = db.Column(db.String(100))
     mjesto = db.Column(db.String(100))
-    vrijeme_poc = db.Column(db.Date)
-    vrijeme_zav = db.Column(db.Date)
+    vrijeme_poc = db.Column(db.TIMESTAMP(timezone = True))
+    vrijeme_zav = db.Column(db.TIMESTAMP(timezone = True))
     video = db.Column(db.String(200))
+    opis = db.Column(db.String(1000))
 
 class Sudionik(db.Model):
     id_sud = db.Column(db.Integer, primary_key=True)
@@ -100,11 +102,33 @@ def logout():
     response.set_cookie('session_id', '', expires=0)
     return response
 
-@app.route('/api/konferencije', methods=['GET'])
-def dohvati_konferencije():
+@app.route('/api/aktivne', methods=['GET'])
+def dohvati_aktivne():
+    rez = []
+    aktivne = []
+    nadolazece = []
+    vrijeme = datetime.now(timezone.utc)
     podaci = Konferencija.query.all()
-    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto} for konf in podaci]
-    return jsonify({'konferencije': rez})
+    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis': konf.opis, 'vrijeme_poc': konf.vrijeme_poc, 'vrijeme_zav': konf.vrijeme_zav} for konf in podaci]
+    for rez1 in rez:   
+        if ((rez1["vrijeme_poc"] <= vrijeme)) and (rez1["vrijeme_zav"] > vrijeme):  
+            aktivne.append(rez1)
+    return jsonify({'konferencije': aktivne})
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/api/nadolazece', methods=['GET'])
+def dohvati_nadolazece():
+    nadolazece = []
+    rez = []
+    vrijeme = datetime.now(timezone.utc)
+    podaci = Konferencija.query.all()
+    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis': konf.opis, 'vrijeme_poc': konf.vrijeme_poc, 'vrijeme_zav': konf.vrijeme_zav} for konf in podaci]
+    for rez1 in rez:   
+        if (rez1["vrijeme_poc"] > vrijeme):
+            nadolazece.append(rez1)
+    return jsonify({'konferencije': nadolazece})
+
+if __name__ == '__main__':
+    app.run(port=5000)
