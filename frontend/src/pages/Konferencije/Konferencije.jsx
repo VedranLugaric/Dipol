@@ -3,7 +3,11 @@ import FallingAnimation from '../../FallingAnimation';
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
 import { useEffect } from 'react';
-import { useState } from 'react'
+import { useState } from 'react';
+
+
+
+
 
 const Konferencije = () => {
 
@@ -34,7 +38,7 @@ const Aktivne = () => {
     useEffect(() => {
         const fetchKonferencije = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/aktivne', {
+                const response = await fetch('http://localhost:5000/api/konferencije', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -43,7 +47,7 @@ const Aktivne = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    setPodaci(data.konferencije);
+                    setPodaci(data.aktivne);
                 } else {
                     throw new Error('Problem s dohvatom konferencija');
                 }
@@ -113,7 +117,7 @@ const Aktivne = () => {
         useEffect(() => {
             const fetchKonferencije = async () => {
                 try {
-                    const response = await fetch('http://localhost:5000/api/nadolazece', {
+                    const response = await fetch('http://localhost:5000/api/konferencije', {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -122,7 +126,7 @@ const Aktivne = () => {
     
                     if (response.ok) {
                         const data = await response.json();
-                        setPodaci(data.konferencije);
+                        setPodaci(data.nadolazece);
                     } else {
                         throw new Error('Problem s dohvatom konferencija');
                     }
