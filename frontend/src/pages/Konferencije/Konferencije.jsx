@@ -32,11 +32,28 @@ const Aktivne = () => {
     const { isAuthenticated } = useAuth();
     const [konferencije, setPodaci] = useState([])
     useEffect(() => {
-        fetch('/api/konferencije')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.konferencije);
-                setPodaci(data.konferencije);});
+        const fetchKonferencije = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/konferencije', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setPodaci(data.konferencije);
+                } else {
+                    throw new Error('Problem s dohvatom konferencija');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error.message);
+                throw new Error('Problem s dohvatom konferencija');
+            }
+        };
+
+        fetchKonferencije();
     }, []);
 
  /*   const listaAktivnih = [

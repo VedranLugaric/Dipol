@@ -7,7 +7,7 @@ from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:asd123@localhost:5432/progi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:bazepodataka@localhost:5432/progi'
 db = SQLAlchemy(app)
 secret_key = secrets.token_hex(16)
 app.secret_key = secret_key
@@ -25,8 +25,6 @@ class Konferencija(db.Model):
     vrijeme_poc = db.Column(db.Date)
     vrijeme_zav = db.Column(db.Date)
     video = db.Column(db.String(200))
-    opis = db.Column(db.String(1000))
-
 
 class Sudionik(db.Model):
     id_sud = db.Column(db.Integer, primary_key=True)
@@ -102,11 +100,11 @@ def logout():
     response.set_cookie('session_id', '', expires=0)
     return response
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
 @app.route('/api/konferencije', methods=['GET'])
 def dohvati_konferencije():
     podaci = Konferencija.query.all()
-    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis' : konf.opis} for konf in podaci]
+    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto} for konf in podaci]
     return jsonify({'konferencije': rez})
+
+if __name__ == '__main__':
+    app.run(debug=True)
