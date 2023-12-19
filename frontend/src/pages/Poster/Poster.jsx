@@ -2,25 +2,31 @@ import FallingAnimation from '../../FallingAnimation'
 import './Poster.css'
 
 const Poster = () => {
-    const preth = '<'
-    const sljed = '>'
+
     return (
         <>
         <FallingAnimation>
             <hr></hr>
             <div className='postercontainer'>
                 <div className='poster-left'>
+                    <img className='poster2' src='/public/slike/poster_2.jpg'></img>
+                    <div className='sideblur'></div>
                 </div>
                 <div className='poster-middle'>
+                    <img className='poster1' src='/public/slike/poster_1.png'>
+                    </img>
+                    <button className='glasaj'>GLASAJ</button>
                 </div>
                 <div className='poster-right'>
+                    <img className='poster3' src='/public/slike/poster_3.jpg'></img>
+                    <div className='sideblur'></div>
                 </div>
             </div>
             <hr></hr>
             <div className='contents'>
-                <button className='prev'>{preth}</button>
+                <button className='prev'></button>
                 <span className='posternaziv'>Trenutni poster: Naziv</span>
-                <button className='next'>{sljed}</button>
+                <button className='next'></button>
             </div>
             <div className='opispostera'>
                 <p>Kombinacija bogatih boja
@@ -34,6 +40,7 @@ const Poster = () => {
                     i istraživanje, stvarajući vizualno 
                     iskustvo koje intrigira i nadahnjuje.</p>
             </div>
+            <div className='empty'></div>
         </FallingAnimation>
         </>
     )
