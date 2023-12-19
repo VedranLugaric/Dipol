@@ -2,6 +2,8 @@ import './Konferencije.css'
 import FallingAnimation from '../../FallingAnimation';
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const Konferencije = () => {
 
@@ -28,8 +30,16 @@ const Konferencije = () => {
 
 const Aktivne = () => {
     const { isAuthenticated } = useAuth();
+    const [konferencije, setPodaci] = useState([])
+    useEffect(() => {
+        fetch('/api/konferencije')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.konferencije);
+                setPodaci(data.konferencije);});
+    }, []);
 
-    const listaAktivnih = [
+ /*   const listaAktivnih = [
         {'ime': 'Konferencija 1',
          'mjesto': 'Varaždin',
          'opis': 'Opis 1',
@@ -42,17 +52,17 @@ const Aktivne = () => {
          'mjesto': 'Split',
          'opis': 'Opis 3',
          'id': '3'}
-    ]
+    ] */
     
     return (
         <div>
-            {listaAktivnih.map((konferencija, index) => (
+            {konferencije.map((konf, index) => (
                 <div className='konferencija' key={index}>
                     <div className='konfImg'></div>
                     <div className='texts'>
-                        <span className='naziv'>{konferencija.ime}</span>
-                        <span className='mjesto'>{konferencija.mjesto}</span>
-                        <span className='opis'>{konferencija.opis}</span>
+                        <span className='naziv'>{konf.naziv}</span>
+                        <span className='mjesto'>{konf.mjesto}</span>
+                        <span className='opis'>{konf.opis}</span>
                     </div>
                     {isAuthenticated && (
                         <div className='pristupi'>
