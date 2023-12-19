@@ -8,7 +8,7 @@ from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True,)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:uzumaki@localhost:5432/progi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:asd123@localhost:5432/progi'
 db = SQLAlchemy(app)
 secret_key = secrets.token_hex(16)
 app.secret_key = secret_key
@@ -102,8 +102,8 @@ def logout():
     response.set_cookie('session_id', '', expires=0)
     return response
 
-@app.route('/api/aktivne', methods=['GET'])
-def dohvati_aktivne():
+@app.route('/api/konferencije', methods=['GET'])
+def dohvati_konferencije():
     rez = []
     aktivne = []
     nadolazece = []
@@ -111,24 +111,11 @@ def dohvati_aktivne():
     podaci = Konferencija.query.all()
     rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis': konf.opis, 'vrijeme_poc': konf.vrijeme_poc, 'vrijeme_zav': konf.vrijeme_zav} for konf in podaci]
     for rez1 in rez:   
-        if ((rez1["vrijeme_poc"] <= vrijeme)) and (rez1["vrijeme_zav"] > vrijeme):  
+        if ((rez1["vrijeme_poc"] <= vrijeme)) and (rez1["vrijeme_zav"] > vrijeme):
             aktivne.append(rez1)
-    return jsonify({'konferencije': aktivne})
+        elif ((rez1["vrijeme_poc"] > vrijeme)):
+            nadolazece.append(rez1)
+    return jsonify({'aktivne': aktivne, 'nadolazece': nadolazece})
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-@app.route('/api/nadolazece', methods=['GET'])
-def dohvati_nadolazece():
-    nadolazece = []
-    rez = []
-    vrijeme = datetime.now(timezone.utc)
-    podaci = Konferencija.query.all()
-    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis': konf.opis, 'vrijeme_poc': konf.vrijeme_poc, 'vrijeme_zav': konf.vrijeme_zav} for konf in podaci]
-    for rez1 in rez:   
-        if (rez1["vrijeme_poc"] > vrijeme):
-            nadolazece.append(rez1)
-    return jsonify({'konferencije': nadolazece})
-
-if __name__ == '__main__':
-    app.run(port=5000)
