@@ -4,87 +4,20 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
 
 const Konferencije = () => {
-    const { isAuthenticated } = useAuth();
 
     return(
         <>
         <FallingAnimation>
         <hr></hr>
         <div className='konfContainer'>
-        <div className='tekst'>Aktivne konferencije: </div>
-            <div className='aktivne'>
-                <div className='konferencija'>
-                    <div className='konfImg'></div>
-                    <div className='texts'>
-                        <span className='naziv'>Konferencija 1</span>
-                        <span className='mjesto'>Varaždin</span>
-                        <span className='opis'>Ovo je prva na popisu aktivnih konferencija</span>
-                    </div>
-                    {isAuthenticated && (
-                        <div className='pristupi'>
-                        <Link to='/poster'>
-                            <button className='pristupibutton'>PRISTUPI
-                            </button>
-                        </Link>
-                        </div>
-                    )}                    
-                </div>
-                <div className='konferencija'>
-                    <div className='konfImg'></div>
-                    <div className='texts'>
-                        <span className='naziv'>Konferencija 2</span>
-                        <span className='mjesto'>Zagreb</span>
-                        <span className='opis'>Ovo je druga na popisu aktivnih konferencija</span>
-                    </div>
-                    <div className='pristupi'>
-                        <Link to='/poster'>
-                            <button className='pristupibutton'>PRISTUPI
-                            </button>
-                        </Link>
-                    </div>
-                </div>
-                <div className='konferencija'>
-                    <div className='konfImg'></div>
-                    <div className='texts'>
-                        <span className='naziv'>Konferencija 3</span>
-                        <span className='mjesto'>Split</span>
-                        <span className='opis'>Ovo je treca na popisu aktivnih konferencija</span>
-                    </div>
-                    <div className='pristupi'>
-                        <Link to='/poster'>
-                            <button className='pristupibutton'>PRISTUPI
-                            </button>
-                        </Link>
-                    </div>
-                </div>
-            <div/>
-            <div className='nadolazece'>
+            <div className='tekst'>Aktivne konferencije: </div>
+                <div className='aktivne'>
+                    <Aktivne />
+                <div/>
             <div className='tekst'>Nadolazeće konferencije: </div>
-                <div className='konferencija'>
-                    <div className='konfImg'></div>
-                    <div className='texts'>
-                        <span className='naziv'>Konferencija 1</span>
-                        <span className='datum'>2.1.2024.</span>
-                        <span className='opis'>Ovo je prva na popisu nadolazecih konferencija</span>
-                    </div>
+                <div className='nadolazece'>
+                    <Nadolazeće />
                 </div>
-                <div className='konferencija'>
-                    <div className='konfImg'></div>
-                    <div className='texts'>
-                        <span className='naziv'>Konferencija 2</span>
-                        <span className='datum'>5.1.2024.</span>
-                        <span className='opis'>Ovo je druga na popisu nadolazecih konferencija</span>
-                    </div>
-                </div>
-                <div className='konferencija'>
-                    <div className='konfImg'></div>
-                    <div className='texts'>
-                        <span className='naziv'>Konferencija 3</span>
-                        <span className='datum'>16.1.2024.</span>
-                        <span className='opis'>Ovo je treca na popisu nadolazecih konferencija</span>
-                    </div>
-                </div>
-            </div>
             </div>
         </div>
         <hr></hr>
@@ -92,5 +25,79 @@ const Konferencije = () => {
         </>
     )
 }
+
+const Aktivne = () => {
+    const { isAuthenticated } = useAuth();
+
+    const listaAktivnih = [
+        {'ime': 'Konferencija 1',
+         'mjesto': 'Varaždin',
+         'opis': 'Opis 1',
+         'id': '1'},
+        {'ime': 'Konferencija 2',
+         'mjesto': 'Zagreb',
+         'opis': 'Opis 2',
+         'id': '2'},
+        {'ime': 'Konferencija 3',
+         'mjesto': 'Split',
+         'opis': 'Opis 3',
+         'id': '3'}
+    ]
+    
+    return (
+        <div>
+            {listaAktivnih.map((konferencija, index) => (
+                <div className='konferencija' key={index}>
+                    <div className='konfImg'></div>
+                    <div className='texts'>
+                        <span className='naziv'>{konferencija.ime}</span>
+                        <span className='mjesto'>{konferencija.mjesto}</span>
+                        <span className='opis'>{konferencija.opis}</span>
+                    </div>
+                    {isAuthenticated && (
+                        <div className='pristupi'>
+                            <Link to='/poster'>
+                                <button className='pristupibutton'>PRISTUPI</button>
+                            </Link>
+                        </div>
+                    )}
+                </div>
+            ))}
+        </div>
+    )
+}
+
+const Nadolazeće = () => {
+    const listaNadolazecih = [
+        {'ime': 'Konferencija 1',
+         'datum': '2.1.2024',
+         'opis': 'Opis 1',
+         'id': '4'},
+        {'ime': 'Konferencija 2',
+         'datum': '5.1.2024.',
+         'opis': 'Opis 2',
+         'id': '5'},
+        {'ime': 'Konferencija 3',
+         'datum': '16.1.2024.',
+         'opis': 'Opis 3',
+         'id': '6'}
+    ]
+
+    return (
+        <div>
+            {listaNadolazecih.map((konferencija, index) => (
+            <div className='konferencija' key={index}>
+                <div className='konfImg'></div>
+                <div className='texts'>
+                    <span className='naziv'>{konferencija.ime}</span>
+                    <span className='datum'>{konferencija.datum}</span>
+                    <span className='opis'>{konferencija.opis}</span>
+                </div>
+            </div>
+        ))}
+        </div>
+    )
+}
+
 
 export default Konferencije;
