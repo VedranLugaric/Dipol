@@ -3,7 +3,7 @@ import FallingAnimation from '../../FallingAnimation';
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
 import { useEffect } from 'react';
-import { useState } from 'react';
+import { useState } from 'react'
 
 const Konferencije = () => {
 
@@ -34,7 +34,7 @@ const Aktivne = () => {
     useEffect(() => {
         const fetchKonferencije = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/konferencije', {
+                const response = await fetch('http://localhost:5000/api/aktivne', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -93,9 +93,7 @@ const Aktivne = () => {
         </div>
     )
 }
-
-const Nadolazeće = () => {
-    const listaNadolazecih = [
+    /*const listaNadolazecih = [
         {'ime': 'Konferencija 1',
          'datum': '2.1.2024',
          'opis': 'Opis 1',
@@ -108,17 +106,44 @@ const Nadolazeće = () => {
          'datum': '16.1.2024.',
          'opis': 'Opis 3',
          'id': '6'}
-    ]
+    ]*/
+    const Nadolazeće = () => {
+
+        const [konferencije, setPodaci] = useState([])
+        useEffect(() => {
+            const fetchKonferencije = async () => {
+                try {
+                    const response = await fetch('http://localhost:5000/api/nadolazece', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+    
+                    if (response.ok) {
+                        const data = await response.json();
+                        setPodaci(data.konferencije);
+                    } else {
+                        throw new Error('Problem s dohvatom konferencija');
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error.message);
+                    throw new Error('Problem s dohvatom konferencija');
+                }
+            };
+    
+            fetchKonferencije();
+        }, []); 
 
     return (
         <div>
-            {listaNadolazecih.map((konferencija, index) => (
+            {konferencije.map((konf, index) => (
             <div className='konferencija' key={index}>
                 <div className='konfImg'></div>
                 <div className='texts'>
-                    <span className='naziv'>{konferencija.ime}</span>
-                    <span className='datum'>{konferencija.datum}</span>
-                    <span className='opis'>{konferencija.opis}</span>
+                    <span className='naziv'>{konf.naziv}</span>
+                    <span className='datum'>{konf.vrijeme_poc}</span>
+                    <span className='opis'>{konf.opis}</span>
                 </div>
             </div>
         ))}
