@@ -1,13 +1,15 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 
-import Home from './pages/Home/Home';
-import Login from './pages/Login/Login';
-import Uzivo from './pages/Uzivo/Uzivo';
-import Registracija from './pages/Registracija/Registracija';
-import UserPage from './pages/UserPage/UserPage';
+import Home from './pages/Home/Home'
+import Login from './pages/Login/Login'
+import Uzivo from './pages/Uzivo/Uzivo'
+import Registracija from './pages/Registracija/Registracija'
+import UserPage from './pages/UserPage/UserPage'
 import Konferencije from './pages/Konferencije/Konferencije'
 import Poster from './pages/Poster/Poster'
+import DodajKonferenciju from './pages/Superadmin/DodajKonferenciju'
+import DodajPoster from './pages/Admin/DodajPoster'
 
 const Main = () => {
   return (
@@ -20,6 +22,8 @@ const Main = () => {
         <Route exact path='/UserPage' element={<UserPage />} />
         <Route exact path='/konferencije' element={<Konferencije />}/>
         <Route exact path='/poster' element={<Poster />}/>
+        <Route exact path='/dodajkonferenciju' element={<DodajKonferenciju />}/>
+        <Route exact path='/dodajposter' element={<DodajPoster />}/>
       </Routes>
     </>
   );

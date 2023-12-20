@@ -10,7 +10,7 @@
 }
 .konferencija{
     box-shadow: black 5px 5px 2rem;
-    border-radius: 15px;
+    border-radius: 60px;
     width: 60%;
     margin-left: 5%;
     height: 125px;
@@ -45,6 +45,10 @@
 .konferencija:hover{
     background-color: rgb(66, 66, 77);
 }
+.konferencija:hover button{
+    background-color: rgb(66, 66, 77);
+}
+
 
 .datum {
     margin-top: 5px;
@@ -61,26 +65,197 @@ hr{
 .mjesto{
     color: rgb(100, 80, 114);
     margin-left: 20px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .pristupi{
     height: 60px;
     width: 120px;
     margin-left: auto;
     align-self: center;
-    margin-right: 40px;
+    margin-right: 60px;
 }
-.pristupibutton{
-    width: 120px;
-    height: 60px;
-    border-radius: 20px;
-    border: none;
-    background-color: rgb(47, 35, 63);
+
+.mjestodatum{
+    margin-top: 10px;
+}
+.dash{
+    margin-left: 21px;
+    color: rgb(118, 104, 126);
+}
+.pristupibutton {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: white;
+  background-color:rgb(46, 46, 54);
+  padding: 1em 2em;
+  border: 2px solid rgb(65, 49, 87) ;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.pristupibutton span:not(:nth-child(6)) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 10px;
+  width: 10px;
+  background-color: rgb(65, 49, 87);
+  border-radius: 50%;
+  transition: .6s ease;
+}
+
+.pristupibutton span:nth-child(6) {
+  position: relative;
+}
+
+.pristupibutton span:nth-child(1) {
+  transform: translate(-3.3em, -4em);
+}
+
+.pristupibutton span:nth-child(2) {
+  transform: translate(-6em, 1.3em);
+}
+
+.pristupibutton span:nth-child(3) {
+  transform: translate(-.2em, 1.8em);
+}
+
+.pristupibuttonspan:nth-child(4) {
+  transform: translate(3.5em, 1.4em);
+}
+
+.pristupibutton span:nth-child(5) {
+  transform: translate(3.5em, -3.8em);
+}
+
+.pristupibutton:hover span:not(:nth-child(6)) {
+  transform: translate(-50%, -50%) scale(17);
+  transition: 1.5s ease;
+}
+
+.addkonf {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
     color: white;
-    font-family:system-ui, -apple-system;
-    font-weight: 400;
-}
-.pristupibutton:hover{
+    background-color:rgb(29, 29, 34);
+    padding: 1em 1.7em;
+    border: 2px solid rgb(65, 49, 87) ;
+    border-radius: 30px;
+    position: relative;
     cursor: pointer;
-    box-shadow: rgb(65, 49, 87) 0 0 20px;
-}
+    overflow: hidden;
+    font-size: 16px;
+  }
+  
+  .addkonf span:not(:nth-child(6)) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 10px;
+    width: 10px;
+    background-color: rgb(65, 49, 87);
+    border-radius: 50%;
+    transition: .6s ease;
+  }
+  
+  .addkonf span:nth-child(6) {
+    position: relative;
+  }
+  
+  .addkonf span:nth-child(1) {
+    transform: translate(-3.3em, -4em);
+  }
+  
+  .addkonf span:nth-child(2) {
+    transform: translate(-6em, 1.3em);
+  }
+  
+  .addkonf span:nth-child(3) {
+    transform: translate(-.2em, 1.8em);
+  }
+  
+  .addkonf:nth-child(4) {
+    transform: translate(3.5em, 1.4em);
+  }
+  
+  .addkonf span:nth-child(5) {
+    transform: translate(3.5em, -3.8em);
+  }
+  
+  .addkonf:hover span:not(:nth-child(6)) {
+    transform: translate(-50%, -50%) scale(25);
+    transition: 1.5s ease;
+  }
+
+  .addkonfdiv{
+    margin-left: 5%;
+    margin-top: 2rem;
+  }
+
+  .konferencija-button{
+    display: flex;
+    flex-direction: row;
+    height: 125px;
+    }
+
+  .addposter {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color:rgb(29, 29, 34);
+    padding: 1em 1.7em;
+    border: 2px solid rgb(65, 49, 87) ;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 16px;
+    margin-top: 2.3rem;
+    margin-left: 1rem;
+  }
+  
+  .addposter span:not(:nth-child(6)) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 10px;
+    width: 10px;
+    background-color: rgb(65, 49, 87);
+    border-radius: 50%;
+    transition: .6s ease;
+  }
+  
+  .addposter span:nth-child(6) {
+    position: relative;
+  }
+  
+  .addposter span:nth-child(1) {
+    transform: translate(-3.3em, -4em);
+  }
+  
+  .addposter span:nth-child(2) {
+    transform: translate(-6em, 1.3em);
+  }
+  
+  .addposter span:nth-child(3) {
+    transform: translate(-.2em, 1.8em);
+  }
+  
+  .addposter:nth-child(4) {
+    transform: translate(3.5em, 1.4em);
+  }
+  
+  .addposter span:nth-child(5) {
+    transform: translate(3.5em, -3.8em);
+  }
+  
+  .addposter:hover span:not(:nth-child(6)) {
+    transform: translate(-50%, -50%) scale(25);
+    transition: 1.5s ease;
+  }

@@ -1,0 +1,80 @@
+.formcontainer{
+    background-color: rgb(46, 46, 54);
+    width: 40rem;
+    margin: auto;
+    height: 48rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    border-radius: 40px;
+    box-shadow: rgb(29, 29, 36) 0 0 3rem;
+}
+hr{
+    height: 2px;
+    background-color: rgb(53, 53, 65);  
+    border: none;
+    width: 80%;
+}
+.headertext{
+    padding: 1.5rem 3rem;
+    color: rgb(129, 113, 145);
+    font-style: italic;
+    font-weight:bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+.input{
+    width: 22rem;
+    margin: auto;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+    padding: 0.3rem;
+    border: transparent;
+    border-bottom: 2px solid white;
+    background: transparent;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+}
+.submitButton{
+    height: 2.7rem;
+    margin: auto;
+    margin-top: 1rem;
+    width: 30%;
+    border: white 2px solid;
+    background: transparent;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    transition: background-color 0.2s ease-in, border 0.2s ease-in;
+    font-weight: bold;
+}
+
+.submitButton:hover{
+    cursor: pointer;
+    background-color: rgb(79, 60, 105);
+    border: 2px solid rgb(79, 60, 105);
+}
+
+
+.label{
+    font-family: system-ui;
+    color: rgb(129, 113, 145);
+    margin-left: 10rem;
+    margin-top: 0.3rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.input::placeholder{
+    font-size: 16px;
+    font-family: system-ui;
+    font-style: italic;
+    color: rgb(165, 165, 165);
+    margin-bottom: -10px;
+}
+.input:focus{
+    outline: 0;
+}
