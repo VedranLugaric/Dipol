@@ -8,7 +8,7 @@ from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True,)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:asd123@localhost:5432/progi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:bazepodataka@localhost:5432/progi'
 db = SQLAlchemy(app)
 secret_key = secrets.token_hex(16)
 app.secret_key = secret_key
