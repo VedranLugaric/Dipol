@@ -101,7 +101,7 @@ const Aktivne = ({aktivne}) => {
                         <span className='mjesto'>{konf.mjesto}</span>
                         <span className='opis'>{konf.opis}</span>
                     </div>
-                    {!isAuthenticated && (
+                    {isAuthenticated && (
                         <div className='pristupi'>
                             <Link to='/poster'>
                                 <button className='pristupibutton'>
