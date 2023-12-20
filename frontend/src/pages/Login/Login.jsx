@@ -3,6 +3,7 @@ import FallingAnimation from '../../FallingAnimation';
 import './Login.css';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../AuthContext';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Login = () => {
 
@@ -20,6 +21,7 @@ const Login = () => {
 
   const { isAuthenticated } = useAuth();
 
+  const [capVal, setCapVal] = useState(null);
   // Redirect to another route if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
@@ -83,7 +85,11 @@ const Login = () => {
                   ></input>
                 </label>
               </div>
-              <button className='loginInputSubmit'>Log in</button>
+              <ReCAPTCHA
+                sitekey="6Lf3iTcpAAAAAOGZ13_kzm2WxGmzGxB9-dEaxnu8"
+                onChange={val => setCapVal(val)} 
+              />
+              <button className='loginInputSubmit' disabled={!capVal}>Log in</button>
             </form>
           </div>
         </div>
