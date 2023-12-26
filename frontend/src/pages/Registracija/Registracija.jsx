@@ -94,7 +94,7 @@ const Registracija = () => {
                     type='email'
                     id='username'
                     className='registrationInputText'
-                    placeholder='Korisničko ime/Email'
+                    placeholder='Email'
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
                     required

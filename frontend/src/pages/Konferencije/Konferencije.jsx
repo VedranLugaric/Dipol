@@ -1,16 +1,17 @@
 import './Konferencije.css'
 import FallingAnimation from '../../FallingAnimation';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
 const Konferencije = () => {
     const [konferencije, setPodaci] = useState([])
+
     useEffect(() => {
         const fetchKonferencije = async () => {
             try {
-                const response = await fetch('http://localhost:5173/api/konferencije', {
+                const response = await fetch('http://localhost:5000/api/konferencije', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -32,7 +33,8 @@ const Konferencije = () => {
         fetchKonferencije();
     }, []);
 
-{/* 
+
+/*{ 
     Hardkodirani podaci koje koristim da ne moram palit bazu :)
 
     const aktivne = [{     
@@ -64,7 +66,7 @@ const Konferencije = () => {
         "opis" : "Opis za mjuzikle"
       
     }]
-    */}
+    }*/
 
     return(
         <>
@@ -91,34 +93,105 @@ const Konferencije = () => {
 const Aktivne = ({aktivne}) => {
     const { isAuthenticated } = useAuth();
     
-    return (
+    const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+    const [selectedKonferencija, setSelectedKonferencija] = useState(null);
+    const [lozinka, setLozinka] = useState('');
+    const [lozinkaValidationMessage, setLozinkaValidationMessage] = useState('');
+    const navigate = useNavigate();
+
+    const handlePristupiClick = (konf) => {
+        setSelectedKonferencija(konf);
+        setShowPasswordPrompt(true);
+    }
+
+    const handleSubmitPassword = () => {
+
+        if (lozinka === selectedKonferencija.lozinka) {
+          navigate('../poster');
+          setShowPasswordPrompt(false);
+        } else {
+          setLozinkaValidationMessage('Pogrešna lozinka!');
+        }
+      };
+
+      return (
         <div>
-            {aktivne && aktivne.map((konf, index) => (
-                <div className='konferencija' key={index}>
-                    <div className='konfImg'></div>
-                    <div className='texts'>
-                        <span className='naziv'>{konf.naziv}</span>
-                        <span className='mjesto'>{konf.mjesto}</span>
-                        <span className='opis'>{konf.opis}</span>
-                    </div>
-                    {isAuthenticated && (
-                        <div className='pristupi'>
-                            <Link to='/poster'>
-                                <button className='pristupibutton'>
-                                    <span class="circle1"></span>
-                                    <span class="circle2"></span>
-                                    <span class="circle3"></span>
-                                    <span class="circle4"></span>
-                                    <span class="circle5"></span>
-                                    <span class="text">Pristupi</span>
-                                </button>
-                            </Link>
-                        </div>
-                    )}
+          {aktivne &&
+            aktivne.map((konf, index) => (
+              <div className='konferencija' key={index}>
+                <div className='konfImg'></div>
+                <div className='texts'>
+                  <span className='naziv'>{konf.naziv}</span>
+                  <span className='mjesto'>{konf.mjesto}</span>
+                  <span className='opis'>{konf.opis}</span>
                 </div>
+                {isAuthenticated && (
+                  <div className='pristupi'>
+                    <button
+                      className='pristupibutton'
+                      onClick={() => handlePristupiClick(konf)}
+                    >
+                      <span class='circle1'></span>
+                      <span class='circle2'></span>
+                      <span class='circle3'></span>
+                      <span class='circle4'></span>
+                      <span class='circle5'></span>
+                      <span class='text'>Pristupi</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             ))}
+          {/* Add the password prompt here based on the state */}
+          {showPasswordPrompt && (
+            <div className='password-prompt'>
+              <label>Lozinka:</label>
+              <input
+                type='password'
+                value={lozinka}
+                onChange={(e) => setLozinka(e.target.value)}
+              />
+              {/* Add validation message rendering */}
+              {lozinkaValidationMessage && (
+                <div className='validation-message'>
+                  {lozinkaValidationMessage}
+                </div>
+              )}
+              {/* Add a button to submit the password */}
+              <button onClick={handleSubmitPassword}>Pristupi</button>
+            </div>
+          )}
         </div>
-    )
+      );
+
+    // return (
+    //     <div>
+    //         {aktivne && aktivne.map((konf, index) => (
+    //             <div className='konferencija' key={index}>
+    //                 <div className='konfImg'></div>
+    //                 <div className='texts'>
+    //                     <span className='naziv'>{konf.naziv}</span>
+    //                     <span className='mjesto'>{konf.mjesto}</span>
+    //                     <span className='opis'>{konf.opis}</span>
+    //                 </div>
+    //                 {isAuthenticated && (
+    //                     <div className='pristupi'>
+    //                         <Link to='/poster'>
+    //                             <button className='pristupibutton'>
+    //                                 <span class="circle1"></span>
+    //                                 <span class="circle2"></span>
+    //                                 <span class="circle3"></span>
+    //                                 <span class="circle4"></span>
+    //                                 <span class="circle5"></span>
+    //                                 <span class="text">Pristupi</span>
+    //                             </button>
+    //                         </Link>
+    //                     </div>
+    //                 )}
+    //             </div>
+    //         ))}
+    //     </div>
+    // )
 }
 
 const Nadolazeće = ({nadolazece}) => {

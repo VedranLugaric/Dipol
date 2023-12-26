@@ -1,7 +1,22 @@
 import FallingAnimation from '../../FallingAnimation'
 import './Poster.css'
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../AuthContext';
+import React, { useEffect } from 'react';
 
 const Poster = () => {
+
+    const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
+
+  useEffect(() => {
+    //provjeri je li korisnik prijavljen
+    if (!isAuthenticated) {
+      //ako nije prijavljen, preusmjeri ga na login
+      navigate('../login');
+    }
+  }, [isAuthenticated, navigate]);
+
 
     return (
         <>

@@ -8,7 +8,7 @@ from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True,)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:bazepodataka@localhost:5432/progi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:asd123@localhost:5432/progi'
 db = SQLAlchemy(app)
 secret_key = secrets.token_hex(16)
 app.secret_key = secret_key
@@ -27,6 +27,7 @@ class Konferencija(db.Model):
     vrijeme_zav = db.Column(db.TIMESTAMP(timezone = True))
     video = db.Column(db.String(200))
     opis = db.Column(db.String(1000))
+    lozinka = db.Column(db.String(100))
 
 class Sudionik(db.Model):
     id_sud = db.Column(db.Integer, primary_key=True)
@@ -109,13 +110,14 @@ def dohvati_konferencije():
     nadolazece = []
     vrijeme = datetime.now(timezone.utc)
     podaci = Konferencija.query.all()
-    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis': konf.opis, 'vrijeme_poc': konf.vrijeme_poc, 'vrijeme_zav': konf.vrijeme_zav} for konf in podaci]
+    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis': konf.opis, 'vrijeme_poc': konf.vrijeme_poc, 'vrijeme_zav': konf.vrijeme_zav, 'video' : konf.video, 'lozinka' : konf.lozinka} for konf in podaci]
     for rez1 in rez:   
         if ((rez1["vrijeme_poc"] <= vrijeme)) and (rez1["vrijeme_zav"] > vrijeme):
             aktivne.append(rez1)
         elif ((rez1["vrijeme_poc"] > vrijeme)):
             nadolazece.append(rez1)
     return jsonify({'aktivne': aktivne, 'nadolazece': nadolazece})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

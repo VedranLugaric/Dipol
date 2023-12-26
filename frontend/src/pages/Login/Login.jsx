@@ -65,7 +65,7 @@ const Login = () => {
                     type='email'
                     id='username'
                     className='loginInputText'
-                    placeholder='Korisničko ime'
+                    placeholder='Email'
                     ref={userRef}
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
