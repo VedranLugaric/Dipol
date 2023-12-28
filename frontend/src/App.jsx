@@ -16,7 +16,8 @@ const Footer = () => {
 }
 
 const NavBar = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, korisnik, logout } = useAuth();
+
 
   const handleLogout = () => {
     //pozovi funkciju za odjavu iz AuthContext
@@ -53,6 +54,13 @@ const NavBar = () => {
           )}
           {isAuthenticated && (
             <>
+              <button className='navButton' style={{ cursor: 'default' }}>
+                  {korisnik && (
+                  <>
+                    {korisnik.ime.toUpperCase()} {korisnik.prezime.toUpperCase()}
+                  </>
+                )}
+              </button>
               <button className='navButton' onClick={handleLogout}>ODJAVA</button>
             </>
           )}

@@ -6,6 +6,12 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+
+  const [korisnik, setKorisnik] = useState(() => {
+    const storedKorisnik = localStorage.getItem('korisnik');
+    return storedKorisnik ? JSON.parse(storedKorisnik) : null;
+  });
+
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
@@ -26,6 +32,9 @@ export const AuthProvider = ({ children }) => {
       });
   
       if (response.ok) {
+        const { korisnik: korisnikData } = await response.json();
+        setKorisnik(korisnikData);
+        localStorage.setItem('korisnik', JSON.stringify(korisnikData));
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
@@ -48,6 +57,8 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         setIsAuthenticated(false);
+        setKorisnik(null);
+        localStorage.removeItem('korisnik');
         localStorage.removeItem('isAuthenticated');
       } else {
         throw new Error('Logout failed');
@@ -59,7 +70,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, korisnik, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

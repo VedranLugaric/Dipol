@@ -42,7 +42,12 @@ def login():
 
         if korisnik and pbkdf2_sha256.verify(lozinka, korisnik.lozinka):
             session_id = generate_session_id()
-            response = make_response({'poruka': 'Prijava uspješna'})
+            korisnik_info = {
+                'id': korisnik.id_sud,
+                'ime': korisnik.ime,
+                'prezime': korisnik.prezime,
+            }
+            response = make_response({'poruka': 'Prijava uspješna', 'korisnik': korisnik_info})
             response.set_cookie('session_id', session_id)
             return response
         else:
