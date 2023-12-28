@@ -12,4 +12,4 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 secret_key = secrets.token_hex(16)
 app.secret_key = secret_key
-from app import routes  # Import routes after initializing app and extensions
+from app import routes
