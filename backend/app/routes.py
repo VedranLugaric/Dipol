@@ -48,12 +48,14 @@ def login():
             user_role = [role.name for role in korisnik.role]
 
             session_id = generate_session_id()
-            response_data = {
+            korisnik_info = {
+                'id': korisnik.id_sud,
+                'ime': korisnik.ime,
+                'prezime': korisnik.prezime,
                 'poruka': 'Prijava uspješna',
                 'role': user_role,
             }
-
-            response = make_response(jsonify(response_data))
+            response = make_response({'poruka': 'Prijava uspješna'})
             response.set_cookie('session_id', session_id)
             return response
         else:
@@ -83,27 +85,3 @@ def dohvati_konferencije():
         elif ((rez1["vrijeme_poc"] > vrijeme)):
             nadolazece.append(rez1)
     return jsonify({'aktivne': aktivne, 'nadolazece': nadolazece})
-
-@app.route('/admin')
-@admin_permission.require(http_exception=403)
-def admin_dashboard():
-    return "Admin Dashboard"
-
-@app.route('/author')
-@author_permission.require(http_exception=403)
-def author_dashboard():
-    return "Author Dashboard"
-
-@app.route('/user')
-@user_permission.require(http_exception=403)
-def user_dashboard():
-    return "User Dashboard"
-
-@app.route('/superadmin')
-@superadmin_permission.require(http_exception=403)
-def superadmin_dashboard():
-    return "Superadmin Dashboard"
-
-@app.errorhandler(403)
-def permission_denied(error):
-    return render_template('403.html'), 403
