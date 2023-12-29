@@ -219,25 +219,33 @@ const Nadolazeće = ({nadolazece}) => {
 }
 
 const DodajKonferenciju = () => {
-    {/* Potrebno dodati uvjet koji provjerava je li ulogiran superadmin*/}
-    
-    return (
-        <>
+  const { userRole } = useAuth();
+  console.log(userRole);
+  let isAdminOrHigher = false;
+  if (JSON.stringify(userRole) === JSON.stringify(['admin'])) {
+    isAdminOrHigher = true;
+  }
+  console.log(isAdminOrHigher);
+  
+  return (
+    <>
+      {isAdminOrHigher && (
         <div className='addkonfdiv'>
-            <Link to='/dodajkonferenciju'>
-                <button className='addkonf'>
-                    <span class="circle1"></span>
-                    <span class="circle2"></span>
-                    <span class="circle3"></span>
-                    <span class="circle4"></span>
-                    <span class="circle5"></span>
-                    <span class="text">Dodaj konferenciju</span>
-                </button>
-            </Link>
+          <Link to='/dodajkonferenciju'>
+            <button className='addkonf'>
+              <span className="circle1"></span>
+              <span className="circle2"></span>
+              <span className="circle3"></span>
+              <span className="circle4"></span>
+              <span className="circle5"></span>
+              <span className="text">Dodaj konferenciju</span>
+            </button>
+          </Link>
         </div>
-        </>
-    )
-}
+      )}
+    </>
+  );
+};
 
 const DodajPoster = () => {
      {/* Potrebno dodati uvjet koji provjerava je li ulogiran admin konferencije*/}

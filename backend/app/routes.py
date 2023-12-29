@@ -1,8 +1,8 @@
 from datetime import datetime, timezone
-from flask import request, jsonify, make_response
+from flask import request, jsonify, make_response, render_template
 from passlib.hash import pbkdf2_sha256
-from app import app, db
-from app.models import Konferencija, Sudionik, generate_session_id
+from app import app, db, admin_permission, author_permission, user_permission, superadmin_permission
+from app.models import Konferencija, Sudionik, Roles, generate_session_id
 
 @app.route('/api/registracija/', methods=['POST'])
 def registracija():
@@ -21,6 +21,10 @@ def registracija():
             email=data['email'],
             lozinka=hashed_password
         )
+
+        default_role = Roles.query.filter_by(name='user').first()
+
+        novi_sudionik.role.append(default_role)
 
         db.session.add(novi_sudionik)
         db.session.commit()
@@ -41,8 +45,15 @@ def login():
         korisnik = Sudionik.query.filter_by(email=email).first()
 
         if korisnik and pbkdf2_sha256.verify(lozinka, korisnik.lozinka):
+            user_role = [role.name for role in korisnik.role]
+
             session_id = generate_session_id()
-            response = make_response({'poruka': 'Prijava uspješna'})
+            response_data = {
+                'poruka': 'Prijava uspješna',
+                'role': user_role,
+            }
+
+            response = make_response(jsonify(response_data))
             response.set_cookie('session_id', session_id)
             return response
         else:
@@ -72,3 +83,27 @@ def dohvati_konferencije():
         elif ((rez1["vrijeme_poc"] > vrijeme)):
             nadolazece.append(rez1)
     return jsonify({'aktivne': aktivne, 'nadolazece': nadolazece})
+
+@app.route('/admin')
+@admin_permission.require(http_exception=403)
+def admin_dashboard():
+    return "Admin Dashboard"
+
+@app.route('/author')
+@author_permission.require(http_exception=403)
+def author_dashboard():
+    return "Author Dashboard"
+
+@app.route('/user')
+@user_permission.require(http_exception=403)
+def user_dashboard():
+    return "User Dashboard"
+
+@app.route('/superadmin')
+@superadmin_permission.require(http_exception=403)
+def superadmin_dashboard():
+    return "Superadmin Dashboard"
+
+@app.errorhandler(403)
+def permission_denied(error):
+    return render_template('403.html'), 403

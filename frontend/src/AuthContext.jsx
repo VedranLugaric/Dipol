@@ -1,18 +1,23 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
-
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
-  
+
+  const [userRole, setUserRole] = useState(() => {
+    const storedUserRole = localStorage.getItem('userRole');
+    return storedUserRole ? JSON.parse(storedUserRole) : null;
+  });
+
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
-  }, [isAuthenticated]);
+    localStorage.setItem('userRole', JSON.stringify(userRole));
+  }, [isAuthenticated, userRole]);
 
   const login = async (email, lozinka) => {
     try {
@@ -24,9 +29,11 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ email, lozinka }),
         credentials: 'include',
       });
-  
+
       if (response.ok) {
+        const responseData = await response.json();
         setIsAuthenticated(true);
+        setUserRole(responseData.role);
       } else {
         setIsAuthenticated(false);
         throw new Error('Authentication failed');
@@ -37,18 +44,18 @@ export const AuthProvider = ({ children }) => {
       throw new Error('Authentication failed');
     }
   };
-  
 
   const logout = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/logout', {
         method: 'POST',
-        credentials: 'include'
+        credentials: 'include',
       });
 
       if (response.ok) {
         setIsAuthenticated(false);
-        localStorage.removeItem('isAuthenticated');
+        setUserRole(null);
+        localStorage.removeItem('userRole');
       } else {
         throw new Error('Logout failed');
       }
@@ -59,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userRole, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
