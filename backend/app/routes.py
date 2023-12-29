@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from flask import request, jsonify, make_response
 from passlib.hash import pbkdf2_sha256
 from app import app, db
-from app.models import Konferencija, Sudionik, generate_session_id
+from app.models import Konferencija, Sudionik, Rad, Posteri, Prezentacija, Rad_se_predstavlja_na, Sudionik_sudjeluje_na, Sudionik_je_administrator, generate_session_id
 
 @app.route('/api/registracija/', methods=['POST'])
 def registracija():
@@ -77,3 +77,31 @@ def dohvati_konferencije():
         elif ((rez1["vrijeme_poc"] > vrijeme)):
             nadolazece.append(rez1)
     return jsonify({'aktivne': aktivne, 'nadolazece': nadolazece})
+
+@app.route('/api/poster/<int:konferencijaId>', methods=['GET'])
+def dohvati_postere(konferencijaId):
+    red1 = []
+    rez = []
+
+    query1 = (
+        db.session.query(Rad)
+        .join(Rad_se_predstavlja_na, Rad_se_predstavlja_na.id_rad == Rad.id_rad, isouter=True)
+        .join(Sudionik, Sudionik.id_sud == Rad.id_sud, isouter=True)
+        .join(Posteri, Posteri.id_poster == Rad_se_predstavlja_na.id_poster, isouter=True)
+        .join(Prezentacija, Prezentacija.id_prez == Rad_se_predstavlja_na.id_prez, isouter=True)
+        .filter(Rad_se_predstavlja_na.id_konf == konferencijaId)
+    )
+
+    red1 = [
+        {
+            'naslov': rad.naslov,
+            'id': rad.id_rad,
+            'autor': f"{rad.sudionik.prezime}, {rad.sudionik.ime}",
+            'poster': Posteri.query.get(rad.radSePredstavljaNa[0].id_poster).poster,
+            'prezentacija': Prezentacija.query.get(rad.radSePredstavljaNa[0].id_prez).prez if Prezentacija.query.get(rad.radSePredstavljaNa[0].id_prez) else None        
+        }
+        for rad in query1
+    ]
+
+    rez.append(red1)
+    return jsonify({'rezultat': rez})

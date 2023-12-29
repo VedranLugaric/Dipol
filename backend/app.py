@@ -217,8 +217,6 @@ def dohvati_konferencije():
 @app.route('/api/poster/<int:konferencijaId>', methods=['GET'])
 def dohvati_postere(konferencijaId):
     red1 = []
-    red2 = []
-
     rez = []
 
     query1 = (
@@ -239,19 +237,6 @@ def dohvati_postere(konferencijaId):
             'prezentacija': Prezentacija.query.get(rad.radSePredstavljaNa[0].id_prez).prez if Prezentacija.query.get(rad.radSePredstavljaNa[0].id_prez) else None        
         }
         for rad in query1
-    ]
-
-    query2 = (
-        db.session.query(Posteri)
-        .join(Rad_se_predstavlja_na, Rad_se_predstavlja_na.id_poster == Posteri.id_poster, isouter=True)
-        .filter(Rad_se_predstavlja_na.id_konf == konferencijaId)
-    )
-
-    red2 = [
-        {
-            'poster': rad.poster,
-        }
-        for rad in query2
     ]
 
     rez.append(red1)
