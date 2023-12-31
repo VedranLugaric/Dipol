@@ -29,6 +29,7 @@ class Sudionik(db.Model):
     rad = relationship('Rad')
     sudionikSudjelujeNa = relationship('Sudionik_sudjeluje_na')
     sudionikJeAdministrator = relationship('Sudionik_je_administrator')
+    superadmin = relationship('Superadmin')
 
     def get_id(self):
         return str(self.id_sud)
@@ -97,6 +98,11 @@ class Sudionik_je_administrator(db.Model):
     id_sud = db.Column(db.Integer, ForeignKey('sudionik.id_sud'), primary_key=True)
     sudionik = relationship('Sudionik')
 
+class Superadmin(db.Model):
+    __tablename__ = 'superadmin'
+    
+    id_sud = db.Column(db.Integer, ForeignKey('sudionik.id_sud'), primary_key=True)
+    sudionik = relationship('Sudionik')
 
 #class Pokrovitelj(db.Model):
 #    __tablename__ = 'pokrovitelj'
