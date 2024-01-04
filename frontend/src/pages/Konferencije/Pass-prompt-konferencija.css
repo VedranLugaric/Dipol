@@ -1,0 +1,19 @@
+.password-prompt{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    width: 50%;
+    height: 50%;
+
+    border-radius: 4rem;
+    box-shadow: rgb(24, 24, 29) 0 0 2rem;
+    background-color: rgb(66, 66, 77);
+    z-index: 3;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

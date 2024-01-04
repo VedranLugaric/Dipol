@@ -4,10 +4,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import './Pass-prompt-konferencija.css'
+import Popup from 'reactjs-popup';
 
 const Konferencije = () => {
     const [konferencije, setPodaci] = useState([])
-
+/*{ 
     useEffect(() => {
         const fetchKonferencije = async () => {
             try {
@@ -34,9 +36,9 @@ const Konferencije = () => {
     }, []);
 
 
-/*{ 
-    Hardkodirani podaci koje koristim da ne moram palit bazu :)
 
+    Hardkodirani podaci koje koristim da ne moram palit bazu :)
+ }*/
     const aktivne = [{     
         "id" : "1",
         "naziv" : "Napoleonove bitke",
@@ -66,7 +68,6 @@ const Konferencije = () => {
         "opis" : "Opis za mjuzikle"
       
     }]
-    }*/
 
     return(
         <>
@@ -76,11 +77,11 @@ const Konferencije = () => {
         <div className='konfContainer'>
             <div className='tekst'>Aktivne konferencije: </div>
                 <div className='aktivne'>
-                    <Aktivne aktivne={konferencije.aktivne} />
+                    <Aktivne aktivne={aktivne} />
                 <div/>
             <div className='tekst'>Nadolazeće konferencije: </div>
                 <div className='nadolazece'>
-                    <Nadolazeće nadolazece={konferencije.nadolazece} />
+                    <Nadolazeće nadolazece={nadolazece} />
                 </div>
             </div>
         </div>
@@ -125,7 +126,7 @@ const Aktivne = ({aktivne}) => {
                   <span className='mjesto'>{konf.mjesto}</span>
                   <span className='opis'>{konf.opis}</span>
                 </div>
-                {isAuthenticated && (
+                {!isAuthenticated && (
                   <div className='pristupi'>
                     <button
                       className='pristupibutton'
@@ -140,10 +141,7 @@ const Aktivne = ({aktivne}) => {
                     </button>
                   </div>
                 )}
-              </div>
-            ))}
-          {/* Add the password prompt here based on the state */}
-          {showPasswordPrompt && (
+                {showPasswordPrompt && selectedKonferencija == konf && (
             <div className='password-prompt'>
               <label>Lozinka:</label>
               <input
@@ -161,6 +159,9 @@ const Aktivne = ({aktivne}) => {
               <button onClick={handleSubmitPassword}>Pristupi</button>
             </div>
           )}
+              </div>
+            ))}
+          {/* Add the password prompt here based on the state */}
         </div>
       );
 
