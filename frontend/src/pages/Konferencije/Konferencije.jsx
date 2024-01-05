@@ -5,11 +5,10 @@ import { useAuth } from '../../AuthContext';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import './Pass-prompt-konferencija.css'
-import Popup from 'reactjs-popup';
 
 const Konferencije = () => {
     const [konferencije, setPodaci] = useState([])
-/*{ 
+
     useEffect(() => {
         const fetchKonferencije = async () => {
             try {
@@ -36,9 +35,9 @@ const Konferencije = () => {
     }, []);
 
 
-
+/*{ 
     Hardkodirani podaci koje koristim da ne moram palit bazu :)
- }*/
+ 
     const aktivne = [{     
         "id" : "1",
         "naziv" : "Napoleonove bitke",
@@ -67,8 +66,24 @@ const Konferencije = () => {
         "datum" : "21.1.2024.",
         "opis" : "Opis za mjuzikle"
       
+    },
+    {     
+        "id" : "4",
+        "naziv" : "Mjuzikli",
+        "mjesto" : "Zagreb",
+        "datum" : "21.1.2024.",
+        "opis" : "Opis za mjuzikle"
+      
+    },
+    {     
+        "id" : "4",
+        "naziv" : "Mjuzikli",
+        "mjesto" : "Zagreb",
+        "datum" : "21.1.2024.",
+        "opis" : "Opis za mjuzikle"
+      
     }]
-
+}*/
     return(
         <>
         <FallingAnimation>
@@ -77,11 +92,11 @@ const Konferencije = () => {
         <div className='konfContainer'>
             <div className='tekst'>Aktivne konferencije: </div>
                 <div className='aktivne'>
-                    <Aktivne aktivne={aktivne} />
+                    <Aktivne aktivne={konferencije.aktivne} />
                 <div/>
             <div className='tekst'>Nadolazeće konferencije: </div>
                 <div className='nadolazece'>
-                    <Nadolazeće nadolazece={nadolazece} />
+                    <Nadolazeće nadolazece={konferencije.nadolazece} />
                 </div>
             </div>
         </div>
@@ -97,7 +112,6 @@ const Aktivne = ({aktivne}) => {
     const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
     const [selectedKonferencija, setSelectedKonferencija] = useState(null);
     const [lozinka, setLozinka] = useState('');
-    const [lozinkaValidationMessage, setLozinkaValidationMessage] = useState('');
     const navigate = useNavigate();
 
     const handlePristupiClick = (konf) => {
@@ -111,9 +125,13 @@ const Aktivne = ({aktivne}) => {
           navigate('../poster');
           setShowPasswordPrompt(false);
         } else {
-          setLozinkaValidationMessage('Pogrešna lozinka!');
+          alert("Pogrešna lozinka!")
         }
-      };
+    };
+    
+    const handleExitPopup = () => {
+        setShowPasswordPrompt(false)
+    }
 
       return (
         <div>
@@ -141,22 +159,29 @@ const Aktivne = ({aktivne}) => {
                     </button>
                   </div>
                 )}
-                {showPasswordPrompt && selectedKonferencija == konf && (
-            <div className='password-prompt'>
-              <label>Lozinka:</label>
-              <input
-                type='password'
-                value={lozinka}
-                onChange={(e) => setLozinka(e.target.value)}
-              />
-              {/* Add validation message rendering */}
-              {lozinkaValidationMessage && (
-                <div className='validation-message'>
-                  {lozinkaValidationMessage}
+                {showPasswordPrompt && selectedKonferencija == konf &&  (
+            <div className='popup-background'>
+                <div className='password-prompt'>
+                <button className='exit' onClick={handleExitPopup}>x</button>
+                  <label className='pass-label'>Unesite lozinku konferencije "{konf.naziv}":</label>
+                  <input className='pass-input'
+                    type='password'
+                    value={lozinka}
+                    onChange={(e) => setLozinka(e.target.value)}
+                  />
+                  {/* Add a button to submit the password */}
+                  <div className='pristupi-pass-div'>
+                  <button className='pristupi-pass' 
+                  onClick={handleSubmitPassword}>
+                    <span class='circle1'></span>
+                    <span class='circle2'></span>
+                    <span class='circle3'></span>
+                    <span class='circle4'></span>
+                    <span class='circle5'></span>
+                    <span class='text'>Pristupi</span>
+                </button>
                 </div>
-              )}
-              {/* Add a button to submit the password */}
-              <button onClick={handleSubmitPassword}>Pristupi</button>
+                </div>
             </div>
           )}
               </div>

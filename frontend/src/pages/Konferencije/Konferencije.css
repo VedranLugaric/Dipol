@@ -45,10 +45,9 @@
 .konferencija:hover{
     background-color: rgb(66, 66, 77);
 }
-.konferencija:hover button{
+.konferencija:hover .pristupibutton{
     background-color: rgb(66, 66, 77);
 }
-
 
 .datum {
     margin-top: 5px;
@@ -258,4 +257,8 @@ hr{
   .addposter:hover span:not(:nth-child(6)) {
     transform: translate(-50%, -50%) scale(25);
     transition: 1.5s ease;
+  }
+  .konferencija-button{
+    display: flex;
+    margin-bottom: 40px;
   }
