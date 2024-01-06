@@ -2,7 +2,8 @@ from datetime import datetime, timezone
 from flask import request, jsonify, make_response, render_template
 from passlib.hash import pbkdf2_sha256
 from app import app, db, admin_permission, author_permission, user_permission, superadmin_permission
-from app.models import Konferencija, Sudionik, Roles, generate_session_id
+from app.models import Konferencija, Sudionik, Roles, Sudionik_sudjeluje_na, generate_session_id
+from app.utils import upload_to_gcs, save_to_database, generate_unique_filename
 
 @app.route('/api/registracija/', methods=['POST'])
 def registracija():
@@ -52,10 +53,10 @@ def login():
                 'id': korisnik.id_sud,
                 'ime': korisnik.ime,
                 'prezime': korisnik.prezime,
-                'poruka': 'Prijava uspješna',
                 'role': user_role,
             }
-            response = make_response({'poruka': 'Prijava uspješna'})
+
+            response = make_response(jsonify(korisnik_info))
             response.set_cookie('session_id', session_id)
             return response
         else:
@@ -78,10 +79,57 @@ def dohvati_konferencije():
     nadolazece = []
     vrijeme = datetime.now(timezone.utc)
     podaci = Konferencija.query.all()
-    rez = [{'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis': konf.opis, 'vrijeme_poc': konf.vrijeme_poc, 'vrijeme_zav': konf.vrijeme_zav, 'video' : konf.video, 'lozinka' : konf.lozinka} for konf in podaci]
+    rez = [{'id': konf.id_konf, 'naziv': konf.naziv, 'mjesto': konf.mjesto, 'opis': konf.opis, 'vrijeme_poc': konf.vrijeme_poc, 'vrijeme_zav': konf.vrijeme_zav, 'video' : konf.video, 'lozinka' : konf.lozinka} for konf in podaci]
     for rez1 in rez:   
         if ((rez1["vrijeme_poc"] <= vrijeme)) and (rez1["vrijeme_zav"] > vrijeme):
             aktivne.append(rez1)
         elif ((rez1["vrijeme_poc"] > vrijeme)):
             nadolazece.append(rez1)
     return jsonify({'aktivne': aktivne, 'nadolazece': nadolazece})
+
+@app.route('/api/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return "No file part", 400
+
+    uploaded_file = request.files['file']
+
+    if uploaded_file.filename == '':
+        return "No selected file", 400
+
+    unique_filename = generate_unique_filename(uploaded_file.filename)
+
+    destination_blob_name = f'images/{unique_filename}'
+
+    upload_to_gcs(uploaded_file, 'progi', destination_blob_name)
+
+
+    image_link = f'https://storage.googleapis.com/progi/{destination_blob_name}'
+
+
+    naslov_rad = request.form.get('nazivPostera')
+    user_id = request.form.get('korisnikId')
+    konf_id = request.form.get('konferencijaId')
+
+    save_to_database(naslov_rad, image_link, konf_id, user_id)
+
+
+    return jsonify({"image_link": image_link})
+
+@app.route('/api/create_user', methods=['POST'])
+def create_user():
+    try:
+        data = request.get_json()
+
+        konferencija_id = data.get('konferencijaId')
+        user_id = data.get('korisnikId')
+
+        new_entry = Sudionik_sudjeluje_na(id_konf=konferencija_id, id_sud=user_id)
+
+        db.session.add(new_entry)
+        db.session.commit()
+
+        return jsonify({"message": "User created successfully"}), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

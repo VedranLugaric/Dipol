@@ -3,14 +3,7 @@ import './DodajKonferenciju.css'
 import { useAuth } from '../../AuthContext';
 
 const DodajKonferenciju = () => {
-    const { userRole } = useAuth();
-    console.log(userRole);
-    let isAdminOrHigher = false;
-    if (JSON.stringify(userRole) === JSON.stringify(['admin'])) {
-      isAdminOrHigher = true;
-    }
-    console.log(isAdminOrHigher);
-    
+    const { isAdminOrHigher } = useAuth();
 
     return (
         <>

@@ -1,9 +1,23 @@
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FallingAnimation from '../../FallingAnimation';
+import { useAuth } from '../../AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 
 import './Home.css';
 
 const Home = () => {
+
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/konferencije');
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <FallingAnimation>
       <div className='mid'>

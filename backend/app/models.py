@@ -40,5 +40,76 @@ class Sudionik(db.Model):
     def has_role(self, role_name):
         return self.role.name == role_name
     
+class Rad(db.Model):
+    __tablename__ = 'rad'
+
+    id_rad = db.Column(db.Integer, primary_key=True)
+    naslov = db.Column(db.String(100))
+    id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'))
+
+    sudionik = db.relationship('Sudionik')
+    rad_se_predstavlja_na = db.relationship('Rad_se_predstavlja_na', back_populates='rad')
+
+
+class Prezentacija(db.Model):
+    __tablename__ = 'prezentacija'
+
+    id_prez = db.Column(db.Integer, primary_key=True)
+    prez = db.Column(db.String(200))
+
+class Rad_se_predstavlja_na(db.Model):
+    __tablename__ = 'rad_se_predstavlja_na'
+
+    id_poster = db.Column(db.Integer, db.ForeignKey('posteri.id_poster'), primary_key=True)
+    id_prez = db.Column(db.Integer, db.ForeignKey('prezentacija.id_prez'), nullable=True, default=None, primary_key=True)
+    id_rad = db.Column(db.Integer, db.ForeignKey('rad.id_rad'), primary_key=True)
+    id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'), primary_key=True)
+    br_glasova = db.Column(db.Integer, default=0)
+
+    posteri = db.relationship('Posteri', back_populates='rad_se_predstavlja_na')
+    prezentacija = db.relationship('Prezentacija')
+    rad = db.relationship('Rad', back_populates='rad_se_predstavlja_na')
+    konferencija = db.relationship('Konferencija')
+
+    def __init__(self, id_poster, id_prez, id_rad, id_konf):
+        self.id_poster = id_poster
+        self.id_prez = id_prez
+        self.id_rad = id_rad
+        self.id_konf = id_konf
+
+class Posteri(db.Model):
+    __tablename__ = 'posteri'
+
+    id_poster = db.Column(db.Integer, primary_key=True)
+    poster = db.Column(db.String(200))
+
+    rad_se_predstavlja_na = db.relationship('Rad_se_predstavlja_na', back_populates='posteri', foreign_keys=[Rad_se_predstavlja_na.id_poster])
+
+class Sudionik_sudjeluje_na(db.Model):
+    __tablename__ = 'sudionik_sudjeluje_na'
+
+    glasovao = db.Column(db.Integer, db.CheckConstraint('Glasovao IN (0, 1)'), default=0)
+
+    id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'), primary_key=True)
+    konferencija = db.relationship('Konferencija')
+
+    id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'), primary_key=True)
+    sudionik = db.relationship('Sudionik')
+
+class Sudionik_je_administrator(db.Model):
+    __tablename__ = 'sudionik_je_administrator'
+
+    id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'), primary_key=True)
+    konferencija = db.relationship('Konferencija')
+    
+    id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'), primary_key=True)
+    sudionik = db.relationship('Sudionik')
+
+class Superadmin(db.Model):
+    __tablename__ = 'superadmin'
+    
+    id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'), primary_key=True)
+    sudionik = db.relationship('Sudionik')
+    
 def generate_session_id():
     return secrets.token_hex(16)

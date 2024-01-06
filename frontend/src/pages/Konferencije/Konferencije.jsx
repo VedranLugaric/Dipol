@@ -2,8 +2,7 @@ import './Konferencije.css'
 import FallingAnimation from '../../FallingAnimation';
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Konferencije = () => {
     const [konferencije, setPodaci] = useState([])
@@ -33,41 +32,6 @@ const Konferencije = () => {
         fetchKonferencije();
     }, []);
 
-
-/*{ 
-    Hardkodirani podaci koje koristim da ne moram palit bazu :)
-
-    const aktivne = [{     
-        "id" : "1",
-        "naziv" : "Napoleonove bitke",
-        "mjesto" : "Zagreb",
-        "opis" : "Tematike ove konferencije su Napoleonove bitke"
-       
-        },
-        {
-        "id" : "2",
-        "naziv" : "Rođendanske torte",
-        "mjesto" : "Varaždin",
-        "opis" : "Najbolja rođendanska torta"
-        },
-        {
-        "id" : "3",
-        "naziv" : "Legendarni slikari",
-        "mjesto" : "Split",
-        "opis" : "Svi slikari"
-        },
-    ]
-
-    const nadolazece = [{     
-        "id" : "4",
-        "naziv" : "Mjuzikli",
-        "mjesto" : "Zagreb",
-        "datum" : "21.1.2024.",
-        "opis" : "Opis za mjuzikle"
-      
-    }]
-    }*/
-
     return(
         <>
         <FallingAnimation>
@@ -91,7 +55,7 @@ const Konferencije = () => {
 }
 
 const Aktivne = ({aktivne}) => {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, korisnik } = useAuth();
     
     const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
     const [selectedKonferencija, setSelectedKonferencija] = useState(null);
@@ -104,15 +68,44 @@ const Aktivne = ({aktivne}) => {
         setShowPasswordPrompt(true);
     }
 
-    const handleSubmitPassword = () => {
-
-        if (lozinka === selectedKonferencija.lozinka) {
-          navigate('../poster');
+    const handleSubmitPassword = async () => {
+      if (lozinka === selectedKonferencija.lozinka) {
           setShowPasswordPrompt(false);
-        } else {
+  
+          // Assuming selectedKonferencija has an 'id' property
+          const conferenceId = selectedKonferencija.id;
+  
+          // Assuming you have the necessary information for user creation
+          const userCreationData = {
+              konferencijaId: conferenceId,
+              korisnikId: korisnik.id, // Assuming korisnik is your authenticated user
+          };
+  
+          try {
+              const response = await fetch('http://localhost:5000/api/create_user', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(userCreationData),
+              });
+  
+              if (response.ok) {
+                  // User created successfully, navigate to the poster page
+                  navigate('../poster');
+              } else {
+                  // Handle error
+                  const errorData = await response.json();
+                  setLozinkaValidationMessage(`Error: ${errorData.error}`);
+              }
+          } catch (error) {
+              setLozinkaValidationMessage('Error creating user. Please try again later.');
+              console.error('Error creating user:', error);
+          }
+      } else {
           setLozinkaValidationMessage('Pogrešna lozinka!');
-        }
-      };
+      }
+    };  
 
       return (
         <div>
@@ -163,35 +156,6 @@ const Aktivne = ({aktivne}) => {
           )}
         </div>
       );
-
-    // return (
-    //     <div>
-    //         {aktivne && aktivne.map((konf, index) => (
-    //             <div className='konferencija' key={index}>
-    //                 <div className='konfImg'></div>
-    //                 <div className='texts'>
-    //                     <span className='naziv'>{konf.naziv}</span>
-    //                     <span className='mjesto'>{konf.mjesto}</span>
-    //                     <span className='opis'>{konf.opis}</span>
-    //                 </div>
-    //                 {isAuthenticated && (
-    //                     <div className='pristupi'>
-    //                         <Link to='/poster'>
-    //                             <button className='pristupibutton'>
-    //                                 <span class="circle1"></span>
-    //                                 <span class="circle2"></span>
-    //                                 <span class="circle3"></span>
-    //                                 <span class="circle4"></span>
-    //                                 <span class="circle5"></span>
-    //                                 <span class="text">Pristupi</span>
-    //                             </button>
-    //                         </Link>
-    //                     </div>
-    //                 )}
-    //             </div>
-    //         ))}
-    //     </div>
-    // )
 }
 
 const Nadolazeće = ({nadolazece}) => {
@@ -211,7 +175,7 @@ const Nadolazeće = ({nadolazece}) => {
                             <span className='opis'>{konf.opis}</span>
                         </div>
                     </div>
-                    <DodajPoster />
+                    <DodajPosterButton konferencijaId={konf.id} />
                 </div>
             ))}
         </div>
@@ -219,13 +183,7 @@ const Nadolazeće = ({nadolazece}) => {
 }
 
 const DodajKonferenciju = () => {
-  const { userRole } = useAuth();
-  console.log(userRole);
-  let isAdminOrHigher = false;
-  if (JSON.stringify(userRole) === JSON.stringify(['admin'])) {
-    isAdminOrHigher = true;
-  }
-  console.log(isAdminOrHigher);
+  const { isAdminOrHigher } = useAuth();
   
   return (
     <>
@@ -247,23 +205,21 @@ const DodajKonferenciju = () => {
   );
 };
 
-const DodajPoster = () => {
-     {/* Potrebno dodati uvjet koji provjerava je li ulogiran admin konferencije*/}
-     
-     return (
-        <>
-        <Link to="/dodajposter">
-            <button className='addposter'>
-                <span class="circle1"></span>
-                <span class="circle2"></span>
-                <span class="circle3"></span>
-                <span class="circle4"></span>
-                <span class="circle5"></span>
-                <span class="text">Dodaj poster</span>
-            </button>
-        </Link>
-        </>
-     )
-}
+const DodajPosterButton = ({ konferencijaId }) => {
+  return (
+    <div>
+      <Link to={`/dodajposter?konferencijaId=${konferencijaId}`}>
+        <button className='addposter'>
+          <span className="circle1"></span>
+          <span className="circle2"></span>
+          <span className="circle3"></span>
+          <span className="circle4"></span>
+          <span className="circle5"></span>
+          <span className="text">Dodaj poster</span>
+        </button>
+      </Link>
+    </div>
+  );
+};
 
 export default Konferencije;

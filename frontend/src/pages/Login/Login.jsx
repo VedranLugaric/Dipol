@@ -85,11 +85,11 @@ const Login = () => {
                   ></input>
                 </label>
               </div>
-              {/* <ReCAPTCHA
+              <ReCAPTCHA
                 sitekey="6Lf3iTcpAAAAAOGZ13_kzm2WxGmzGxB9-dEaxnu8"
                 onChange={val => setCapVal(val)} 
-              /> */}
-              <button className='loginInputSubmit'>Log in</button>
+              />
+              <button className='loginInputSubmit' disabled={!capVal}>Log in</button>
             </form>
           </div>
         </div>

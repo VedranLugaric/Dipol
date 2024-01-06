@@ -11,19 +11,18 @@ export const AuthProvider = ({ children }) => {
     return storedKorisnik ? JSON.parse(storedKorisnik) : null;
   });
 
+  const [isAdminOrHigher, setisAdminOrHigher] = useState(() => {
+    return localStorage.getItem('isAdminOrHigher') === 'true';
+  });
+
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
 
-  const [userRole, setUserRole] = useState(() => {
-    const storedUserRole = localStorage.getItem('userRole');
-    return storedUserRole ? JSON.parse(storedUserRole) : null;
-  });
-
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
-    localStorage.setItem('userRole', JSON.stringify(userRole));
-  }, [isAuthenticated, userRole]);
+    localStorage.setItem('isAdminOrHigher', isAdminOrHigher);
+  }, [isAuthenticated, isAdminOrHigher]);
 
   const login = async (email, lozinka) => {
     try {
@@ -37,11 +36,17 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.ok) {
-        const { korisnik: korisnikData } = await response.json();
+        const korisnikData = await response.json();
         setKorisnik(korisnikData);
         localStorage.setItem('korisnik', JSON.stringify(korisnikData));
         setIsAuthenticated(true);
-        setUserRole(korisnik.role);
+
+        if (JSON.stringify(korisnikData.role) === JSON.stringify(['admin'])) {
+          setisAdminOrHigher(true);
+        } else {
+          setisAdminOrHigher(false);
+        }
+
       } else {
         setIsAuthenticated(false);
         throw new Error('Authentication failed');
@@ -63,7 +68,10 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         setIsAuthenticated(false);
         setKorisnik(null);
+        setisAdminOrHigher(false);
         localStorage.removeItem('korisnik');
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('isAdminOrHigher');
       } else {
         throw new Error('Logout failed');
       }
@@ -74,7 +82,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, korisnik, userRole, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isAdminOrHigher, korisnik, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

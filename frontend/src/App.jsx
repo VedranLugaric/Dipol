@@ -41,7 +41,6 @@ const NavBar = () => {
           </Link>
           <NavigationButton name="O NAMA" />
 
-          {/* Conditionally render the buttons based on authentication status */}
           {!isAuthenticated && (
             <>
               <Link to='/registracija'>
