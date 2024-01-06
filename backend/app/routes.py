@@ -133,3 +133,35 @@ def create_user():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/dodaj_konf', methods=['POST'])
+def dodaj_konferenciju():
+    if request.method == 'POST':
+        data = request.json
+
+        # Extract data from the request
+        naziv = data.get('naziv')
+        mjesto = data.get('mjesto')
+        vrijeme_poc = data.get('vrijemePocetka')
+        vrijeme_zav = data.get('vrijemeKraja')
+        opis = data.get('opis')
+        lozinka = data.get('konfLozinka')
+        video = data.get('video')
+
+        # Create a new conference instance
+        nova_konferencija = Konferencija(
+            naziv=naziv,
+            mjesto=mjesto,
+            vrijeme_poc=vrijeme_poc,
+            vrijeme_zav=vrijeme_zav,
+            opis=opis,
+            lozinka=lozinka,
+            video=video
+        )
+
+        # Add the conference to the database
+        db.session.add(nova_konferencija)
+        db.session.commit()
+
+        return jsonify({'message': 'Konferencija uspješno dodana!'})
