@@ -46,7 +46,7 @@
   background-color: rgb(66, 66, 77);
 }
 .konferencija:hover .pristupibutton{
-  background-color: rgb(66, 66, 77);
+    background-color: rgb(66, 66, 77);
 }
 
 .datum {
@@ -230,35 +230,63 @@ transition: 1.5s ease;
   transition: .6s ease;
 }
 
-.addposter span:nth-child(6) {
-  position: relative;
-}
-
-.addposter span:nth-child(1) {
-  transform: translate(-3.3em, -4em);
-}
-
-.addposter span:nth-child(2) {
-  transform: translate(-6em, 1.3em);
-}
-
-.addposter span:nth-child(3) {
-  transform: translate(-.2em, 1.8em);
-}
-
-.addposter:nth-child(4) {
-  transform: translate(3.5em, 1.4em);
-}
-
-.addposter span:nth-child(5) {
-  transform: translate(3.5em, -3.8em);
-}
-
-.addposter:hover span:not(:nth-child(6)) {
-  transform: translate(-50%, -50%) scale(25);
-  transition: 1.5s ease;
-}
-.konferencija-button{
-  display: flex;
-  margin-bottom: 40px;
-}
+  .addposter {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color:rgb(29, 29, 34);
+    padding: 1em 1.7em;
+    border: 2px solid rgb(65, 49, 87) ;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 16px;
+    margin-top: 2.3rem;
+    margin-left: 1rem;
+  }
+  
+  .addposter span:not(:nth-child(6)) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 10px;
+    width: 10px;
+    background-color: rgb(65, 49, 87);
+    border-radius: 50%;
+    transition: .6s ease;
+  }
+  
+  .addposter span:nth-child(6) {
+    position: relative;
+  }
+  
+  .addposter span:nth-child(1) {
+    transform: translate(-3.3em, -4em);
+  }
+  
+  .addposter span:nth-child(2) {
+    transform: translate(-6em, 1.3em);
+  }
+  
+  .addposter span:nth-child(3) {
+    transform: translate(-.2em, 1.8em);
+  }
+  
+  .addposter:nth-child(4) {
+    transform: translate(3.5em, 1.4em);
+  }
+  
+  .addposter span:nth-child(5) {
+    transform: translate(3.5em, -3.8em);
+  }
+  
+  .addposter:hover span:not(:nth-child(6)) {
+    transform: translate(-50%, -50%) scale(25);
+    transition: 1.5s ease;
+  }
+  .konferencija-button{
+    display: flex;
+    margin-bottom: 40px;
+  }

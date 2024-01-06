@@ -3,6 +3,7 @@ import FallingAnimation from '../../FallingAnimation';
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
 import { useEffect, useState } from 'react';
+import './Pass-prompt-konferencija.css'
 
 const Konferencije = () => {
     const [konferencije, setPodaci] = useState([])
@@ -60,7 +61,6 @@ const Aktivne = ({aktivne}) => {
     const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
     const [selectedKonferencija, setSelectedKonferencija] = useState(null);
     const [lozinka, setLozinka] = useState('');
-    const [lozinkaValidationMessage, setLozinkaValidationMessage] = useState('');
     const navigate = useNavigate();
 
     const handlePristupiClick = (konf) => {
@@ -118,7 +118,7 @@ const Aktivne = ({aktivne}) => {
                   <span className='mjesto'>{konf.mjesto}</span>
                   <span className='opis'>{konf.opis}</span>
                 </div>
-                {isAuthenticated && (
+                {!isAuthenticated && (
                   <div className='pristupi'>
                     <button
                       className='pristupibutton'
@@ -133,27 +133,34 @@ const Aktivne = ({aktivne}) => {
                     </button>
                   </div>
                 )}
+                {showPasswordPrompt && selectedKonferencija == konf &&  (
+            <div className='popup-background'>
+                <div className='password-prompt'>
+                <button className='exit' onClick={handleExitPopup}>x</button>
+                  <label className='pass-label'>Unesite lozinku konferencije "{konf.naziv}":</label>
+                  <input className='pass-input'
+                    type='password'
+                    value={lozinka}
+                    onChange={(e) => setLozinka(e.target.value)}
+                  />
+                  {/* Add a button to submit the password */}
+                  <div className='pristupi-pass-div'>
+                  <button className='pristupi-pass' 
+                  onClick={handleSubmitPassword}>
+                    <span class='circle1'></span>
+                    <span class='circle2'></span>
+                    <span class='circle3'></span>
+                    <span class='circle4'></span>
+                    <span class='circle5'></span>
+                    <span class='text'>Pristupi</span>
+                </button>
+                </div>
+                </div>
+            </div>
+          )}
               </div>
             ))}
           {/* Add the password prompt here based on the state */}
-          {showPasswordPrompt && (
-            <div className='password-prompt'>
-              <label>Lozinka:</label>
-              <input
-                type='password'
-                value={lozinka}
-                onChange={(e) => setLozinka(e.target.value)}
-              />
-              {/* Add validation message rendering */}
-              {lozinkaValidationMessage && (
-                <div className='validation-message'>
-                  {lozinkaValidationMessage}
-                </div>
-              )}
-              {/* Add a button to submit the password */}
-              <button onClick={handleSubmitPassword}>Pristupi</button>
-            </div>
-          )}
         </div>
       );
 }
