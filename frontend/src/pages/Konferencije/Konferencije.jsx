@@ -61,6 +61,7 @@ const Aktivne = ({aktivne}) => {
     const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
     const [selectedKonferencija, setSelectedKonferencija] = useState(null);
     const [lozinka, setLozinka] = useState('');
+    const [lozinkaValidationMessage, setLozinkaValidationMessage] = useState('');
     const navigate = useNavigate();
 
     const handlePristupiClick = (konf) => {
@@ -91,78 +92,79 @@ const Aktivne = ({aktivne}) => {
               });
   
               if (response.ok) {
-                  // User created successfully, navigate to the poster page
                   navigate('../poster');
               } else {
-                  // Handle error
                   const errorData = await response.json();
                   setLozinkaValidationMessage(`Error: ${errorData.error}`);
               }
           } catch (error) {
-              setLozinkaValidationMessage('Error creating user. Please try again later.');
               console.error('Error creating user:', error);
           }
       } else {
-          setLozinkaValidationMessage('Pogrešna lozinka!');
+          alert("Pogrešna lozinka!")
       }
-    };  
+    };
 
-      return (
-        <div>
-          {aktivne &&
-            aktivne.map((konf, index) => (
-              <div className='konferencija' key={index}>
-                <div className='konfImg'></div>
-                <div className='texts'>
-                  <span className='naziv'>{konf.naziv}</span>
-                  <span className='mjesto'>{konf.mjesto}</span>
-                  <span className='opis'>{konf.opis}</span>
-                </div>
-                {!isAuthenticated && (
-                  <div className='pristupi'>
-                    <button
-                      className='pristupibutton'
-                      onClick={() => handlePristupiClick(konf)}
-                    >
-                      <span class='circle1'></span>
-                      <span class='circle2'></span>
-                      <span class='circle3'></span>
-                      <span class='circle4'></span>
-                      <span class='circle5'></span>
-                      <span class='text'>Pristupi</span>
-                    </button>
-                  </div>
-                )}
-                {showPasswordPrompt && selectedKonferencija == konf &&  (
-            <div className='popup-background'>
-                <div className='password-prompt'>
-                <button className='exit' onClick={handleExitPopup}>x</button>
-                  <label className='pass-label'>Unesite lozinku konferencije "{konf.naziv}":</label>
-                  <input className='pass-input'
-                    type='password'
-                    value={lozinka}
-                    onChange={(e) => setLozinka(e.target.value)}
-                  />
-                  {/* Add a button to submit the password */}
-                  <div className='pristupi-pass-div'>
-                  <button className='pristupi-pass' 
-                  onClick={handleSubmitPassword}>
+    const handleExitPopup = () => {
+      setShowPasswordPrompt(false)
+    }
+
+    return (
+      <div>
+        {aktivne &&
+          aktivne.map((konf, index) => (
+            <div className='konferencija' key={index}>
+              <div className='konfImg'></div>
+              <div className='texts'>
+                <span className='naziv'>{konf.naziv}</span>
+                <span className='mjesto'>{konf.mjesto}</span>
+                <span className='opis'>{konf.opis}</span>
+              </div>
+              {isAuthenticated && (
+                <div className='pristupi'>
+                  <button
+                    className='pristupibutton'
+                    onClick={() => handlePristupiClick(konf)}
+                  >
                     <span class='circle1'></span>
                     <span class='circle2'></span>
                     <span class='circle3'></span>
                     <span class='circle4'></span>
                     <span class='circle5'></span>
                     <span class='text'>Pristupi</span>
-                </button>
+                  </button>
                 </div>
-                </div>
-            </div>
-          )}
+              )}
+              {showPasswordPrompt && selectedKonferencija == konf &&  (
+          <div className='popup-background'>
+              <div className='password-prompt'>
+              <button className='exit' onClick={handleExitPopup}>x</button>
+                <label className='pass-label'>Unesite lozinku konferencije "{konf.naziv}":</label>
+                <input className='pass-input'
+                  type='password'
+                  value={lozinka}
+                  onChange={(e) => setLozinka(e.target.value)}
+                />
+                {/* Add a button to submit the password */}
+                <div className='pristupi-pass-div'>
+                <button className='pristupi-pass' 
+                onClick={handleSubmitPassword}>
+                  <span class='circle1'></span>
+                  <span class='circle2'></span>
+                  <span class='circle3'></span>
+                  <span class='circle4'></span>
+                  <span class='circle5'></span>
+                  <span class='text'>Pristupi</span>
+              </button>
               </div>
-            ))}
-          {/* Add the password prompt here based on the state */}
-        </div>
-      );
+              </div>
+          </div>
+        )}
+            </div>
+          ))}
+        {/* Add the password prompt here based on the state */}
+      </div>
+    );
 }
 
 const Nadolazeće = ({nadolazece}) => {
