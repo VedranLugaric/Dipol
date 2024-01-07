@@ -11,18 +11,22 @@ export const AuthProvider = ({ children }) => {
     return storedKorisnik ? JSON.parse(storedKorisnik) : null;
   });
 
-  const [isAdminOrHigher, setisAdminOrHigher] = useState(() => {
-    return localStorage.getItem('isAdminOrHigher') === 'true';
+  const [isAdmin, setIsAdmin] = useState(() => {
+    return localStorage.getItem('isAdmin') === 'true';
+  });
+
+  const [isAuthor, setIsAuthor] = useState(() => {
+    return localStorage.getItem('isAuthor') === 'true';
   });
 
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
-
+  
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
-    localStorage.setItem('isAdminOrHigher', isAdminOrHigher);
-  }, [isAuthenticated, isAdminOrHigher]);
+    localStorage.setItem('isAdmin', isAdmin);
+  }, [isAuthenticated, isAdmin]);
 
   const login = async (email, lozinka) => {
     try {
@@ -37,17 +41,15 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const korisnikData = await response.json();
+
         setKorisnik(korisnikData);
         localStorage.setItem('korisnik', JSON.stringify(korisnikData));
+
         setIsAuthenticated(true);
-
-        if (JSON.stringify(korisnikData.role) === JSON.stringify(['admin'])) {
-          setisAdminOrHigher(true);
-        } else {
-          setisAdminOrHigher(false);
-        }
-
+        setIsAdmin(korisnikData.role.includes('admin'));
+        setIsAuthor(korisnikData.role.includes('autor'));
       } else {
+
         setIsAuthenticated(false);
         throw new Error('Authentication failed');
       }
@@ -68,10 +70,12 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         setIsAuthenticated(false);
         setKorisnik(null);
-        setisAdminOrHigher(false);
+        setIsAdmin(false);
+        setIsAuthor(false);
         localStorage.removeItem('korisnik');
         localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('isAdminOrHigher');
+        localStorage.removeItem('isAdmin');
+        localStorage.removeItem('isAuthor');
       } else {
         throw new Error('Logout failed');
       }
@@ -82,7 +86,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isAdminOrHigher, korisnik, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isAdmin, isAuthor, korisnik, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

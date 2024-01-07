@@ -19,6 +19,7 @@ class Konferencija(db.Model):
     video = db.Column(db.String(200))
     opis = db.Column(db.String(1000))
     lozinka = db.Column(db.String(100))
+    aktivna = db.Column(db.Boolean, default=False)
 
 class Sudionik(db.Model):
     id_sud = db.Column(db.Integer, primary_key=True)
@@ -61,7 +62,7 @@ class Rad_se_predstavlja_na(db.Model):
     __tablename__ = 'rad_se_predstavlja_na'
 
     id_poster = db.Column(db.Integer, db.ForeignKey('posteri.id_poster'), primary_key=True)
-    id_prez = db.Column(db.Integer, db.ForeignKey('prezentacija.id_prez'), nullable=True, default=None, primary_key=True)
+    id_prez = db.Column(db.Integer, db.ForeignKey('prezentacija.id_prez'), primary_key=False)
     id_rad = db.Column(db.Integer, db.ForeignKey('rad.id_rad'), primary_key=True)
     id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'), primary_key=True)
     br_glasova = db.Column(db.Integer, default=0)

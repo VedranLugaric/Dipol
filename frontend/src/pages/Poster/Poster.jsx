@@ -1,117 +1,118 @@
-import FallingAnimation from '../../FallingAnimation'
-import './Poster.css'
-import { useNavigate } from 'react-router-dom';
+// Poster.jsx
+
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate} from 'react-router-dom';
+import FallingAnimation from '../../FallingAnimation';
+import { Document, Page, pdfjs } from 'react-pdf';
+import './Poster.css';
 import { useAuth } from '../../AuthContext';
-import React, { useEffect, useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf'
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.js',
-    import.meta.url,
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url
 ).toString();
 
-const Poster = () => {
+const Poster = ({ conferenceId }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { konferencijaId } = useParams();
+  const { korisnik } = useAuth();
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
-    const { isAuthenticated, logout } = useAuth();
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const response = await fetch(`http://localhost:5000/api/posteri/${konferencijaId}`, {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ id_sud: korisnik.id }),
+              });
 
-    useEffect(() => {
-        //provjeri je li korisnik prijavljen
-        if (!isAuthenticated) {
-            //ako nije prijavljen, preusmjeri ga na login
-            navigate('../login');
-        }
-    }, [isAuthenticated, navigate]);
+              if (response.ok) {
+                  const data = await response.json();
+                  setData(data);
+              } else {
+                  console.error('Failed to fetch data');
+                  navigate('../konferencije');
+              }
+          } catch (error) {
+              console.error('Fetch error:', error.message);
+          } finally {
+              setLoading(false);
+          }
+      };
 
-    const [radovi, setPodaci] = useState([])
+      fetchData();
+  }, [conferenceId, korisnik.id]);
 
-    useEffect(() => {
-        const fetchRadovi = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/api/poster/23', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setPodaci(data.rezultat);
-                } else {
-                    throw new Error('Problem s dohvatom radova');
-                }
-            } catch (error) {
-                console.error('Fetch error:', error.message);
-                throw new Error('Problem s dohvatom radova');
-            }
-        };
-
-        fetchRadovi();
-    }, []);
-
+  
     return (
-        <>
-            <FallingAnimation>
-                <div>
-                    <Rad radovi={radovi} />
-                </div>
-            </FallingAnimation>
-        </>
-    )
-}
-
-const Rad = ({ radovi }) => {
-
-    const radoviArray = Array.isArray(radovi[1]) ? radovi[1] : [];
-    const imeArray = Array.isArray(radovi[0]) ? radovi[0] : [];
-
-    return (
-        <div>
-            {imeArray.map((rad, index) => (
-                <div className='rad' key={rad.id}>
-                    <div className='texts'>
-                        <span className='naslov'>{rad.nazivKonf}</span>
-                    </div>
-                </div>
-            ))}
-            {radoviArray.map((rad, index) => (
-                <div className='rad' key={rad.id}>
-                    <div className='texts'>
-                        <span className='naslov'>{rad.naslov}</span>
-                        <span className='id'>{rad.id}</span>
-                        <span className='autor'>{rad.autor}</span>
-                    </div>
-                    <div>
-                        <button className='glasajbutton'>
-                            <span class="circle1"></span>
-                            <span class="circle2"></span>
-                            <span class="circle3"></span>
-                            <span class="circle4"></span>
-                            <span class="circle5"></span>
-                            <span class="text">Glasaj</span>
-                        </button>
-                    </div>
-
-                    <div className='poster'>
-
-                        <Document file={rad.poster}>
-                            <Page pageNumber={1} />
-                        </Document>
-
-                        {/*}Ako želite učitavati .png/.jpg datoteku zamijeni s kodom gore
-                        <div className='poster'>
-                            <img className='poster1' src={rad.poster} />
-                        </div>
-*/}
-                    </div>
-                    <div className='prezentacija'>
-
-                    </div>
-                </div>
-            ))}
+      <FallingAnimation>
+        <div className='poster-container'>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              {data.posteri.map((poster, index) => (
+                <PosterItem key={poster.poster_id} poster={poster} rad={data.radovi[index]} />
+              ))}
+            </>
+          )}
         </div>
+      </FallingAnimation>
     );
+  };
+  
+const PosterItem = ({ poster, rad, conferenceId }) => {
+  const [hasVoted, setHasVoted] = useState(rad.hasVoted);
+  const [errorMessage, setErrorMessage] = useState('');
+  const { korisnik } = useAuth();
+  const { konferencijaId } = useParams();
+
+  const handleVote = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/vote/${rad.rad_id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ vote: 1, id_sud: korisnik.id, konferencijaId: konferencijaId }),
+      });
+
+      if (response.ok) {
+        setHasVoted(true);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message);
+      }
+    } catch (error) {
+      console.error('Vote error:', error.message);
+    }
+  };
+
+  return (
+    <div className='poster-item'>
+      {/* Display the poster image URL and the rad name */}
+      <div className='poster-preview'>
+        {poster.poster_image_link && (
+          <img src={poster.poster_image_link} alt='Poster Preview' />
+        )}
+        {rad && <span className='rad-title'>{rad.naslov}</span>}
+      </div>
+
+      {/* Add a vote button */}
+      <button onClick={handleVote} disabled={hasVoted}>
+        {hasVoted ? 'Voted' : 'Vote'}
+      </button>
+
+      {/* Display an error message if the user has already voted */}
+      {errorMessage && <p>{errorMessage}</p>}
+
+      {/* Add any other UI elements you need for each poster */}
+    </div>
+  );
 };
 
-export default Poster
+export default Poster;

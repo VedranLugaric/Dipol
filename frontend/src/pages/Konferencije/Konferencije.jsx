@@ -1,5 +1,6 @@
 import './Konferencije.css'
 import FallingAnimation from '../../FallingAnimation';
+import Poster from '../Poster/Poster';
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
 import { useEffect, useState } from 'react';
@@ -73,13 +74,9 @@ const Aktivne = ({aktivne}) => {
       if (lozinka === selectedKonferencija.lozinka) {
           setShowPasswordPrompt(false);
   
-          // Assuming selectedKonferencija has an 'id' property
-          const conferenceId = selectedKonferencija.id;
-  
-          // Assuming you have the necessary information for user creation
           const userCreationData = {
-              konferencijaId: conferenceId,
-              korisnikId: korisnik.id, // Assuming korisnik is your authenticated user
+              konferencijaId: selectedKonferencija.id,
+              korisnikId: korisnik.id,
           };
   
           try {
@@ -92,7 +89,7 @@ const Aktivne = ({aktivne}) => {
               });
   
               if (response.ok) {
-                  navigate('../poster');
+                navigate(`../posteri/${selectedKonferencija.id}`);
               } else {
                   const errorData = await response.json();
                   setLozinkaValidationMessage(`Error: ${errorData.error}`);
@@ -145,7 +142,6 @@ const Aktivne = ({aktivne}) => {
                   value={lozinka}
                   onChange={(e) => setLozinka(e.target.value)}
                 />
-                {/* Add a button to submit the password */}
                 <div className='pristupi-pass-div'>
                 <button className='pristupi-pass' 
                 onClick={handleSubmitPassword}>
@@ -156,13 +152,15 @@ const Aktivne = ({aktivne}) => {
                   <span class='circle5'></span>
                   <span class='text'>Pristupi</span>
               </button>
+              {!showPasswordPrompt && (
+              <Poster key={index} conferenceId={selectedKonferencija.id} />
+              )}
               </div>
               </div>
           </div>
         )}
             </div>
           ))}
-        {/* Add the password prompt here based on the state */}
       </div>
     );
 }
@@ -192,11 +190,11 @@ const Nadolazeće = ({nadolazece}) => {
 }
 
 const DodajKonferenciju = () => {
-  const { isAdminOrHigher } = useAuth();
+  const { isAdmin } = useAuth();
   
   return (
     <>
-      {isAdminOrHigher && (
+      {isAdmin && (
         <div className='addkonfdiv'>
           <Link to='/dodajkonferenciju'>
             <button className='addkonf'>

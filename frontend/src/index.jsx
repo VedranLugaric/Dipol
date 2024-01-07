@@ -21,7 +21,7 @@ const Main = () => {
         <Route exact path='/registracija' element={<Registracija />} />
         <Route exact path='/UserPage' element={<UserPage />} />
         <Route exact path='/konferencije' element={<Konferencije />}/>
-        <Route exact path='/poster' element={<Poster />}/>
+        <Route path="/posteri/:konferencijaId" element={<Poster />} />
         <Route exact path='/dodajkonferenciju' element={<DodajKonferenciju />}/>
         <Route exact path='/dodajposter' element={<DodajPoster />}/>
       </Routes>

@@ -144,3 +144,54 @@ p{
     opacity: 0.7;
 }
 */
+
+/* Add these styles to your Poster.css or your preferred stylesheet */
+
+/* Poster.css */
+
+.background{
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 780px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.poster-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+  color: white; /* White text color */
+}
+
+.poster-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid white; /* White border around each poster */
+}
+
+.poster-info {
+  display: flex;
+  justify-content: space-between;
+  width: 50%; /* Adjust as needed */
+  margin-bottom: 20px;
+}
+
+.poster-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.poster-author {
+  font-size: 16px;
+}
+
+.poster-preview img {
+  width: 50%; /* Set image width to 50% */
+}

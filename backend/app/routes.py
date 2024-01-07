@@ -1,9 +1,10 @@
 from datetime import datetime, timezone
 from flask import request, jsonify, make_response, render_template
 from passlib.hash import pbkdf2_sha256
-from app import app, db, admin_permission, author_permission, user_permission, superadmin_permission
-from app.models import Konferencija, Sudionik, Roles, Sudionik_sudjeluje_na, generate_session_id
+from app import app, db
+from app.models import generate_session_id, Konferencija, Sudionik, Roles, Sudionik_sudjeluje_na, Rad_se_predstavlja_na, Rad
 from app.utils import upload_to_gcs, save_to_database, generate_unique_filename
+from sqlalchemy.exc import IntegrityError
 
 @app.route('/api/registracija/', methods=['POST'])
 def registracija():
@@ -124,16 +125,77 @@ def create_user():
         konferencija_id = data.get('konferencijaId')
         user_id = data.get('korisnikId')
 
+        existing_entry = Sudionik_sudjeluje_na.query.filter_by(id_konf=konferencija_id, id_sud=user_id).first()
+
+        if existing_entry:
+            return jsonify({"message": "Korisnik već postoji za ovu konferenciju"}), 200
+
         new_entry = Sudionik_sudjeluje_na(id_konf=konferencija_id, id_sud=user_id)
 
         db.session.add(new_entry)
         db.session.commit()
 
-        return jsonify({"message": "User created successfully"}), 201
+        return jsonify({"message": "Korisnik uspješno stvoren"}), 201
+
+    except IntegrityError as e:
+        db.session.rollback()
+        return jsonify({"error": "Neuspješno stvaranje korisnika. IntegrityError: " + str(e)}), 500
+
+    except Exception as e:
+        return jsonify({"error": "Neuspješno stvaranje korisnika. " + str(e)}), 500
+
+@app.route('/api/posteri/<int:konferencijaId>', methods=['POST'])
+def get_conference_posteri(konferencijaId):
+    try:
+        sudionik_id = request.json.get('id_sud')
+        konferencija = Konferencija.query.get(konferencijaId)
+
+        if not konferencija:
+            return jsonify({"error": "Konferencija ne postoji"}), 404
+
+        if not konferencija.aktivna:
+            return jsonify({"error": "Konferencija nije aktivna ili trenutno nije vrijeme konferencije"}), 403
+
+        sudionik_sudjeluje_na_entry = Sudionik_sudjeluje_na.query.filter_by(id_konf=konferencijaId, id_sud=sudionik_id).first()
+
+        if sudionik_sudjeluje_na_entry:
+            posteri_data = (
+                db.session.query(Rad_se_predstavlja_na)
+                .filter(Rad_se_predstavlja_na.id_konf == konferencijaId)
+                .all()
+            )
+
+            radovi_data = (
+                db.session.query(Rad)
+                .join(Rad_se_predstavlja_na, Rad.id_rad == Rad_se_predstavlja_na.id_rad)
+                .filter(Rad_se_predstavlja_na.id_konf == konferencijaId)
+                .all()
+            )
+
+            posteri = [
+                {
+                    "poster_id": poster.id_poster,
+                    "poster_image_link": poster.posteri.poster,
+                }
+                for poster in posteri_data
+            ]
+
+            radovi = [
+                {
+                    "rad_id": rad.id_rad,
+                    "naslov": rad.naslov,
+                }
+                for rad in radovi_data
+            ]
+
+            return jsonify({"posteri": posteri, "radovi": radovi}), 200
+
+        return jsonify({"error": "Sudionik nije registriran za ovu konferenciju"}), 403
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+<<<<<<< Updated upstream
 
 @app.route('/api/dodaj_konf', methods=['POST'])
 def dodaj_konferenciju():
@@ -165,3 +227,40 @@ def dodaj_konferenciju():
         db.session.commit()
 
         return jsonify({'message': 'Konferencija uspješno dodana!'})
+=======
+@app.route('/api/vote/<int:rad_id>', methods=['POST'])
+def vote(rad_id):
+    data = request.get_json()
+    user_id = data.get('id_sud')
+    konferencijaId = data.get('konferencijaId')
+    
+    if not user_id or not konferencijaId:
+        return jsonify({'error': 'Potrebni su ID korisnika i ID konferencije'}), 400
+
+    try:
+        existing_vote = Sudionik_sudjeluje_na.query.filter_by(id_sud=user_id, id_konf=konferencijaId).first()
+
+        if existing_vote and existing_vote.glasovao == 1:
+            return jsonify({'error': 'Korisnik je već glasao za ovu konferenciju'}), 400
+
+        rad_se_predstavlja_na = Rad_se_predstavlja_na.query.filter_by(id_rad=rad_id, id_konf=konferencijaId).first()
+
+        if rad_se_predstavlja_na:
+            rad_se_predstavlja_na.br_glasova += 1
+        else:
+            return jsonify({'error': 'Zapis za Rad_se_predstavlja_na ne postoji'}), 400
+
+        if existing_vote:
+            existing_vote.glasovao = 1
+        else:
+            new_vote = Sudionik_sudjeluje_na(id_sud=user_id, id_konf=konferencijaId, glasovao=1)
+            db.session.add(new_vote)
+
+        db.session.commit()
+
+        return jsonify({'message': 'Glas uspješno zabilježen'})
+    except IntegrityError as e:
+        db.session.rollback()
+        print(f"IntegrityError: {str(e)}")
+        return jsonify({'error': 'Pogreška prilikom zapisivanja glasa'}), 500
+>>>>>>> Stashed changes
