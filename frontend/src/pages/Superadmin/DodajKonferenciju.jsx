@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 const DodajKonferenciju = () => {
-    const { isAdminOrHigher } = useAuth();
+    const { isAdmin } = useAuth();
     const navigate = useNavigate();
 
     const [naziv, setNaziv] = useState('');
@@ -54,7 +54,7 @@ const DodajKonferenciju = () => {
 
     return (
         <>
-        {isAdminOrHigher && (
+        {isAdmin && (
             <FallingAnimation>
             <hr></hr>
             <div className='formcontainer'>
@@ -142,7 +142,7 @@ const DodajKonferenciju = () => {
             <hr></hr>
             </FallingAnimation>
         )}
-        {!isAdminOrHigher && (
+        {!isAdmin && (
             <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

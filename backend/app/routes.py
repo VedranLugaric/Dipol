@@ -195,7 +195,6 @@ def get_conference_posteri(konferencijaId):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-<<<<<<< Updated upstream
 
 @app.route('/api/dodaj_konf', methods=['POST'])
 def dodaj_konferenciju():
@@ -227,7 +226,6 @@ def dodaj_konferenciju():
         db.session.commit()
 
         return jsonify({'message': 'Konferencija uspješno dodana!'})
-=======
 @app.route('/api/vote/<int:rad_id>', methods=['POST'])
 def vote(rad_id):
     data = request.get_json()
@@ -263,4 +261,3 @@ def vote(rad_id):
         db.session.rollback()
         print(f"IntegrityError: {str(e)}")
         return jsonify({'error': 'Pogreška prilikom zapisivanja glasa'}), 500
->>>>>>> Stashed changes
