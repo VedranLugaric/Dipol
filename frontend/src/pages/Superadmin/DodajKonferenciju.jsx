@@ -143,7 +143,10 @@ const DodajKonferenciju = () => {
             </FallingAnimation>
         )}
         {!isAdminOrHigher && (
-            <p>Nemate pristup stranici</p>
+            <div className='nemate-pristup'>
+                <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
+                <button className='return' onClick={() => navigate(-1)}>Povratak</button>
+            </div>
         )}
         </>
     )
