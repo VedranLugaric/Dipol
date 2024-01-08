@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 const DodajKonferenciju = () => {
-    const { isAdminOrHigher } = useAuth();
+    const { isAdmin } = useAuth();
     const navigate = useNavigate();
 
     const [naziv, setNaziv] = useState('');
@@ -22,11 +22,9 @@ const DodajKonferenciju = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Format the date and time before sending to the server
         const formatDateTime = (date, time) => {
-            // Combine date and time, then format in a way PostgreSQL understands
             const combinedDateTime = new Date(`${date}T${time}`);
-            const formattedDateTime = combinedDateTime.toISOString(); // Format: 'YYYY-MM-DDTHH:mm:ss.sssZ'
+            const formattedDateTime = combinedDateTime.toISOString();
             return formattedDateTime;
         };
 
@@ -54,7 +52,7 @@ const DodajKonferenciju = () => {
 
     return (
         <>
-        {isAdminOrHigher && (
+        {isAdmin && (
             <FallingAnimation>
             <hr></hr>
             <div className='formcontainer'>
@@ -142,7 +140,7 @@ const DodajKonferenciju = () => {
             <hr></hr>
             </FallingAnimation>
         )}
-        {!isAdminOrHigher && (
+        {!isAdmin && (
             <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

@@ -22,10 +22,9 @@ const Login = () => {
   const { isAuthenticated } = useAuth();
 
   const [capVal, setCapVal] = useState(null);
-  // Redirect to another route if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('../konferencije'); // Change this to the route you want to redirect to
+      navigate('../konferencije');
     }
   }, [isAuthenticated, navigate]);
 
@@ -33,7 +32,6 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      //poziv funkcije iz AuthContext
       await login(user, lozinka);
 
       setSuccess(true);
@@ -51,7 +49,6 @@ const Login = () => {
 
   return (
     <FallingAnimation>
-      {/*    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'>{errMsg}</p> */}
       <div className='background'>
         <div className='loginBody'>
           <div className='firsts'>

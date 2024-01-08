@@ -123,12 +123,12 @@ const Aktivne = ({aktivne}) => {
                     className='pristupibutton'
                     onClick={() => handlePristupiClick(konf)}
                   >
-                    <span class='circle1'></span>
-                    <span class='circle2'></span>
-                    <span class='circle3'></span>
-                    <span class='circle4'></span>
-                    <span class='circle5'></span>
-                    <span class='text'>Pristupi</span>
+                    <span className='circle1'></span>
+                    <span className='circle2'></span>
+                    <span className='circle3'></span>
+                    <span className='circle4'></span>
+                    <span className='circle5'></span>
+                    <span className='text'>Pristupi</span>
                   </button>
                 </div>
               )}
@@ -145,12 +145,12 @@ const Aktivne = ({aktivne}) => {
                 <div className='pristupi-pass-div'>
                 <button className='pristupi-pass' 
                 onClick={handleSubmitPassword}>
-                  <span class='circle1'></span>
-                  <span class='circle2'></span>
-                  <span class='circle3'></span>
-                  <span class='circle4'></span>
-                  <span class='circle5'></span>
-                  <span class='text'>Pristupi</span>
+                  <span className='circle1'></span>
+                  <span className='circle2'></span>
+                  <span className='circle3'></span>
+                  <span className='circle4'></span>
+                  <span className='circle5'></span>
+                  <span className='text'>Pristupi</span>
               </button>
               {!showPasswordPrompt && (
               <Poster key={index} conferenceId={selectedKonferencija.id} />
@@ -169,7 +169,7 @@ const Nadolazeće = ({nadolazece}) => {
     return (
         <div>
             {nadolazece && nadolazece.map((konf, index) => (
-                <div className='konferencija-button'>
+                  <div className='konferencija-button' key={index}>
                     <div className='konferencija' key={index}>
                         <div className='konfImg'></div>
                         <div className='texts'>

@@ -2,9 +2,10 @@ from datetime import datetime, timezone
 from flask import request, jsonify, make_response, render_template
 from passlib.hash import pbkdf2_sha256
 from app import app, db
-from app.models import generate_session_id, Konferencija, Sudionik, Roles, Sudionik_sudjeluje_na, Rad_se_predstavlja_na, Rad
+from app.models import generate_session_id, Konferencija, Sudionik, Roles, Sudionik_sudjeluje_na, Rad_se_predstavlja_na, Rad, Posteri
 from app.utils import upload_to_gcs, save_to_database, generate_unique_filename
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import func
 
 @app.route('/api/registracija/', methods=['POST'])
 def registracija():
@@ -195,14 +196,12 @@ def get_conference_posteri(konferencijaId):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-<<<<<<< Updated upstream
 
 @app.route('/api/dodaj_konf', methods=['POST'])
 def dodaj_konferenciju():
     if request.method == 'POST':
         data = request.json
 
-        # Extract data from the request
         naziv = data.get('naziv')
         mjesto = data.get('mjesto')
         vrijeme_poc = data.get('vrijemePocetka')
@@ -211,7 +210,6 @@ def dodaj_konferenciju():
         lozinka = data.get('konfLozinka')
         video = data.get('video')
 
-        # Create a new conference instance
         nova_konferencija = Konferencija(
             naziv=naziv,
             mjesto=mjesto,
@@ -222,12 +220,12 @@ def dodaj_konferenciju():
             video=video
         )
 
-        # Add the conference to the database
         db.session.add(nova_konferencija)
         db.session.commit()
 
         return jsonify({'message': 'Konferencija uspješno dodana!'})
-=======
+    
+
 @app.route('/api/vote/<int:rad_id>', methods=['POST'])
 def vote(rad_id):
     data = request.get_json()
@@ -263,4 +261,80 @@ def vote(rad_id):
         db.session.rollback()
         print(f"IntegrityError: {str(e)}")
         return jsonify({'error': 'Pogreška prilikom zapisivanja glasa'}), 500
->>>>>>> Stashed changes
+
+
+@app.route('/api/past_conferences', methods=['GET'])
+def get_past_conferences():
+    try:
+        past_conferences = Konferencija.query.filter(Konferencija.vrijeme_zav < datetime.now()).all()
+
+        conferences_data = [
+            {
+                'id_konf': conference.id_konf,
+                'naziv': conference.naziv,
+                'mjesto': conference.mjesto,
+                'vrijeme_poc': conference.vrijeme_poc.isoformat(),
+                'vrijeme_zav': conference.vrijeme_zav.isoformat(),
+                'video': conference.video,
+                'opis': conference.opis,
+                'lozinka': conference.lozinka,
+                'aktivna': conference.aktivna,
+            }
+            for conference in past_conferences
+        ]
+
+        return jsonify({'conferences': conferences_data}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/past_conference/<int:conference_id>', methods=['GET'])
+def get_past_conference(conference_id):
+
+    conference = Konferencija.query.get_or_404(conference_id)
+
+    rad_data = (
+    Rad.query
+    .outerjoin(Rad_se_predstavlja_na, (Rad.id_rad == Rad_se_predstavlja_na.id_rad) & (Rad_se_predstavlja_na.id_konf == conference_id))
+    .join(Sudionik, Rad.id_sud == Sudionik.id_sud)
+    .filter(Rad_se_predstavlja_na.id_konf == conference_id)
+    .with_entities(
+        Rad.id_rad,
+        Rad.naslov,
+        func.coalesce(func.max(Rad_se_predstavlja_na.br_glasova), 0).label('br_glasova'),
+        Sudionik.ime,
+        Sudionik.prezime
+    )
+    .group_by(Rad.id_rad, Sudionik.ime, Sudionik.prezime)
+    .order_by(func.max(Rad_se_predstavlja_na.br_glasova).desc())
+    .all()
+    )
+
+
+
+    response = {
+        'conference': {
+            'id': conference.id_konf,
+            'name': conference.naziv,
+            'place': conference.mjesto,
+            'start_time': conference.vrijeme_poc,
+            'end_time': conference.vrijeme_zav,
+            'video': conference.video,
+            'description': conference.opis,
+            'password': conference.lozinka,
+            'active': conference.aktivna,
+        },
+        'rad_data': [
+            {
+                'id_rad': rad.id_rad,
+                'naslov': rad.naslov,
+                'br_glasova': rad.br_glasova,
+                'ime_sudionika': rad.ime,
+                'prezime_sudionika': rad.prezime,
+            }
+            for rad in rad_data
+        ],
+    }
+
+    return jsonify(response), 200

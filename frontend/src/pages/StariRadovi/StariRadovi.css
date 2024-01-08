@@ -1,0 +1,33 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  color: white;
+}
+
+.conference-details {
+  margin-bottom: 20px;
+}
+
+.radovi-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.radovi-list li {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.radovi-list li strong {
+  color: #333;
+}
+
+.radovi-list li span {
+  color: #777;
+}

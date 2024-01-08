@@ -10,6 +10,8 @@ import Konferencije from './pages/Konferencije/Konferencije'
 import Poster from './pages/Poster/Poster'
 import DodajKonferenciju from './pages/Superadmin/DodajKonferenciju'
 import DodajPoster from './pages/Admin/DodajPoster'
+import ProsleKonferencije from './pages/ProsleKonferencije/ProsleKonferencije'
+import StariRadovi from './pages/StariRadovi/StariRadovi'
 
 const Main = () => {
   return (
@@ -24,6 +26,8 @@ const Main = () => {
         <Route path="/posteri/:konferencijaId" element={<Poster />} />
         <Route exact path='/dodajkonferenciju' element={<DodajKonferenciju />}/>
         <Route exact path='/dodajposter' element={<DodajPoster />}/>
+        <Route path="/proslekonferencije" element={<ProsleKonferencije />} />
+        <Route path="/stariradovi/:id" element={<StariRadovi />} />
       </Routes>
     </>
   );

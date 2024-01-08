@@ -61,6 +61,9 @@ const NavBar = () => {
                 )}
               </button>
               <button className='navButton' onClick={handleLogout}>ODJAVA</button>
+              <Link to='/proslekonferencije'>
+                <NavigationButton name='PROŠLE KONFERENCIJE' />
+              </Link>
             </>
           )}
         </div>
