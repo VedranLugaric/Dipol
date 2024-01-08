@@ -32,6 +32,8 @@
 	\item Pokrovitelj sponzorira
 	\item Reklama
 	\item Sudionik je administrator
+	\item Roles
+	\item Sudionik roles
 \end{itemize}
 		
 			\subsection{Opis tablica}
@@ -57,6 +59,12 @@
 		\hline
 		Video & VARCHAR & Link na video live prijenosa konferencije\\ 
 		\hline
+		Opis & VARCHAR & Opis konferencije\\ 
+		\hline
+		Lozinka & VARCHAR & Lozinka za pristup konferenciji\\ 
+		\hline
+		Aktivna & BOOLEAN & Određuje ako je konferencija trenutno aktivna\\ 
+		\hline
 	\end{tabular}
 \end{table}
 
@@ -76,6 +84,10 @@
 		\hline
 		E-mail & VARCHAR & E-mail sudionika\\ 
 		\hline
+		Lozika & VARCHAR & Lozinka za pristup korisničkom računu\\ 
+		\hline
+		Role & VARCHAR & Određuje ulogu odredenog korisnika user/admin\\ 
+		\hline
 	\end{tabular}
 \end{table}
 
@@ -91,11 +103,7 @@
 		\hline
 		\cellcolor{lightblue}ID konferencije & INT & Jedinstven identifikator konferencije\\ 
 		\hline
-		Autor & BOOLEAN & Oznaka je li je sudionik autor jednog od radova na konferenciji\\ 
-		\hline
-		Autor & BOOLEAN & Oznaka je li je sudionik glasovao\\ 
-		\hline
-		Lozinka & VARCHAR & Hash lozinke\\ 
+		Glasovao & INTEGER & Oznaka je li je sudionik glasao na određenoj koneferenciji ili nije\\ 
 		\hline
 	\end{tabular}
 \end{table}
@@ -230,6 +238,35 @@
 	\end{tabular}
 \end{table}
 
+\textbf{Roles} – Ovaj entitet sadrži informaciju koji id ima koja uloga. Sadrži atribute: ID Uloge i naziv uloge. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Sudionik_roles} preko identifikatora uloge.
+
+\begin{table}[H]
+	\caption{Sudionik je administrator}
+	\label{tbl:sudionikJeAdministrator}
+	\centering
+	\begin{tabular}{|l|c|l|} 
+		\hline
+		\cellcolor{lightblue}ID & INT & Jedinstven identifikator uloge\\ 
+		\hline
+		Name & VARCHAR & Naziv uloge\\ 
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{Sudionik_roles} – Ovaj entitet sadrži informaciju koji ID sudionika ima koju ID uloga. Sadrži atribute: ID Uloge i ID sudionika. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Roles} preko identifikatora uloge i u vezi \textit{One-to-One} s entiteton \textit{Sudionik}.
+
+\begin{table}[H]
+	\caption{Sudionik je administrator}
+	\label{tbl:sudionikJeAdministrator}
+	\centering
+	\begin{tabular}{|l|c|l|} 
+		\hline
+		\cellcolor{lightblue}ID sudionika & INT & Jedinstven identifikator sudionika\\ 
+		\hline
+		\cellcolor{lightblue}ID  & INT & Jedinstven identifikator uloge\\ 
+		\hline
+	\end{tabular}
+\end{table}
 
 		
 				
