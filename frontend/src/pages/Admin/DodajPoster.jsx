@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link,useLocation  } from 'react-router-dom';
+import { Link,useLocation, useNavigate  } from 'react-router-dom';
 import FallingAnimation from '../../FallingAnimation';
 import { useAuth } from '../../AuthContext';
+import './DodajPoster.css'
+import '../Superadmin/DodajKonferenciju.css'
 
 const DodajPoster = () => {
     const [nazivPostera, setNazivPostera] = useState('');
@@ -9,7 +11,10 @@ const DodajPoster = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadMessage, setUploadMessage] = useState('');
 
+    const { isAdmin } = useAuth();
     const { isAuthenticated, korisnik } = useAuth();
+
+    const navigate = useNavigate();
 
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -93,6 +98,11 @@ const DodajPoster = () => {
                                 Unesi
                             </button>
                         </form>
+                        {isAdmin && (
+                            <div className='view-div'>
+                                <button className='view-pending' onClick={() => navigate(`../pregled-radova/:${konferencijaId}`)}>Pregledaj unesene radove</button>
+                            </div>                 
+                        )}
                     </div>
                 </div>
                 <hr></hr>

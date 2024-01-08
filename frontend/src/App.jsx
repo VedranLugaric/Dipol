@@ -36,23 +36,13 @@ const NavBar = () => {
           <Link to='/konferencije'>
             <NavigationButton name="KONFERENCIJE" />
           </Link>
-          <Link to='/uzivo'>
-            <NavigationButton name="UŽIVO" />
-          </Link>
+          <Link to='/proslekonferencije'>
+                <NavigationButton name='PROŠLE KONFERENCIJE' />
+              </Link>
           <NavigationButton name="O NAMA" />
-
-          {!isAuthenticated && (
-            <>
-              <Link to='/registracija'>
-                <NavigationButton name="REGISTRACIJA" />
-              </Link>
-              <Link to='/login'>
-                <NavigationButton name="LOGIN" />
-              </Link>
-            </>
-          )}
           {isAuthenticated && (
             <>
+              <button className='navButton' onClick={handleLogout}>ODJAVA</button>
               <button className='navButton' style={{ cursor: 'default'}}>
                   {korisnik && (
                   <>
@@ -60,9 +50,15 @@ const NavBar = () => {
                   </>
                 )}
               </button>
-              <button className='navButton' onClick={handleLogout}>ODJAVA</button>
-              <Link to='/proslekonferencije'>
-                <NavigationButton name='PROŠLE KONFERENCIJE' />
+            </>
+          )}
+          {!isAuthenticated && (
+            <>
+              <Link to='/registracija'>
+                <NavigationButton name="REGISTRACIJA" />
+              </Link>
+              <Link to='/login'>
+                <NavigationButton name="LOGIN" />
               </Link>
             </>
           )}

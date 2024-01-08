@@ -1,13 +1,23 @@
 .container {
   max-width: 800px;
-  margin: 0 auto;
+  margin: auto;
+  margin-top: 2rem;
   padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(46, 46, 54);
+  box-shadow: none;
+  border-radius: 30px;
 }
 
 h2 {
   color: white;
+  text-align: center;
 }
-
+p{
+  margin-left: 1rem;
+}
 .conference-details {
   margin-bottom: 20px;
 }

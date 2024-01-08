@@ -35,6 +35,8 @@
   width: max-content;
   margin-top: 10px;
   margin-left: 10px;
+  font-style: italic;
+  padding: 10px;
 }
 .opis{
   padding: 15px;
@@ -68,12 +70,11 @@ hr{
 }
 .pristupi{
   height: 60px;
-  width: 120px;
+  width: 300px;
   margin-left: auto;
   align-self: center;
-  margin-right: 60px;
+  display: flex;
 }
-
 .mjestodatum{
   margin-top: 10px;
 }
@@ -93,6 +94,7 @@ position: relative;
 cursor: pointer;
 overflow: hidden;
 font-size: 16px;
+margin-right: 1rem;
 }
 
 .pristupibutton span:not(:nth-child(6)) {

@@ -1,0 +1,76 @@
+.rad-container{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    margin: 1rem;
+}
+.rad{
+    border-radius: 30px;
+    width: 200px;
+    height: fit-content;
+    background-color: rgb(46, 46, 54);
+    max-height: 600px;
+    padding: 1rem;
+}
+.rad-texts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+.img-div{
+    max-height: 300px;
+    max-width: 200px;
+}
+.naziv{
+    margin: 0;
+}
+.autor-rada{
+    color: rgb(156, 150, 170);;
+}
+.opis{
+    margin: auto;
+}
+.rad-button-cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid 2px rgb(46, 46, 54);
+    margin: 1rem;
+    border-radius: 35px;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    width: 175px;
+    padding: 1rem;
+}
+.accept-button{
+    border-radius: 20px;
+    padding: 6px 10px;
+    border: 2px solid rgb(62, 167, 109);
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in;
+}
+.reject-button{
+    border-radius: 20px;
+    padding: 6px 10px;
+    border: 2px solid rgb(160, 75, 75);
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in;
+}
+.accept-button:hover{
+    cursor: pointer;
+    background-color: rgb(62, 167, 109);
+}
+.reject-button:hover{
+    cursor: pointer;
+    background-color: rgb(160, 75, 75);
+}

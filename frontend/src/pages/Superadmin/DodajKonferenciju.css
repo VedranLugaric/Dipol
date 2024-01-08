@@ -2,7 +2,7 @@
     background-color: rgb(46, 46, 54);
     width: 40rem;
     margin: auto;
-    height: 57rem;
+    height: fit-content;
     margin-top: 2rem;
     margin-bottom: 4rem;
     border-radius: 40px;
@@ -43,6 +43,7 @@ form{
     height: 2.7rem;
     margin: auto;
     margin-top: 1rem;
+    margin-bottom: 2rem;
     width: 30%;
     border: white 2px solid;
     background: transparent;

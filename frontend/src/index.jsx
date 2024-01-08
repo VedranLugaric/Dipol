@@ -12,6 +12,7 @@ import DodajKonferenciju from './pages/Superadmin/DodajKonferenciju'
 import DodajPoster from './pages/Admin/DodajPoster'
 import ProsleKonferencije from './pages/ProsleKonferencije/ProsleKonferencije'
 import StariRadovi from './pages/StariRadovi/StariRadovi'
+import PregledRadova from './pages/Superadmin/PregledRadova'
 
 const Main = () => {
   return (
@@ -19,7 +20,7 @@ const Main = () => {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/login' element={<Login />} />
-        <Route exact path='/uzivo' element={<Uzivo />} />
+        <Route exact path='/live/:konferencijaId' element={<Uzivo />} />
         <Route exact path='/registracija' element={<Registracija />} />
         <Route exact path='/UserPage' element={<UserPage />} />
         <Route exact path='/konferencije' element={<Konferencije />}/>
@@ -28,6 +29,7 @@ const Main = () => {
         <Route exact path='/dodajposter' element={<DodajPoster />}/>
         <Route path="/proslekonferencije" element={<ProsleKonferencije />} />
         <Route path="/stariradovi/:id" element={<StariRadovi />} />
+        <Route path='/pregled-radova/:konferencijaId' element={<PregledRadova />} />
       </Routes>
     </>
   );

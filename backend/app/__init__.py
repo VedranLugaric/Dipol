@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 CORS(app, supports_credentials=True)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:bazepodataka@localhost:5432/progi'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:yale1972@localhost:5432/progi2'
 db = SQLAlchemy(app)
 principal = Principal(app)
 

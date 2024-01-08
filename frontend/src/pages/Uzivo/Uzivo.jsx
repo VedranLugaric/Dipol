@@ -3,22 +3,17 @@ import './Uzivo.css'
 import FallingAnimation from '../../FallingAnimation';
 
 const Uzivo = () => {
-    const opts = {
-        height: '500px',
-        width: '700px',
-        playerVars: {
-          autoplay: 0,
-          controls: 1,
-        }
-    }
-    const _onReady = (event) => {
-        event.target.pauseVideo()
-    }
-
+    //ovaj src se treba zamijeniti src-om iz baze
+    const src = "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4";
+    
     return (
         <FallingAnimation>
+            <hr></hr>
             <div className="video">
-                <YouTube className='lofigirl' videoId="lHpYyYtkmrw" opts={opts} onReady={_onReady}/>
+            <video controls width="100%">
+                <source src={src} type="video/mp4" />
+                Sorry, your browser doesn't support embedded videos.
+                </video>
             </div>
         </FallingAnimation>
     )
@@ -26,16 +21,3 @@ const Uzivo = () => {
 }
 
 export default Uzivo
-
-{/* 
-<iframe 
-width="560" 
-height="315" 
-src="https://www.youtube.com/embed/lHpYyYtkmrw?si=hXzXiH0f3xOVzk2u" 
-title="YouTube video player" 
-frameborder="0" 
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-allowfullscreen>    
-</iframe>
-*/}
-

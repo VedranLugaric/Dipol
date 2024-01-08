@@ -6,6 +6,7 @@ import { useAuth } from '../../AuthContext';
 import { useEffect, useState } from 'react';
 import './Pass-prompt-konferencija.css'
 
+
 const Konferencije = () => {
     const [konferencije, setPodaci] = useState([])
 
@@ -62,12 +63,19 @@ const Aktivne = ({aktivne}) => {
     const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
     const [selectedKonferencija, setSelectedKonferencija] = useState(null);
     const [lozinka, setLozinka] = useState('');
+    const [joinLive, setLive] = useState('')
     const [lozinkaValidationMessage, setLozinkaValidationMessage] = useState('');
     const navigate = useNavigate();
 
     const handlePristupiClick = (konf) => {
-        setSelectedKonferencija(konf);
-        setShowPasswordPrompt(true);
+        setSelectedKonferencija(konf)
+        setShowPasswordPrompt(true)
+    }
+
+    const handleLiveClick = (konf) => {
+        setSelectedKonferencija(konf)
+        setShowPasswordPrompt(true)
+        setLive(true)
     }
 
     const handleSubmitPassword = async () => {
@@ -89,7 +97,12 @@ const Aktivne = ({aktivne}) => {
               });
   
               if (response.ok) {
-                navigate(`../posteri/${selectedKonferencija.id}`);
+                if(joinLive) {
+                  setLive(false)
+                  navigate(`../live/${selectedKonferencija.id}`)
+                }else {
+                  navigate(`../posteri/${selectedKonferencija.id}`);
+                }
               } else {
                   const errorData = await response.json();
                   setLozinkaValidationMessage(`Error: ${errorData.error}`);
@@ -119,6 +132,15 @@ const Aktivne = ({aktivne}) => {
               </div>
               {isAuthenticated && (
                 <div className='pristupi'>
+                  <button className='pristupibutton'
+                  onClick={() => handleLiveClick(konf)}>
+                    <span className='circle1'></span>
+                    <span className='circle2'></span>
+                    <span className='circle3'></span>
+                    <span className='circle4'></span>
+                    <span className='circle5'></span>
+                    <span className='text'>Live</span>
+                  </button>
                   <button
                     className='pristupibutton'
                     onClick={() => handlePristupiClick(konf)}
@@ -194,7 +216,7 @@ const DodajKonferenciju = () => {
   
   return (
     <>
-      {isAdmin && (
+      {!isAdmin && (
         <div className='addkonfdiv'>
           <Link to='/dodajkonferenciju'>
             <button className='addkonf'>

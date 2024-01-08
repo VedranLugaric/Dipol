@@ -52,9 +52,9 @@ const DodajKonferenciju = () => {
 
     return (
         <>
-        {isAdmin && (
-            <FallingAnimation>
+        <FallingAnimation>
             <hr></hr>
+        {!isAdmin && (
             <div className='formcontainer'>
                 <h2 className='headertext'>Dodavanje konferencije</h2>
                 <div className='formdiv'>
@@ -137,8 +137,6 @@ const DodajKonferenciju = () => {
                     </form>
                 </div>
             </div>
-            <hr></hr>
-            </FallingAnimation>
         )}
         {!isAdmin && (
             <div className='nemate-pristup'>
@@ -146,6 +144,8 @@ const DodajKonferenciju = () => {
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>
             </div>
         )}
+        <hr></hr>
+        </FallingAnimation>
         </>
     )
 }

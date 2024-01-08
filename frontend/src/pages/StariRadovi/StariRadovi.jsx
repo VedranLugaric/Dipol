@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './StariRadovi.css';
+import FallingAnimation from '../../FallingAnimation';
 
 const StariRadovi = () => {
   const { id } = useParams();
@@ -21,13 +22,16 @@ const StariRadovi = () => {
   }, [id]);
 
   return (
+    <FallingAnimation>
+      <hr></hr>
     <div className="container">
-      <h2>Conference Details</h2>
+      <h2>Podaci o konferenciji</h2>
+      <hr></hr>
       {conferenceDetails && (
         <div className="conference-details">
-          <p>Naziv konferencije: {conferenceDetails.conference.name}</p>
-          <p>Vrijeme početka: {conferenceDetails.conference.start_time}</p>
-          <p>Vrijeme završetka: {conferenceDetails.conference.end_time}</p>
+          <p className='conf-name'>Naziv konferencije: {conferenceDetails.conference.name}</p>
+          <p className='conf-time'>Vrijeme početka: {conferenceDetails.conference.start_time}</p>
+          <p className='conf-time'>Vrijeme završetka: {conferenceDetails.conference.end_time}</p>
 
           {conferenceDetails.rad_data.length > 0 && (
             <div>
@@ -44,6 +48,7 @@ const StariRadovi = () => {
         </div>
       )}
     </div>
+    </FallingAnimation>
   );
 };
 
