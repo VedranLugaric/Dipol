@@ -50,14 +50,19 @@ const Poster = ({ conferenceId }) => {
   
     return (
       <FallingAnimation>
+        <hr></hr>
         <div className='poster-container'>
           {loading ? (
             <p>Loading...</p>
           ) : (
             <>
+            <div className='posteri-container'>
               {data.posteri.map((poster, index) => (
-                <PosterItem key={poster.poster_id} poster={poster} rad={data.radovi[index]} />
+                <>
+                    <PosterItem key={poster.poster_id} poster={poster} rad={data.radovi[index]} />
+                </>
               ))}
+            </div>
             </>
           )}
         </div>
@@ -70,6 +75,14 @@ const PosterItem = ({ poster, rad, conferenceId }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const { korisnik } = useAuth();
   const { konferencijaId } = useParams();
+  const [zoomedIn, setZoom] = useState('');
+
+  const zoomIn = () => {
+    setZoom(true)
+  }
+  const zoomOut = () => {
+    setZoom(false)
+  }
 
   const handleVote = async () => {
     try {
@@ -93,26 +106,35 @@ const PosterItem = ({ poster, rad, conferenceId }) => {
   };
 
   return (
-    <div className='poster-item'>
-      {/* Display the poster image URL and the rad name */}
-      <div className='poster-preview'>
-        {poster.poster_image_link && (
-          <img src={poster.poster_image_link} alt='Poster Preview' />
+    <>
+        <div className='poster-item'>
+            <div className='poster-img-div'>
+                {poster.poster_image_link && (
+                    <img onClick={zoomIn}
+                    className='poster-img' src={poster.poster_image_link} alt='Poster preview' />
+                )}
+                <div className='rad-texts'>
+                <hr></hr>
+                    {rad && <p className='rad-title'>{rad.naslov}</p>}
+                    <p className='autor'>Dodati ime autora</p>
+                </div>
+            </div>
+            <button className='vote-button' onClick={handleVote} disabled={hasVoted}>
+                {hasVoted ? 'VOTED' : 'VOTE'}
+            </button>
+
+            {errorMessage && <p>{errorMessage}</p>}
+        </div>
+        {zoomedIn && (
+            <div className='zoom-in'>
+                {poster.poster_image_link && (
+                    <img onClick={zoomOut}
+                    className='poster-zoom' src={poster.poster_image_link} alt='Poster preview' />
+                )}
+            </div>
         )}
-        {rad && <span className='rad-title'>{rad.naslov}</span>}
-      </div>
-
-      {/* Add a vote button */}
-      <button onClick={handleVote} disabled={hasVoted}>
-        {hasVoted ? 'Voted' : 'Vote'}
-      </button>
-
-      {/* Display an error message if the user has already voted */}
-      {errorMessage && <p>{errorMessage}</p>}
-
-      {/* Add any other UI elements you need for each poster */}
-    </div>
-  );
+    </>
+    );
 };
 
 export default Poster;

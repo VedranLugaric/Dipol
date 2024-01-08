@@ -53,7 +53,7 @@ const NavBar = () => {
           )}
           {isAuthenticated && (
             <>
-              <button className='navButton' style={{ cursor: 'default' }}>
+              <button className='navButton' style={{ cursor: 'default'}}>
                   {korisnik && (
                   <>
                     {korisnik.ime.toUpperCase()} {korisnik.prezime.toUpperCase()}
