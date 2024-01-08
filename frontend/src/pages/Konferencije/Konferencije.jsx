@@ -59,7 +59,6 @@ const Konferencije = () => {
 
 const Aktivne = ({aktivne}) => {
     const { isAuthenticated, korisnik } = useAuth();
-    
     const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
     const [selectedKonferencija, setSelectedKonferencija] = useState(null);
     const [lozinka, setLozinka] = useState('');
@@ -68,20 +67,35 @@ const Aktivne = ({aktivne}) => {
     const navigate = useNavigate();
 
     const handlePristupiClick = (konf) => {
-        setSelectedKonferencija(konf)
-        setShowPasswordPrompt(true)
-    }
-
-    const handleLiveClick = (konf) => {
-        setSelectedKonferencija(konf)
-        setShowPasswordPrompt(true)
-        setLive(true)
-    }
+      setSelectedKonferencija(konf);
+      const hasEnteredPassword = localStorage.getItem(`konferencija_${konf.id}_entered`);
+      if (hasEnteredPassword === 'true') {
+          setShowPasswordPrompt(false);
+          navigate(`../posteri/${konf.id}`);
+        } else {
+          setShowPasswordPrompt(true);
+      }
+  }
+  
+  const handleLiveClick = (konf) => {
+      setSelectedKonferencija(konf);
+      const hasEnteredPassword = localStorage.getItem(`konferencija_${konf.id}_entered`);
+      if (hasEnteredPassword === 'true') {
+          setShowPasswordPrompt(false);
+          setLive(true);
+          navigate(`../live/${konf.id}`)
+      } else {
+          setShowPasswordPrompt(true);
+          setLive(true);
+      }
+  }  
 
     const handleSubmitPassword = async () => {
       if (lozinka === selectedKonferencija.lozinka) {
           setShowPasswordPrompt(false);
-  
+
+          localStorage.setItem(`konferencija_${selectedKonferencija.id}_entered`, 'true');
+
           const userCreationData = {
               konferencijaId: selectedKonferencija.id,
               korisnikId: korisnik.id,

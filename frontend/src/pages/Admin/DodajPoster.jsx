@@ -39,7 +39,7 @@ const DodajPoster = () => {
         formData.append('nazivPostera', nazivPostera);
         formData.append('opisPostera', opisPostera);
         formData.append('korisnikId', korisnik.id);
-        formData.append('konferencijaId', 1);
+        formData.append('konferencijaId', 3);
 
         try {
             const response = await fetch('http://localhost:5000/api/upload', {
