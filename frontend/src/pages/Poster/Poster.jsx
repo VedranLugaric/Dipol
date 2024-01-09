@@ -143,4 +143,47 @@ const PosterItem = ({ poster, rad, conferenceId }) => {
     );
 };
 
+ /* const Footer = () =>{
+  const [pokrovitelji, setPokrovitelj] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/pokrovitelj/${konferencijaId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json',
+          },
+          body: JSON.stringify({id_pokrovitelj: pokrovitelji.id}),
+        });
+
+        if (response.ok){
+          const pokrovitelji = await response.json();
+          setPokrovitelj(pokrovitelji);
+        }
+        else {
+          console.error('Failed to fetch data');
+        }
+      } catch (error) {
+        console.error('Fetch error:', error.message);
+      }
+    };
+    fetchData();
+  }, []);
+
+  return(
+    <FallingAnimation>
+      <hr>
+      <footer>
+        <ul>
+          {pokrovitelji.map(pokrovitelj => (
+            <li key={pokrovitelj.id}>{pokrovitelj.ime}</li>
+          ))}
+        </ul>
+      </footer>
+      </hr>
+    </FallingAnimation>
+  )
+
+} */
+
 export default Poster;

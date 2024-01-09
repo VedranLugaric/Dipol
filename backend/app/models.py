@@ -111,6 +111,20 @@ class Superadmin(db.Model):
     
     id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'), primary_key=True)
     sudionik = db.relationship('Sudionik')
-    
+
+class Pokrovitelj(db.Model):
+    __tablename__ = 'pokrovitelj' 
+
+    id_pokrovitelj = db.Column(db.Integer, primary_key = True)
+    ime = db.Column(db.String(100))
+
+class Pokrovitelj_sponzorira(db.Model):
+    __tablename__ = 'pokrovitelj_sponzorira'  
+
+    id_pokrovitelj = db.Column(db.Integer, db.ForeignKey('pokrovitelj.id_pokrovitelj'), primary_key = True)
+    id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'), primary_key = True)
+    pokrovitelj = db.relationship('Pokrovitelj')
+    konferencija = db.relationship('Konferencija') 
+
 def generate_session_id():
     return secrets.token_hex(16)

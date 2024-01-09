@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from flask import request, jsonify, make_response, render_template
 from passlib.hash import pbkdf2_sha256
 from app import app, db
-from app.models import generate_session_id, Konferencija, Sudionik, Roles, Sudionik_sudjeluje_na, Rad_se_predstavlja_na, Rad, Posteri
+from app.models import generate_session_id, Konferencija, Sudionik, Roles, Sudionik_sudjeluje_na, Rad_se_predstavlja_na, Rad, Posteri, Pokrovitelj, Pokrovitelj_sponzorira
 from app.utils import upload_to_gcs, save_to_database, generate_unique_filename
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
@@ -336,5 +336,12 @@ def get_past_conference(conference_id):
             for rad in rad_data
         ],
     }
+
+@app.route('/api/pokrovitelj/<int:konferencijaId>', methods = ['POST'])
+def pokrovitelj_za_konf(konferencijaId):
+    konferencija = Konferencija.query.get(konferencijaId)
+    rez = db.session.query.join(Pokrovitelj_sponzorira).filter(Pokrovitelj_sponzorira.id_konf == id.konf).all()
+    podaci = [{'id' : pokrovitelj.id_pokrovitelj, 'ime' : pokrovitelj.ime} for pokrovitelj in rez]
+    return jsonify({'pokrovitelj': podaci})
 
     return jsonify(response), 200
