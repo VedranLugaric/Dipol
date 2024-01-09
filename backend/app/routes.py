@@ -336,6 +336,7 @@ def get_past_conference(conference_id):
             for rad in rad_data
         ],
     }
+    return response
 
 @app.route('/api/pokrovitelj/<int:konferencijaId>', methods = ['POST'])
 def pokrovitelj_za_konf(konferencijaId):

@@ -229,7 +229,7 @@ const DodajKonferenciju = () => {
   
   return (
     <>
-      {!isAdmin && (
+      {isAdmin && (
         <div className='addkonfdiv'>
           <Link to='/dodajkonferenciju'>
             <button className='addkonf'>
@@ -248,6 +248,8 @@ const DodajKonferenciju = () => {
 };
 
 const DodajPosterButton = ({ konferencijaId }) => {
+  const { isAdmin } = useAuth()
+
   return (
     <div>
       <Link to={`/dodajposter?konferencijaId=${konferencijaId}`}>
@@ -260,6 +262,18 @@ const DodajPosterButton = ({ konferencijaId }) => {
           <span className="text">Dodaj poster</span>
         </button>
       </Link>
+      {isAdmin && (
+        <Link to={`../pregled-radova/:${konferencijaId}`}>
+        <button className='addposter'>
+          <span className="circle1"></span>
+          <span className="circle2"></span>
+          <span className="circle3"></span>
+          <span className="circle4"></span>
+          <span className="circle5"></span>
+          <span className="text">Pregledaj radove</span>
+        </button>
+      </Link>
+      )}
     </div>
   );
 };

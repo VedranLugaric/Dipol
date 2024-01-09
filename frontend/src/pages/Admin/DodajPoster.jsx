@@ -11,8 +11,9 @@ const DodajPoster = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadMessage, setUploadMessage] = useState('');
 
-    const { isAdmin } = useAuth();
+    
     const { isAuthenticated, korisnik } = useAuth();
+    const { isAdmin } = useAuth();
 
     const navigate = useNavigate();
 

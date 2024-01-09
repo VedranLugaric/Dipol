@@ -54,7 +54,7 @@ const DodajKonferenciju = () => {
         <>
         <FallingAnimation>
             <hr></hr>
-        {!isAdmin && (
+        {isAdmin && (
             <div className='formcontainer'>
                 <h2 className='headertext'>Dodavanje konferencije</h2>
                 <div className='formdiv'>
