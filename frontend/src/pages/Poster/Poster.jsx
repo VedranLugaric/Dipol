@@ -137,7 +137,7 @@ const PosterItem = ({ poster, rad, conferenceId }) => {
     );
 };
 
-/*  const Footer = () =>{
+ /* const Footer = () =>{
   const [pokrovitelji, setPokrovitelj] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -161,8 +161,8 @@ const PosterItem = ({ poster, rad, conferenceId }) => {
         console.error('Fetch error:', error.message);
       }
     };
-    
-  });
+    fetchData();
+  }, []);
 
   return(
     <FallingAnimation>
