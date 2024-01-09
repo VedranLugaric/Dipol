@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../AuthContext';
 import { useEffect, useState } from 'react';
 import './Pass-prompt-konferencija.css'
+import GfGWeatherApp from '../WeatherApp/WeatherApp';
 
 
 const Konferencije = () => {
@@ -40,6 +41,9 @@ const Konferencije = () => {
         <FallingAnimation>
         <hr></hr>
         <DodajKonferenciju />
+        <div className='weatherapp'>
+          <GfGWeatherApp />
+        </div>
         <div className='konfContainer'>
             <div className='tekst'>Aktivne konferencije: </div>
                 <div className='aktivne'>
