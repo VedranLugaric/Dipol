@@ -58,147 +58,146 @@ const Konferencije = () => {
 }
 
 const Aktivne = ({aktivne}) => {
-    const { isAuthenticated, korisnik } = useAuth();
-    const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
-    const [selectedKonferencija, setSelectedKonferencija] = useState(null);
-    const [lozinka, setLozinka] = useState('');
-    const [joinLive, setLive] = useState('')
-    const [lozinkaValidationMessage, setLozinkaValidationMessage] = useState('');
-    const navigate = useNavigate();
+  const { isAuthenticated, korisnik } = useAuth();
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [selectedKonferencija, setSelectedKonferencija] = useState(null);
+  const [lozinka, setLozinka] = useState('');
+  const [joinLive, setLive] = useState('')
+  const navigate = useNavigate();
 
-    const handlePristupiClick = (konf) => {
-      setSelectedKonferencija(konf);
-      const hasEnteredPassword = localStorage.getItem(`konferencija_${konf.id}_entered`);
-      if (hasEnteredPassword === 'true') {
-          setShowPasswordPrompt(false);
-          navigate(`../posteri/${konf.id}`);
-        } else {
-          setShowPasswordPrompt(true);
-      }
+  const handlePristupiClick = (konf) => {
+    setSelectedKonferencija(konf);
+    const hasEnteredPassword = localStorage.getItem(`konferencija_${konf.id}_entered`);
+    if (hasEnteredPassword === 'true') {
+        setShowPasswordPrompt(false);
+        navigate(`../posteri/${konf.id}`);
+      } else {
+        setShowPasswordPrompt(true);
+    }
   }
   
   const handleLiveClick = (konf) => {
-      setSelectedKonferencija(konf);
-      const hasEnteredPassword = localStorage.getItem(`konferencija_${konf.id}_entered`);
-      if (hasEnteredPassword === 'true') {
-          setShowPasswordPrompt(false);
-          setLive(true);
-          navigate(`../live/${konf.id}`)
-      } else {
-          setShowPasswordPrompt(true);
-          setLive(true);
-      }
+    setSelectedKonferencija(konf);
+    const hasEnteredPassword = localStorage.getItem(`konferencija_${konf.id}_entered`);
+    if (hasEnteredPassword === 'true') {
+      setShowPasswordPrompt(false);
+      setLive(true);
+      navigate(`../live/${konf.id}`)
+    } else {
+        setShowPasswordPrompt(true);
+        setLive(true);
+    }
   }  
 
-    const handleSubmitPassword = async () => {
-      if (lozinka === selectedKonferencija.lozinka) {
-          setShowPasswordPrompt(false);
+  const handleSubmitPassword = async () => {
+    if (lozinka === selectedKonferencija.lozinka) {
+        setShowPasswordPrompt(false);
 
-          localStorage.setItem(`konferencija_${selectedKonferencija.id}_entered`, 'true');
+        localStorage.setItem(`konferencija_${selectedKonferencija.id}_entered`, 'true');
 
-          const userCreationData = {
-              konferencijaId: selectedKonferencija.id,
-              korisnikId: korisnik.id,
-          };
-  
-          try {
-              const response = await fetch('http://localhost:5000/api/create_user', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(userCreationData),
-              });
-  
-              if (response.ok) {
-                if(joinLive) {
-                  setLive(false)
-                  navigate(`../live/${selectedKonferencija.id}`)
-                }else {
-                  navigate(`../posteri/${selectedKonferencija.id}`);
-                }
-              } else {
-                  const errorData = await response.json();
-                  setLozinkaValidationMessage(`Error: ${errorData.error}`);
+        const userCreationData = {
+            konferencijaId: selectedKonferencija.id,
+            korisnikId: korisnik.id,
+        };
+
+        try {
+            const response = await fetch('http://localhost:5000/api/create_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userCreationData),
+            });
+
+            if (response.ok) {
+              if(joinLive) {
+                setLive(false)
+                navigate(`../live/${selectedKonferencija.id}`)
+              }else {
+                navigate(`../posteri/${selectedKonferencija.id}`);
               }
-          } catch (error) {
-              console.error('Error creating user:', error);
-          }
-      } else {
-          alert("Pogrešna lozinka!")
-      }
-    };
-
-    const handleExitPopup = () => {
-      setShowPasswordPrompt(false)
+            } else {
+                const errorData = await response.json();
+                console.error('Error creating user:', errorData);
+            }
+        } catch (error) {
+            console.error('Error creating user:', error);
+        }
+    } else {
+        alert("Pogrešna lozinka!")
     }
+  };
 
-    return (
-      <div>
-        {aktivne &&
-          aktivne.map((konf, index) => (
-            <div className='konferencija' key={index}>
-              <div className='konfImg'></div>
-              <div className='texts'>
-                <span className='naziv'>{konf.naziv}</span>
-                <span className='mjesto'>{konf.mjesto}</span>
-                <span className='opis'>{konf.opis}</span>
-              </div>
-              {isAuthenticated && (
-                <div className='pristupi'>
-                  <button className='pristupibutton'
-                  onClick={() => handleLiveClick(konf)}>
-                    <span className='circle1'></span>
-                    <span className='circle2'></span>
-                    <span className='circle3'></span>
-                    <span className='circle4'></span>
-                    <span className='circle5'></span>
-                    <span className='text'>Live</span>
-                  </button>
-                  <button
-                    className='pristupibutton'
-                    onClick={() => handlePristupiClick(konf)}
-                  >
-                    <span className='circle1'></span>
-                    <span className='circle2'></span>
-                    <span className='circle3'></span>
-                    <span className='circle4'></span>
-                    <span className='circle5'></span>
-                    <span className='text'>Pristupi</span>
-                  </button>
-                </div>
-              )}
-              {showPasswordPrompt && selectedKonferencija == konf &&  (
-          <div className='popup-background'>
-              <div className='password-prompt'>
-              <button className='exit' onClick={handleExitPopup}>x</button>
-                <label className='pass-label'>Unesite lozinku konferencije "{konf.naziv}":</label>
-                <input className='pass-input'
-                  type='password'
-                  value={lozinka}
-                  onChange={(e) => setLozinka(e.target.value)}
-                />
-                <div className='pristupi-pass-div'>
-                <button className='pristupi-pass' 
-                onClick={handleSubmitPassword}>
+  const handleExitPopup = () => {
+    setShowPasswordPrompt(false)
+  }
+
+  return (
+    <div>
+      {aktivne &&
+        aktivne.map((konf, index) => (
+          <div className='konferencija' key={index}>
+            <div className='konfImg'></div>
+            <div className='texts'>
+              <span className='naziv'>{konf.naziv}</span>
+              <span className='mjesto'>{konf.mjesto}</span>
+              <span className='opis'>{konf.opis}</span>
+            </div>
+            {isAuthenticated && (
+              <div className='pristupi'>
+                <button className='pristupibutton'
+                onClick={() => handleLiveClick(konf)}>
+                  <span className='circle1'></span>
+                  <span className='circle2'></span>
+                  <span className='circle3'></span>
+                  <span className='circle4'></span>
+                  <span className='circle5'></span>
+                  <span className='text'>Live</span>
+                </button>
+                <button
+                  className='pristupibutton'
+                  onClick={() => handlePristupiClick(konf)}
+                >
                   <span className='circle1'></span>
                   <span className='circle2'></span>
                   <span className='circle3'></span>
                   <span className='circle4'></span>
                   <span className='circle5'></span>
                   <span className='text'>Pristupi</span>
-              </button>
-              {!showPasswordPrompt && (
-              <Poster key={index} conferenceId={selectedKonferencija.id} />
-              )}
+                </button>
               </div>
-              </div>
-          </div>
-        )}
+            )}
+            {showPasswordPrompt && selectedKonferencija == konf &&  (
+        <div className='popup-background'>
+            <div className='password-prompt'>
+            <button className='exit' onClick={handleExitPopup}>x</button>
+              <label className='pass-label'>Unesite lozinku konferencije "{konf.naziv}":</label>
+              <input className='pass-input'
+                type='password'
+                value={lozinka}
+                onChange={(e) => setLozinka(e.target.value)}
+              />
+              <div className='pristupi-pass-div'>
+              <button className='pristupi-pass' 
+              onClick={handleSubmitPassword}>
+                <span className='circle1'></span>
+                <span className='circle2'></span>
+                <span className='circle3'></span>
+                <span className='circle4'></span>
+                <span className='circle5'></span>
+                <span className='text'>Pristupi</span>
+            </button>
+            {!showPasswordPrompt && (
+            <Poster key={index} conferenceId={selectedKonferencija.id} />
+            )}
             </div>
-          ))}
-      </div>
-    );
+            </div>
+        </div>
+      )}
+          </div>
+        ))}
+    </div>
+  );
 }
 
 const Nadolazeće = ({nadolazece}) => {

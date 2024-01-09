@@ -69,13 +69,20 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         setIsAuthenticated(false);
-        setKorisnik(null);
         setIsAdmin(false);
         setIsAuthor(false);
+        setKorisnik(null);
         localStorage.removeItem('korisnik');
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('isAdmin');
         localStorage.removeItem('isAuthor');
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+          const key = localStorage.key(i);
+          if (key.startsWith('konferencija_')) {
+              localStorage.removeItem(key);
+          }
+        }      
+
       } else {
         throw new Error('Logout failed');
       }
