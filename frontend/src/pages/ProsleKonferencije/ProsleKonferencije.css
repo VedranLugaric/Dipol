@@ -54,9 +54,12 @@
 
 .conf-button{
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  justify-items: center;
   align-items: center;
+  justify-items: center;
+  margin: auto;
+  margin-right: 1rem;
 }
 
 .button {
@@ -71,6 +74,7 @@
   overflow: hidden;
   font-size: 16px;
   font-weight: bold;
+  width: max-content;
 }
 
 .button span:not(:nth-child(6)) {

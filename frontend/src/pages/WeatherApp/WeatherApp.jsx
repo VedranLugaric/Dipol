@@ -85,9 +85,6 @@ const GfGWeatherApp = (props) => {
 			)} 
 			{weather && weather.data && weather.data.main && ( 
 				<div>
-					<div className="date"> 
-						<span>{toDateFunction()}</span> 
-					</div>
 					<div className='temp-container'> 
 						<div className="icon-temp"> 
 							<img 
@@ -95,14 +92,15 @@ const GfGWeatherApp = (props) => {
 								src={`https://openweathermap.org/img/wn/${weather.data.weather[0].icon}@2x.png`}
 								alt={weather.data.weather[0].description} 
 							/> 
-							{Math.round(weather.data.main.temp)} 
+							<sup className='num'>{Math.round(weather.data.main.temp)} </sup>
 							<sup className="deg">°C</sup> 
 						</div> 
 						<div className="des-wind"> 
 							<p className='text'>{weather.data.weather[0].description.toUpperCase()}</p> 
 							<p className='text'>Wind Speed: {weather.data.wind.speed}m/s</p> 
 						</div>
-					</div> 
+						
+					</div>
 				</div> 
 			)} 
 		</div> 

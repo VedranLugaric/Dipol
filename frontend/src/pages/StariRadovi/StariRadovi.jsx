@@ -49,12 +49,22 @@ const StariRadovi = () => {
           <p className='conf-name'>Naziv konferencije: {conferenceDetails.conference.name}</p>
           <p className='conf-time'>Vrijeme početka: {conferenceDetails.conference.start_time}</p>
           <p className='conf-time'>Vrijeme završetka: {conferenceDetails.conference.end_time}</p>
-
+          <div className='conf-button'>
+              <button className='button' onClick={() => handleConferenceSelect(conference.id_konf)}>
+                <span className='circle1'></span>
+                <span className='circle2'></span>
+                <span className='circle3'></span>
+                <span className='circle4'></span>
+                <span className='circle5'></span>
+                <span className='text'>Galerija fotografija</span>
+              </button>
+            </div>
         
 
           {conferenceDetails.rad_data.length > 0 && (
             <div>
               <h3 className='conf-rang'>Rangirana ljestvica radova</h3>
+              <hr className='rang'></hr>
               <div className='top-three-cont'>
                 {getTopThreeVotes(conferenceDetails).map((rad, index) => (
                 <>

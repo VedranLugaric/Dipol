@@ -9,6 +9,7 @@
   background-color: rgb(46, 46, 54);
   box-shadow: none;
   border-radius: 30px;
+  margin-bottom: 3rem;
 }
 
 h2 {
@@ -29,8 +30,12 @@ p{
   font-weight:bold;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 28px;
+  padding-bottom: 2rem;
 }
-
+.rang{
+  margin-bottom: 3rem;
+  margin-top: -3rem;
+}
 .top-three-cont{
   display: flex;
   flex-direction: row;
@@ -123,4 +128,68 @@ p{
   margin-left: auto;
   margin-right: 20px;
   font-size: 16px;
+}
+.conf-button{
+  display: block;
+  margin-left: 1rem;
+}
+.button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: white;
+  background-color:transparent;
+  padding: 0.7em 1.2em;
+  border: 2px solid rgb(65, 49, 87) ;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.button span:not(:nth-child(6)) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 10px;
+  width: 10px;
+  background-color: rgb(46, 46, 54);
+  border-radius: 50%;
+  transition: transform .6s ease;
+}
+
+.button span:nth-child(6) {
+  position: relative;
+}
+
+.button span:nth-child(1) {
+  transform: translate(-3.3em, -4em);
+  background-color: rgb(65, 49, 87);
+}
+
+.button span:nth-child(2) {
+  transform: translate(-6em, 1.3em);
+  background-color: rgb(65, 49, 87);
+}
+
+.button span:nth-child(3) {
+  transform: translate(-.2em, 1.8em);
+  background-color: rgb(65, 49, 87);
+}
+
+.button:nth-child(4) {
+  transform: translate(3.5em, 1.4em);
+  background-color: rgb(65, 49, 87);
+}
+
+.button span:nth-child(5) {
+  transform: translate(3.5em, -3.8em);
+  background-color: rgb(65, 49, 87);
+}
+
+.button:hover span:not(:nth-child(6)) {
+  transform: translate(-50%, -50%) scale(25);
+  transition: transform 1.5s ease;
+  background-color: rgb(65, 49, 87);
 }
