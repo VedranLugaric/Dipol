@@ -4,49 +4,20 @@
 		Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
 } 
 
-
-.app-name { 
-	font-size: 2.3rem; 
-	color: rgb(106, 88, 133);
-	margin-bottom: 16px; 
-} 
-
 .App { 
 	display: flex; 
 	flex-direction: column; 
-	justify-content: center; 
-	align-items: center; 
-	width: 400px; 
-	min-height: 300px; 
-	background-color: rgb(46, 46, 54) ; 
+	justify-content: center;
+	align-items: center;
+
+	box-shadow: black 5px 5px 2rem;
+  	border-radius: 60px;
+
+	background-color: rgb(46, 46, 54);
 	text-align: center; 
-	margin: 128px auto; 
-	border-radius: 30px; 
-	padding-bottom: 32px; 
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-} 
 
-.city-search { 
-	width: 100%; 
-	max-width: 400px; 
-	box-sizing: border-box; 
-	border: none;
-    border-bottom: white solid 1px; 
-	outline: none;  
-	font-size: 16px; 
-	background-color: transparent; 
-	background-position: 10px 12px; 
-	background-repeat: no-repeat; 
-	padding: 12px 40px 12px 40px; 
-	-webkit-transition: width 0.4s ease-in-out; 
-	transition: width 0.4s ease-in-out; 
-	color: white;
-    margin-top: 20px; 
-} 
-
-.city-search:focus { 
-	width: 100%;
-    background-color: rgb(66, 66, 77); 
+	height: 8rem;
+	margin-left: 2rem;
 } 
 
 .city-name { 
@@ -56,34 +27,50 @@
 } 
 
 .date { 
-	font-size: 1.25em; 
+	font-size: 1em;
+	margin-top: 8px; 
 	font-weight: 500; 
 	color: #777; 
 } 
 
 .icon-temp { 
-	font-size: 3rem; 
+	font-size: 2rem; 
 	font-weight: 700; 
 	color: #796591; 
 	text-align: center; 
 } 
-
+.icon{
+	height: 80%;
+}
 .deg { 
 	font-size: 1.3rem; 
 	vertical-align: super;
 } 
 
 .des-wind { 
+	display: flex;
+	flex-direction: column;
 	font-weight: 500; 
-	color: #666; 
+	color: #666;
+	margin: auto;
 } 
+.text{
+	margin: auto;
+	font-size: 16px;
+	margin-right: 1rem;
+	margin-left: 1rem;
+}
 
 .error-message { 
-	display: block; 
+	display: flex; 
 	text-align: center; 
-	color: #d32f2f; 
-	font-size: 24px; 
-	margin-top: auto; 
+	color: #ffffff; 
+	font-size: 24px;  
+
+	flex-direction: column;
+	margin-bottom: auto;
+	margin-right: 1rem;
+	margin-left: 1rem;
 } 
 
 .Loader { 
@@ -108,4 +95,7 @@
 	height: 100px; 
 	border-radius: 50%; 
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+.temp-container{
+	display: flex;
 }
