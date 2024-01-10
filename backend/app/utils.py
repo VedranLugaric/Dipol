@@ -18,7 +18,7 @@ def generate_unique_filename(filename):
     return unique_filename
 
 def upload_to_gcs(file, bucket_name, destination_blob_name):
-    key_file_path = "C:\\Users\\Lukas\\Desktop\\FER\\progi-key.json"
+    key_file_path = "C:\\Users\\User\\Documents\\GitHub\\progi-key.json"
     client = storage.Client.from_service_account_json(key_file_path)
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)

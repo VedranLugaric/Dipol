@@ -29,7 +29,7 @@ const NavBar = () => {
       <div className='navBar'>
         <Link to='/' className='logo'>
           <a href='#' className='logo'>
-            <h2>dipol</h2>
+            <h2 className='logo'>dipol</h2>
           </a>
         </Link>
         <div className='navBtns'>

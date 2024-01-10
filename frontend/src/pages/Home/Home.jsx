@@ -22,7 +22,7 @@ const Home = () => {
     <FallingAnimation>
       <div className='mid'>
         <div className='midContents'>
-          <h1>OCIJENITE RAD</h1>
+          <h1 className='ocijenite'>OCIJENITE RAD</h1>
           <a className='teksthome'>Postanite član "ime organizacije" i dobijte mogućnost 
             objavljivanja, ocjenjivanja i praćenja radova. U nekoliko klikova možete pratiti
             live prijenos bilo koje aktivne konferencije!</a>

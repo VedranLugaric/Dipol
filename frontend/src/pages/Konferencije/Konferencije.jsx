@@ -41,8 +41,6 @@ const Konferencije = () => {
         <FallingAnimation>
         <hr></hr>
         <DodajKonferenciju />
-        <div className='weatherapp'>
-        </div>
         <div className='konfContainer'>
             <div className='tekst'>Aktivne konferencije: </div>
                 <div className='aktivne'>
@@ -52,7 +50,7 @@ const Konferencije = () => {
                 <div className='nadolazece'>
                     <Nadolazeće nadolazece={konferencije.nadolazece} />
                 </div>
-            </div>
+          </div>
         </div>
         <hr></hr>
         </FallingAnimation>
@@ -213,7 +211,7 @@ const Nadolazeće = ({nadolazece}) => {
     return (
         <div>
             {nadolazece && nadolazece.map((konf, index) => (
-                  <div className='konferencija-button' key={index}>
+                  <div className='conf-weather-cont' key={index}>
                     <div className='konferencija' key={index}>
                         <div className='konfImg'></div>
                         <div className='texts'>

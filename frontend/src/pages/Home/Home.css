@@ -9,8 +9,16 @@
   margin-left: 20%;
   color: white;
   text-decoration: none;
-  float: left;
-  align-self: center
+  align-self: center;
+  margin: 2rem;
+  margin-left: 17%;
+  font-size: 2.3rem;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  background: linear-gradient(to left, white 50%, rgb(65, 49, 87) 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 
@@ -32,7 +40,7 @@
 
 .mid{
   font-family: Geneva, Verdana, sans-serif;
-  height: 600px;
+  height: 40rem;
   background-image: url(slike/coffee-break-1177540_1280.jpg);
   background-size: cover;
   display: flex;
@@ -42,7 +50,7 @@
   color: white;
   margin: auto;
   text-align: center;
-  width: 500px;
+  width: fit-content;
 }
 
 .midBtns{
@@ -99,4 +107,7 @@
 }
 body{
   margin: 0;
+}
+.ocijenite{
+  color: white;
 }
