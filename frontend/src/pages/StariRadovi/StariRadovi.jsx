@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './StariRadovi.css';
 import FallingAnimation from '../../FallingAnimation';
+import { useNavigate  } from 'react-router-dom';
 
 const StariRadovi = () => {
   const { id } = useParams();
   const [conferenceDetails, setConferenceDetails] = useState(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +52,7 @@ const StariRadovi = () => {
           <p className='conf-time'>Vrijeme početka: {conferenceDetails.conference.start_time}</p>
           <p className='conf-time'>Vrijeme završetka: {conferenceDetails.conference.end_time}</p>
           <div className='conf-button'>
-              <button className='button' onClick={() => handleConferenceSelect(conference.id_konf)}>
+              <button className='button' onClick={() => navigate(`/galerija/${conferenceDetails.conference.id}`)}>
                 <span className='circle1'></span>
                 <span className='circle2'></span>
                 <span className='circle3'></span>

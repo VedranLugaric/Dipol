@@ -13,6 +13,7 @@ import DodajPoster from './pages/Admin/DodajPoster'
 import ProsleKonferencije from './pages/ProsleKonferencije/ProsleKonferencije'
 import StariRadovi from './pages/StariRadovi/StariRadovi'
 import PregledRadova from './pages/Superadmin/PregledRadova'
+import Galerija from './pages/Galerija/Galerija'
 
 const Main = () => {
   return (
@@ -30,6 +31,7 @@ const Main = () => {
         <Route path="/proslekonferencije" element={<ProsleKonferencije />} />
         <Route path="/stariradovi/:id" element={<StariRadovi />} />
         <Route path='/pregled-radova/:konferencijaId' element={<PregledRadova />} />
+        <Route path='/galerija/:konferencijaId' element={<Galerija />}></Route>
       </Routes>
     </>
   );
