@@ -42,7 +42,6 @@ const Konferencije = () => {
         <hr></hr>
         <DodajKonferenciju />
         <div className='weatherapp'>
-          <GfGWeatherApp />
         </div>
         <div className='konfContainer'>
             <div className='tekst'>Aktivne konferencije: </div>
@@ -140,6 +139,8 @@ const Aktivne = ({aktivne}) => {
     <div>
       {aktivne &&
         aktivne.map((konf, index) => (
+          <>
+          <div className='conf-weather-cont'>
           <div className='konferencija' key={index}>
             <div className='konfImg'></div>
             <div className='texts'>
@@ -171,6 +172,7 @@ const Aktivne = ({aktivne}) => {
                 </button>
               </div>
             )}
+            
             {showPasswordPrompt && selectedKonferencija == konf &&  (
         <div className='popup-background'>
             <div className='password-prompt'>
@@ -199,6 +201,9 @@ const Aktivne = ({aktivne}) => {
         </div>
       )}
           </div>
+          <GfGWeatherApp grad={konf.mjesto} />
+          </div>
+          </>
         ))}
     </div>
   );
