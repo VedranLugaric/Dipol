@@ -13,13 +13,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 const Poster = ({ conferenceId }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ posters: [], radovi: [], pokrovitelji: [] });
   const [loading, setLoading] = useState(true);
   const { konferencijaId } = useParams();
   const { korisnik, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
-
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -27,54 +25,68 @@ const Poster = ({ conferenceId }) => {
     }
 
     const fetchData = async () => {
-        try {
-            const response = await fetch(`http://localhost:5000/api/posteri/${konferencijaId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id_sud: korisnik.id }),
-            });
+      try {
+        const posterResponse = await fetch(`http://localhost:5000/api/posteri/${konferencijaId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id_sud: korisnik.id }),
+        });
 
-            if (response.ok) {
-                const data = await response.json();
-                setData(data);
-            } else {
-                console.error('Failed to fetch data');
-                navigate('../konferencije');
-            }
-        } catch (error) {
-            console.error('Fetch error:', error.message);
-        } finally {
-            setLoading(false);
+        const pokroviteljResponse = await fetch(`http://localhost:5000/api/pokrovitelj/${konferencijaId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (posterResponse.ok && pokroviteljResponse.ok) {
+          const posterData = await posterResponse.json();
+          const pokroviteljData = await pokroviteljResponse.json();
+
+          setData({ posters: posterData.posteri, radovi: posterData.radovi, pokrovitelji: pokroviteljData.pokrovitelj });
+        } else {
+          console.error('Failed to fetch data');
+          navigate('../konferencije');
         }
+      } catch (error) {
+        console.error('Fetch error:', error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-      fetchData();
+    fetchData();
   }, [conferenceId, korisnik.id, isAuthenticated, navigate]);
 
-  
-    return (
-      <FallingAnimation>
-        <hr></hr>
-        <div className='poster-container'>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
+  return (
+    <FallingAnimation>
+      <hr></hr>
+      <div className='poster-container'>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
             <div className='posteri-container'>
-              {data.posteri.map((poster, index) => (
-                <>
-                    <PosterItem key={poster.poster_id} poster={poster} rad={data.radovi[index]} />
-                </>
+              {data.posters.map((poster, index) => (
+                <PosterItem key={poster.poster_id} poster={poster} rad={data.radovi[index]} />
               ))}
             </div>
-            </>
-          )}
-        </div>
-      </FallingAnimation>
-    );
-  };
+            <div className='pokrovitelji-container'>
+              <h2>Pokrovitelji</h2>
+              {data.pokrovitelji.map((pokrovitelj) => (
+                <div key={pokrovitelj.id} className='pokrovitelj-item' onClick={() => window.open(pokrovitelj.stranica, '_blank')}>
+                  <p>{pokrovitelj.ime}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </FallingAnimation>
+  );
+};
   
 const PosterItem = ({ poster, rad, conferenceId }) => {
   const [hasVoted, setHasVoted] = useState(rad.hasVoted);
@@ -143,47 +155,6 @@ const PosterItem = ({ poster, rad, conferenceId }) => {
     );
 };
 
- /* const Footer = () =>{
-  const [pokrovitelji, setPokrovitelj] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/api/pokrovitelj/${konferencijaId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type' : 'application/json',
-          },
-          body: JSON.stringify({id_pokrovitelj: pokrovitelji.id}),
-        });
-
-        if (response.ok){
-          const pokrovitelji = await response.json();
-          setPokrovitelj(pokrovitelji);
-        }
-        else {
-          console.error('Failed to fetch data');
-        }
-      } catch (error) {
-        console.error('Fetch error:', error.message);
-      }
-    };
-    fetchData();
-  }, []);
-
-  return(
-    <FallingAnimation>
-      <hr>
-      <footer>
-        <ul>
-          {pokrovitelji.map(pokrovitelj => (
-            <li key={pokrovitelj.id}>{pokrovitelj.ime}</li>
-          ))}
-        </ul>
-      </footer>
-      </hr>
-    </FallingAnimation>
-  )
-
-} */
+ 
 
 export default Poster;
