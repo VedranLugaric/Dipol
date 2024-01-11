@@ -47,7 +47,7 @@ class Rad(db.Model):
     id_rad = db.Column(db.Integer, primary_key=True)
     naslov = db.Column(db.String(100))
     id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'))
-
+    pdf = db.Column(db.String(200))
     sudionik = db.relationship('Sudionik')
     rad_se_predstavlja_na = db.relationship('Rad_se_predstavlja_na', back_populates='rad')
 

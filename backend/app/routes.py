@@ -91,32 +91,46 @@ def dohvati_konferencije():
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
-    if 'file' not in request.files:
-        return "No file part", 400
+    if 'imageFile' not in request.files or 'pdfFile' not in request.files or 'pptFile' not in request.files:
+        return 'No file part', 400
 
-    uploaded_file = request.files['file']
+    image_file = request.files['imageFile']
+    pdf_file = request.files['pdfFile']
+    ppt_file = request.files['pptFile']
 
-    if uploaded_file.filename == '':
-        return "No selected file", 400
+    if image_file.filename == '':
+        return 'No selected image file', 400
+    if pdf_file and pdf_file.filename == '':
+        return 'No selected PDF file', 400
+    if ppt_file and ppt_file.filename == '':
+        return 'No selected PPT file', 400
 
-    unique_filename = generate_unique_filename(uploaded_file.filename)
+    unique_image_filename = generate_unique_filename(image_file.filename)
+    unique_pdf_filename = generate_unique_filename(pdf_file.filename) if pdf_file else None
+    unique_ppt_filename = generate_unique_filename(ppt_file.filename) if ppt_file else None
 
-    destination_blob_name = f'images/{unique_filename}'
+    image_blob_name = f'images/{unique_image_filename}'
+    pdf_blob_name = f'pdfs/{unique_pdf_filename}' if pdf_file else None
+    ppt_blob_name = f'ppts/{unique_ppt_filename}' if ppt_file else None
 
-    upload_to_gcs(uploaded_file, 'progi', destination_blob_name)
+    upload_to_gcs(image_file, 'progi', image_blob_name)
+    if pdf_file:
+        upload_to_gcs(pdf_file, 'progi', pdf_blob_name)
+    if ppt_file:
+        upload_to_gcs(ppt_file, 'progi', ppt_blob_name)
 
-
-    image_link = f'https://storage.googleapis.com/progi/{destination_blob_name}'
-
+    image_link = f'https://storage.googleapis.com/progi/{image_blob_name}'
+    pdf_link = f'https://storage.googleapis.com/progi/{pdf_blob_name}' if pdf_file else None
+    ppt_link = f'https://storage.googleapis.com/progi/{ppt_blob_name}' if ppt_file else None
 
     naslov_rad = request.form.get('nazivPostera')
     user_id = request.form.get('korisnikId')
     konf_id = request.form.get('konferencijaId')
 
-    save_to_database(naslov_rad, image_link, konf_id, user_id)
+    save_to_database(naslov_rad, image_link, pdf_link, ppt_link, konf_id, user_id)
 
+    return jsonify({"image_link": image_link, "pdf_link": pdf_link, "ppt_link": ppt_link})
 
-    return jsonify({"image_link": image_link})
 
 @app.route('/api/create_user', methods=['POST'])
 def create_user():
