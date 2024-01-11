@@ -51,13 +51,11 @@ const DodajPoster = () => {
 
         const formData = new FormData();
         formData.append('imageFile', selectedImageFile);
-        if (selectedPdfFile) {
-            formData.append('pdfFile', selectedPdfFile);
-        }
+        formData.append('pdfFile', selectedPdfFile);
         if (selectedPptFile) {
             formData.append('pptFile', selectedPptFile);
         }
-              formData.append('nazivPostera', nazivPostera);
+        formData.append('nazivPostera', nazivPostera);
         formData.append('opisPostera', opisPostera);
         formData.append('korisnikId', korisnik.id);
         formData.append('konferencijaId', 3);
