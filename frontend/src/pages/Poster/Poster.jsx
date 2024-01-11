@@ -17,6 +17,7 @@ const Poster = ({ conferenceId }) => {
   const [loading, setLoading] = useState(true);
   const { konferencijaId } = useParams();
   const { korisnik, isAuthenticated } = useAuth();
+  const { isAdmin } = useAuth()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,8 +65,28 @@ const Poster = ({ conferenceId }) => {
     <FallingAnimation>
       <hr></hr>
       <div className='poster-container'>
+        {isAdmin && (
+          <div className='add-pok-div'>
+            <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/:${konferencijaId}`)}>
+              <span className="circle1"></span>
+              <span className="circle2"></span>
+              <span className="circle3"></span>
+              <span className="circle4"></span>
+              <span className="circle5"></span>
+              <span className="text">Dodaj pokrovitelja</span>
+            </button>
+            <button className='addkonf' onClick={() => navigate(`/dodaj-fotografije/:${konferencijaId}`)}>
+              <span className="circle1"></span>
+              <span className="circle2"></span>
+              <span className="circle3"></span>
+              <span className="circle4"></span>
+              <span className="circle5"></span>
+              <span className="text">Dodaj fotografije</span>
+            </button>
+          </div>
+        )}
         {loading ? (
-          <p>Loading...</p>
+          <h2>Loading...</h2>
         ) : (
           <>
             <div className='posteri-container'>

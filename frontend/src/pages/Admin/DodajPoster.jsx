@@ -105,7 +105,7 @@ const DodajPoster = () => {
                                 required
                             />
                             <label htmlFor="img" className='label'>
-                                Select image:
+                                Odaberite sliku postera:
                             </label>
                             <input
                                 type="file"
