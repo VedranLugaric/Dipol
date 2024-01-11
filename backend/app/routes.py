@@ -25,10 +25,6 @@ def registracija():
             lozinka=hashed_password
         )
 
-        default_role = Roles.query.filter_by(name='user').first()
-
-        novi_sudionik.role.append(default_role)
-
         db.session.add(novi_sudionik)
         db.session.commit()
 
@@ -48,14 +44,11 @@ def login():
         korisnik = Sudionik.query.filter_by(email=email).first()
 
         if korisnik and pbkdf2_sha256.verify(lozinka, korisnik.lozinka):
-            user_role = [role.name for role in korisnik.role]
-
             session_id = generate_session_id()
             korisnik_info = {
                 'id': korisnik.id_sud,
                 'ime': korisnik.ime,
                 'prezime': korisnik.prezime,
-                'role': user_role,
             }
 
             response = make_response(jsonify(korisnik_info))
@@ -355,7 +348,6 @@ def get_past_conference(conference_id):
 
 @app.route('/api/pokrovitelj/<int:konferencijaId>', methods = ['GET'])
 def pokrovitelj_za_konf(konferencijaId):
-    konferencija = Konferencija.query.get(konferencijaId)
     rez = db.session.query(Pokrovitelj).join(Pokrovitelj_sponzorira).filter(Pokrovitelj_sponzorira.id_konf == konferencijaId).all()
     podaci = [{'id' : pokrovitelj.id_pokrovitelj, 'ime' : pokrovitelj.ime, 'stranica' : pokrovitelj.stranica} for pokrovitelj in rez]
     return jsonify({'pokrovitelj': podaci}), 200

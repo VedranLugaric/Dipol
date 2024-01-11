@@ -7,14 +7,11 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 const Login = () => {
 
-  let ulogirani = false
   const userRef = useRef();
   const errRef = useRef();
 
   const [user, setUser] = useState('');
   const [lozinka, setLozinka] = useState('');
-  const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
   const { login } = useAuth();
