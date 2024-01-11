@@ -353,11 +353,10 @@ def get_past_conference(conference_id):
     }
     return response
 
-@app.route('/api/pokrovitelj/<int:konferencijaId>', methods = ['POST'])
+@app.route('/api/pokrovitelj/<int:konferencijaId>', methods = ['GET'])
 def pokrovitelj_za_konf(konferencijaId):
     konferencija = Konferencija.query.get(konferencijaId)
-    rez = db.session.query.join(Pokrovitelj_sponzorira).filter(Pokrovitelj_sponzorira.id_konf == id.konf).all()
-    podaci = [{'id' : pokrovitelj.id_pokrovitelj, 'ime' : pokrovitelj.ime} for pokrovitelj in rez]
-    return jsonify({'pokrovitelj': podaci})
+    rez = db.session.query(Pokrovitelj).join(Pokrovitelj_sponzorira).filter(Pokrovitelj_sponzorira.id_konf == konferencijaId).all()
+    podaci = [{'id' : pokrovitelj.id_pokrovitelj, 'ime' : pokrovitelj.ime, 'stranica' : pokrovitelj.stranica} for pokrovitelj in rez]
+    return jsonify({'pokrovitelj': podaci}), 200
 
-    return jsonify(response), 200

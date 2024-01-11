@@ -117,6 +117,7 @@ class Pokrovitelj(db.Model):
 
     id_pokrovitelj = db.Column(db.Integer, primary_key = True)
     ime = db.Column(db.String(100))
+    stranica = db.Column(db.String(200))
 
 class Pokrovitelj_sponzorira(db.Model):
     __tablename__ = 'pokrovitelj_sponzorira'  

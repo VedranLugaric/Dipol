@@ -14,6 +14,9 @@ import ProsleKonferencije from './pages/ProsleKonferencije/ProsleKonferencije'
 import StariRadovi from './pages/StariRadovi/StariRadovi'
 import PregledRadova from './pages/Superadmin/PregledRadova'
 import Galerija from './pages/Galerija/Galerija'
+import DodajVoditelja from './pages/Superadmin/DodajVoditelja'
+import DodajPokrovitelja from './pages/Superadmin/DodajPokrovitelja'
+import DodajFotografije from './pages/Superadmin/DodajFotografije'
 
 const Main = () => {
   return (
@@ -32,6 +35,9 @@ const Main = () => {
         <Route path="/stariradovi/:id" element={<StariRadovi />} />
         <Route path='/pregled-radova/:konferencijaId' element={<PregledRadova />} />
         <Route path='/galerija/:konferencijaId' element={<Galerija />}></Route>
+        <Route path='/dodaj-voditelja/:konferencijaId' element={<DodajVoditelja />}></Route>
+        <Route path='/dodaj-pokrovitelja/:konferencijaId' element={<DodajPokrovitelja />}></Route>
+        <Route path='/dodaj-fotografije/:konferencijaId' element={<DodajFotografije />}></Route>
       </Routes>
     </>
   );

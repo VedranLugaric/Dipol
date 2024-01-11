@@ -45,6 +45,7 @@
     cursor: pointer;
     font-size: small;
     transition: background-color 0.3s ease-in;
+    font-weight: bold;
 }
 
 .vote-button:hover{
@@ -89,4 +90,10 @@
     top: 0%;
     left: 0%;
     display: flex;
+}
+.add-pok-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
 }
