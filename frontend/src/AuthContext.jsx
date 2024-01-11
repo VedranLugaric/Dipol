@@ -42,10 +42,10 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const korisnikData = await response.json();
 
-        // setKorisnik(korisnikData);
+        setKorisnik(korisnikData);
         // localStorage.setItem('korisnik', JSON.stringify(korisnikData));
 
-        // setIsAuthenticated(true);
+        setIsAuthenticated(true);
         // setIsAdmin(korisnikData.role.includes('admin'));
         // setIsAuthor(korisnikData.role.includes('autor'));
       } else {
