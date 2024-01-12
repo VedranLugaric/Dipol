@@ -23,6 +23,7 @@ class Sudionik(db.Model):
     prezime = db.Column(db.String(50))
     email = db.Column(db.String(100), unique=True, nullable=False)
     lozinka = db.Column(db.String(128))
+    admin = db.Column(db.Boolean)
 
     def get_id(self):
         return str(self.id_sud)
