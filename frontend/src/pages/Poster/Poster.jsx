@@ -81,8 +81,17 @@ const Poster = ({ conferenceId }) => {
               <span className="circle5"></span>
               <span className="text">Dodaj fotografije</span>
             </button>
+            </>
+            )}
+            <button className='button' onClick={() => navigate(`/galerija/${konferencijaId}`)}>
+                <span className='circle1'></span>
+                <span className='circle2'></span>
+                <span className='circle3'></span>
+                <span className='circle4'></span>
+                <span className='circle5'></span>
+                <span className='text'>Galerija fotografija</span>
+              </button>
           </div>
-        )}
         {loading ? (
           <h2>Loading...</h2>
         ) : (
@@ -142,6 +151,42 @@ const PosterItem = ({ rad, conferenceId }) => {
     }
   };
 
+  const handleDownloadPDF = (pdfLink) => {
+    var posteriContainer = document.querySelector('.posteri-container');
+    if (posteriContainer) {
+        var pdfObject = document.createElement('object');
+        pdfObject.className = 'pdf-viewer';
+        pdfObject.setAttribute('data', pdfLink);
+        pdfObject.setAttribute('type', 'application/pdf');
+        pdfObject.setAttribute('width', '100%');
+        pdfObject.setAttribute('height', '100%');
+    
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Izlaz iz pdf-a';
+        deleteButton.className = 'exitpdf';
+        deleteButton.onclick = function () {
+            posteriContainer.removeChild(deleteButton);
+            posteriContainer.removeChild(pdfObject);
+        };
+    
+        posteriContainer.appendChild(deleteButton);
+        posteriContainer.appendChild(pdfObject);
+
+    } else {
+        console.error('Div with class name "posteri-container" not found.');
+    }
+  };
+
+const handleDownloadPPT = (pptLink) => {
+    const pdfUrl = pptLink;
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "document.ppt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
   return (
     <>
         <div className='poster-item'>
@@ -156,10 +201,20 @@ const PosterItem = ({ rad, conferenceId }) => {
                     <p className='autor'>Dodati ime autora</p>
                 </div>
             </div>
+            <div className='buttons-poster'>
             <button className='vote-button' onClick={handleVote} disabled={hasVoted}>
                 {hasVoted ? 'VOTED' : 'VOTE'}
             </button>
-
+            <div className='pdf-ppt-buttons'>
+              {rad.pdf_link && (
+                <button onClick={() => handleDownloadPDF(rad.pdf_link)} className="ppt-button">pdf</button>
+              )}
+              {rad.prez_link && (
+                <button onClick={() => handleDownloadPPT(rad.prez_link)} className="ppt-button">ppt</button>
+              )}    
+            </div>
+                    
+            </div>
             {errorMessage && <p>{errorMessage}</p>}
         </div>
         {zoomedIn && (
