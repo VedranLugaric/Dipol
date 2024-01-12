@@ -179,7 +179,9 @@ def get_conference_posteri(konferencijaId):
                 {
                     "rad_id": rad.id_rad,
                     "naslov": rad.naslov,
-                    "poster_image_link": rad.poster
+                    "poster_image_link": rad.poster,
+                    "pdf_link":rad.pdf,
+                    "prez_link":rad.prez
                 }
                 for rad in radovi_data
             ]

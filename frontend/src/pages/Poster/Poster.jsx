@@ -63,8 +63,9 @@ const Poster = ({ conferenceId }) => {
     <FallingAnimation>
       <hr></hr>
       <div className='poster-container'>
-        {!isAdmin && (
           <div className='add-pok-div'>
+          {!isAdmin && (
+            <>
             <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/:${konferencijaId}`)}>
               <span className="circle1"></span>
               <span className="circle2"></span>
@@ -81,8 +82,17 @@ const Poster = ({ conferenceId }) => {
               <span className="circle5"></span>
               <span className="text">Dodaj fotografije</span>
             </button>
+            </>
+            )}
+            <button className='button' onClick={() => navigate(`/galerija/${konferencijaId}`)}>
+                <span className='circle1'></span>
+                <span className='circle2'></span>
+                <span className='circle3'></span>
+                <span className='circle4'></span>
+                <span className='circle5'></span>
+                <span className='text'>Galerija fotografija</span>
+              </button>
           </div>
-        )}
         {loading ? (
           <h2>Loading...</h2>
         ) : (
@@ -142,6 +152,26 @@ const PosterItem = ({ rad, conferenceId }) => {
     }
   };
 
+  const handleDownloadPDF = (pdfLink) => {
+    const pdfUrl = pdfLink;
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "document.pdf"; // specify the filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+const handleDownloadPPT = (pptLink) => {
+    const pdfUrl = pptLink;
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "document.ppt"; // specify the filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
   return (
     <>
         <div className='poster-item'>
@@ -156,10 +186,16 @@ const PosterItem = ({ rad, conferenceId }) => {
                     <p className='autor'>Dodati ime autora</p>
                 </div>
             </div>
+            <div className='buttons-poster'>
             <button className='vote-button' onClick={handleVote} disabled={hasVoted}>
                 {hasVoted ? 'VOTED' : 'VOTE'}
             </button>
-
+            <div className='pdf-ppt-buttons'>
+              <button onClick={() => handleDownloadPDF(rad.pdf_link)} className="ppt-button">pdf</button>
+              <button onClick={() => handleDownloadPPT(rad.prez_link)} className="ppt-button">ppt</button>    
+            </div>
+                    
+            </div>
             {errorMessage && <p>{errorMessage}</p>}
         </div>
         {zoomedIn && (

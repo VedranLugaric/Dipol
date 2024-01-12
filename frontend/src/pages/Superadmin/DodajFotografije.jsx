@@ -13,9 +13,6 @@ const DodajFotografije = () => {
         e.preventDefault();
 
         const formData = {
-            ime,
-            prezime,
-            mail,
         };
 
         try {
@@ -34,7 +31,7 @@ const DodajFotografije = () => {
         <>
         <FallingAnimation>
         <hr></hr>
-        {isAdmin && (
+        {!isAdmin && (
             <div className='dodaj-voditelja-cont'>
                 <div className='formcontainer'>
                     <h2 className='headertext'>Dodavanje fotografija</h2>

@@ -37,7 +37,7 @@ const DodajVoditelja = () => {
         <>
         <FallingAnimation>
         <hr></hr>
-        {isAdmin && (
+        {!isAdmin && (
             <div className='dodaj-voditelja-cont'>
                 <div className='formcontainer'>
                     <h2 className='headertext'>Dodavanje voditelja</h2>

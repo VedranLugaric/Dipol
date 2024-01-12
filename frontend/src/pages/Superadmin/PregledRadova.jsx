@@ -3,6 +3,8 @@ import './PregledRadova.css'
 import { useAuth } from '../../AuthContext';
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const PregledRadova = ({ conferenceId }) => {
 
@@ -10,6 +12,7 @@ const PregledRadova = ({ conferenceId }) => {
     const navigate = useNavigate();
 
     const { konferencijaId } = useParams();
+
     const [radovi, setRadovi] = useState([]);
 
     useEffect(() => {
@@ -37,33 +40,6 @@ const PregledRadova = ({ conferenceId }) => {
         fetchRadovi();
     }, [konferencijaId]);
 
-    //hardkodirani podaci
-    // const radovi = [
-    //     {
-    //         'id' : '72',
-    //         'naziv' : 'Rad 1',
-    //         'opis' : 'Opis rada 1',
-    //         'file' : "src",
-    //         'autor' : 'autor 1',
-    //         'prihvacen' : 'ne'
-    //     },
-    //     {
-    //         'id' : '73',
-    //         'naziv' : 'Rad 2',
-    //         'opis' : 'Opis rada 2',
-    //         'file' : 'src',
-    //         'autor' : 'autor 2',
-    //         'prihvacen' : 'ne'
-    //     },
-    //     {
-    //         'id' : '74',
-    //         'naziv' : 'Rad 3',
-    //         'opis' : 'Opis rada 3',
-    //         'file' : 'src',
-    //         'autor' : 'autor 3',
-    //         'prihvacen' : 'ne'
-    //     }
-    // ]
 
     const handleAccept = async (id) => {
         //u bazi polje odobren stavlja u True
@@ -114,36 +90,56 @@ const PregledRadova = ({ conferenceId }) => {
         }
     }
 
+    const handleDownloadPDF = (pdfLink) => {
+        const pdfUrl = pdfLink;
+        const link = document.createElement("a");
+        link.href = pdfUrl;
+        link.download = "document.pdf"; // specify the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+
+    const handleDownloadPPT = (pptLink) => {
+        const pdfUrl = pptLink;
+        const link = document.createElement("a");
+        link.href = pdfUrl;
+        link.download = "document.ppt"; // specify the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <>
         <FallingAnimation>
             <hr></hr>
             {!isAdmin && (
-                <div className="rad-container">
+                <div className="posteri-container">
                 {radovi && 
                     radovi.map((rad, index) => (
                         <>
-                        <div className="rad-button-cont">
-                            <div className="rad" key = {index}>
-                                <div className="rad-texts">
-                                    <span className="naziv">{rad.naslov}</span>
-                                    <span className="autor-rada">{rad.autor}</span>
-                                    <span className="opis">{rad.opis}</span>
-                                </div>
-                                <div className="img-div">
-                                    <img className="rad-img" src={rad.poster_link} alt = 'Src rada'/>
-                                </div>
+                        <div className="poster-item">
+                            <div className="poster-img-div">
+                                    <img className="poster-img" src={rad.poster_link} alt = 'Src rada'/>
+                            </div>
+                            <div className="rad-texts" key = {index}>
+                            <hr></hr>
+                                <p className="rad-title">{rad.naslov}</p>
+                                <p className="autor-rada">Autor</p>
                             </div>
                             <div className="buttons">
                                     <button onClick={() => handleAccept(rad.id_rad)} className="accept-button">Prihvati</button>
                                     <button onClick={() => handleReject(rad.id_rad)}className="reject-button">Odbaci</button>
+                                    <button onClick={() => handleDownloadPDF(rad.pdf_link)} className="ppt-button">pdf</button>
+                                    <button onClick={() => handleDownloadPPT(rad.prez_link)} className="ppt-button">ppt</button> 
                             </div>
                         </div>
                         </>
                     ))}
             </div>
             )}
-            {isAdmin && (
+            {!isAdmin && (
                 <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

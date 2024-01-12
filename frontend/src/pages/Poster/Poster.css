@@ -35,8 +35,8 @@
 }
 .vote-button{
     margin-top: auto;
-    margin-bottom: 2rem;
-    width: 50%;
+    margin-bottom: 0.3rem;
+    width: 100%;
     padding: 0.3rem;
     border-radius: 1rem;
     border: rgb(65, 49, 87) solid 2px;
@@ -96,4 +96,12 @@
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
+}
+.buttons-poster{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    justify-items: center;
+    width: 10rem;
 }
