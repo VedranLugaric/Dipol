@@ -38,6 +38,7 @@ const Main = () => {
         <Route path='/dodaj-voditelja/:konferencijaId' element={<DodajVoditelja />}></Route>
         <Route path='/dodaj-pokrovitelja/:konferencijaId' element={<DodajPokrovitelja />}></Route>
         <Route path='/dodaj-fotografije/:konferencijaId' element={<DodajFotografije />}></Route>
+        <Route path="/galerija/:konferencijaId" element={<Galerija />} />
       </Routes>
     </>
   );

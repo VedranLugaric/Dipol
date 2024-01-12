@@ -33,7 +33,6 @@ class Sudionik(db.Model):
     def is_active(self):
         return True
 
-    
 class Rad(db.Model):
     __tablename__ = 'rad'
 
@@ -46,8 +45,9 @@ class Rad(db.Model):
     odobren = db.Column(db.Boolean)
     br_glasova = db.Column(db.Integer, default=0)
     id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'))
+    
     sudionik = db.relationship('Sudionik')
-
+    konferencija = db.relationship('Konferencija')
 
 class Sudionik_sudjeluje_na(db.Model):
     __tablename__ = 'sudionik_sudjeluje_na'
@@ -72,12 +72,6 @@ class Sudionik_je_administrator(db.Model):
     id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'), primary_key=True)
     sudionik = db.relationship('Sudionik')
 
-class Superadmin(db.Model):
-    __tablename__ = 'superadmin'
-    
-    id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'), primary_key=True)
-    sudionik = db.relationship('Sudionik')
-
 class Pokrovitelj(db.Model):
     __tablename__ = 'pokrovitelj' 
 
@@ -93,6 +87,15 @@ class Pokrovitelj_sponzorira(db.Model):
     id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'), primary_key = True)
     pokrovitelj = db.relationship('Pokrovitelj')
     konferencija = db.relationship('Konferencija') 
+
+class Galerija(db.Model):
+    __tablename__ = 'galerija'
+
+    id_slika = db.Column(db.Integer, primary_key=True)
+    slika_link = db.Column(db.String(200), nullable=False)
+    id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'))
+
+    konferencija = db.relationship('Konferencija')
 
 def generate_session_id():
     return secrets.token_hex(16)

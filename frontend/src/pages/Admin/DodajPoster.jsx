@@ -48,6 +48,10 @@ const DodajPoster = () => {
             setUploadMessage('Please select an image file before submitting.');
             return;
         }
+        if (!selectedPdfFile) {
+            setUploadMessage('Please select an pdf file before submitting.');
+            return;
+        }
 
         const formData = new FormData();
         formData.append('imageFile', selectedImageFile);

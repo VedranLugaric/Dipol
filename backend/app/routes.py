@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from flask import request, jsonify, make_response, render_template
 from passlib.hash import pbkdf2_sha256
 from app import app, db
-from app.models import generate_session_id, Konferencija, Sudionik, Sudionik_sudjeluje_na, Rad, Pokrovitelj, Pokrovitelj_sponzorira
+from app.models import generate_session_id, Konferencija, Sudionik, Sudionik_sudjeluje_na, Rad, Pokrovitelj, Pokrovitelj_sponzorira, Galerija
 from app.utils import upload_to_gcs, save_to_database, generate_unique_filename
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
@@ -336,3 +336,16 @@ def pokrovitelj_za_konf(konferencijaId):
     podaci = [{'id' : pokrovitelj.id_pokrovitelj, 'ime' : pokrovitelj.ime, 'stranica' : pokrovitelj.stranica} for pokrovitelj in rez]
     return jsonify({'pokrovitelj': podaci}), 200
 
+@app.route('/api/galerija/<int:konferencijaId>', methods = ['GET'])
+def get_pictures(konferencijaId):
+    pictures = Galerija.query.filter_by(id_konf=konferencijaId).all()
+
+    conference = Konferencija.query.get(konferencijaId)
+    conference_name = conference.naziv if conference else None
+
+    response_data = {
+        'conference_name': conference_name,
+        'pictures': [picture.slika_link for picture in pictures],
+    }
+
+    return jsonify(response_data), 200

@@ -42,13 +42,10 @@ def save_to_database(naslov_rad, image_link, pdf_link, ppt_link, conference_id, 
     if naslov_rad is None or naslov_rad.strip() == "":
         raise ValueError("Invalid title provided")
 
-    new_rad = Rad(naslov=naslov_rad, id_sud=user_id, poster=image_link, pdf=pdf_link, id_konf=conference_id)
+    new_rad = Rad(naslov=naslov_rad, id_sud=user_id, poster=image_link, pdf=pdf_link, id_konf=conference_id, odobren=False)
 
-    new_prez = None
     if ppt_link:
-        new_prez = Rad(prez=ppt_link)
-        db.session.add(new_prez)
-        db.session.flush()
+        new_rad.prez = ppt_link
 
     db.session.add(new_rad)
 
