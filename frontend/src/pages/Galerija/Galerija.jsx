@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import FallingAnimation from '../../FallingAnimation'
 import './Galerija.css'
+import { saveAs } from 'file-saver'
 
 const Galerija = () => {
   const { konferencijaId } = useParams();
@@ -23,6 +24,26 @@ const Galerija = () => {
     fetchData();
   }, [konferencijaId]);
 
+  const downloadImage = (link) => {
+    try {
+      saveAs(link, 'slika.png')
+    } catch {
+
+    }
+    try {
+      saveAs(link, 'slika.jpg')
+    }
+    catch {
+
+    }
+    try {
+      saveAs(link, 'slika.jpeg')
+    } 
+    catch {
+
+    }
+  }
+
   return (
     <>
       <hr />
@@ -31,11 +52,13 @@ const Galerija = () => {
         <div className='conf-button-galerija'></div>
         <div className='galerija-container'>
           {images.map((image, index) => (
-            <div className='fotografija' key={index}>
-              <img className='foto' src={image} alt={`Slika ${index + 1}`} />
-              <a href={image} download>
-                <button className='download-button'>Preuzmi</button>
-              </a>
+            <div className='btn-foto-div'>
+              <div className='fotografija' key={index}>
+                <img className='foto' src={image} alt={`Slika ${index + 1}`} />
+              </div>
+              <a className='btn-a'>
+                  <button className='download-button' onClick={() => downloadImage(image)}>Preuzmi</button>
+                </a>
             </div>
           ))}
         </div>
