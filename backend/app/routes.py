@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from flask import request, jsonify, make_response, render_template
 from passlib.hash import pbkdf2_sha256
 from app import app, db
-from app.models import generate_session_id, Konferencija, Sudionik, Roles, Sudionik_sudjeluje_na, Rad_se_predstavlja_na, Rad, Posteri, Pokrovitelj, Pokrovitelj_sponzorira
+from app.models import generate_session_id, Konferencija, Sudionik, Sudionik_sudjeluje_na, Rad, Pokrovitelj, Pokrovitelj_sponzorira
 from app.utils import upload_to_gcs, save_to_database, generate_unique_filename
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
@@ -89,7 +89,7 @@ def upload_file():
 
     image_file = request.files['imageFile']
     pdf_file = request.files['pdfFile']
-    ppt_file = request.files.get('pptFile')  # Using get to handle the case when 'pptFile' is not present
+    ppt_file = request.files.get('pptFile')
 
     if image_file.filename == '':
         return 'No selected image file', 400
@@ -168,36 +168,22 @@ def get_conference_posteri(konferencijaId):
         sudionik_sudjeluje_na_entry = Sudionik_sudjeluje_na.query.filter_by(id_konf=konferencijaId, id_sud=sudionik_id).first()
 
         if sudionik_sudjeluje_na_entry:
-            posteri_data = (
-                db.session.query(Rad_se_predstavlja_na)
-                .filter(Rad_se_predstavlja_na.id_konf == konferencijaId)
-                .all()
-            )
-
             radovi_data = (
                 db.session.query(Rad)
-                .join(Rad_se_predstavlja_na, Rad.id_rad == Rad_se_predstavlja_na.id_rad)
-                .filter(Rad_se_predstavlja_na.id_konf == konferencijaId)
+                .filter(Rad.id_konf == konferencijaId)
                 .all()
             )
-
-            posteri = [
-                {
-                    "poster_id": poster.id_poster,
-                    "poster_image_link": poster.posteri.poster,
-                }
-                for poster in posteri_data
-            ]
 
             radovi = [
                 {
                     "rad_id": rad.id_rad,
                     "naslov": rad.naslov,
+                    "poster_image_link": rad.poster
                 }
                 for rad in radovi_data
             ]
 
-            return jsonify({"posteri": posteri, "radovi": radovi}), 200
+            return jsonify({"radovi": radovi}), 200
 
         return jsonify({"error": "Sudionik nije registriran za ovu konferenciju"}), 403
 
@@ -249,10 +235,10 @@ def vote(rad_id):
         if existing_vote and existing_vote.glasovao == 1:
             return jsonify({'error': 'Korisnik je već glasao za ovu konferenciju'}), 400
 
-        rad_se_predstavlja_na = Rad_se_predstavlja_na.query.filter_by(id_rad=rad_id, id_konf=konferencijaId).first()
+        rad = Rad.query.filter_by(id_rad=rad_id, id_konf=konferencijaId).first()
 
-        if rad_se_predstavlja_na:
-            rad_se_predstavlja_na.br_glasova += 1
+        if rad:
+            rad.br_glasova += 1
         else:
             return jsonify({'error': 'Zapis za Rad_se_predstavlja_na ne postoji'}), 400
 
@@ -303,23 +289,21 @@ def get_past_conference(conference_id):
     conference = Konferencija.query.get_or_404(conference_id)
 
     rad_data = (
-    Rad.query
-    .outerjoin(Rad_se_predstavlja_na, (Rad.id_rad == Rad_se_predstavlja_na.id_rad) & (Rad_se_predstavlja_na.id_konf == conference_id))
-    .join(Sudionik, Rad.id_sud == Sudionik.id_sud)
-    .filter(Rad_se_predstavlja_na.id_konf == conference_id)
-    .with_entities(
-        Rad.id_rad,
-        Rad.naslov,
-        func.coalesce(func.max(Rad_se_predstavlja_na.br_glasova), 0).label('br_glasova'),
-        Sudionik.ime,
-        Sudionik.prezime
+        Rad.query
+        .join(Sudionik, Rad.id_sud == Sudionik.id_sud)
+        .filter(Rad.id_konf == conference_id)
+        .with_entities(
+            Rad.id_rad,
+            Rad.naslov,
+            Rad.poster,
+            Rad.br_glasova,
+            Sudionik.ime,
+            Sudionik.prezime
+        )
+        .group_by(Rad.id_rad, Sudionik.ime, Sudionik.prezime)
+        .order_by(Rad.br_glasova.desc())
+        .all()
     )
-    .group_by(Rad.id_rad, Sudionik.ime, Sudionik.prezime)
-    .order_by(func.max(Rad_se_predstavlja_na.br_glasova).desc())
-    .all()
-    )
-
-
 
     response = {
         'conference': {

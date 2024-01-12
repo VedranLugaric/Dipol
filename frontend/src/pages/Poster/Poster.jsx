@@ -25,7 +25,7 @@ const Poster = ({ conferenceId }) => {
 
     const fetchData = async () => {
       try {
-        const posterResponse = await fetch(`http://localhost:5000/api/posteri/${konferencijaId}`, {
+        const radResponse = await fetch(`http://localhost:5000/api/posteri/${konferencijaId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -40,11 +40,11 @@ const Poster = ({ conferenceId }) => {
           },
         });
 
-        if (posterResponse.ok && pokroviteljResponse.ok) {
-          const posterData = await posterResponse.json();
+        if (radResponse.ok && pokroviteljResponse.ok) {
+          const radData = await radResponse.json();
           const pokroviteljData = await pokroviteljResponse.json();
 
-          setData({ posters: posterData.posteri, radovi: posterData.radovi, pokrovitelji: pokroviteljData.pokrovitelj });
+          setData({ radovi: radData.radovi, pokrovitelji: pokroviteljData.pokrovitelj });
         } else {
           console.error('Failed to fetch data');
           navigate('../konferencije');
@@ -88,8 +88,8 @@ const Poster = ({ conferenceId }) => {
         ) : (
           <>
             <div className='posteri-container'>
-              {data.posters.map((poster, index) => (
-                <PosterItem key={poster.poster_id} poster={poster} rad={data.radovi[index]} />
+              {data.radovi.map((rad) => (
+                <PosterItem key={rad.rad_id} rad={rad} />
               ))}
             </div>
             <div className='pokrovitelji-container'>
@@ -107,7 +107,7 @@ const Poster = ({ conferenceId }) => {
   );
 };
   
-const PosterItem = ({ poster, rad, conferenceId }) => {
+const PosterItem = ({ rad, conferenceId }) => {
   const [hasVoted, setHasVoted] = useState(rad.hasVoted);
   const [errorMessage, setErrorMessage] = useState('');
   const { korisnik } = useAuth();
@@ -146,9 +146,9 @@ const PosterItem = ({ poster, rad, conferenceId }) => {
     <>
         <div className='poster-item'>
             <div className='poster-img-div'>
-                {poster.poster_image_link && (
+                {rad.poster_image_link && (
                     <img onClick={zoomIn}
-                    className='poster-img' src={poster.poster_image_link} alt='Poster preview' />
+                    className='poster-img' src={rad.poster_image_link} alt='Poster preview' />
                 )}
                 <div className='rad-texts'>
                 <hr></hr>
@@ -164,9 +164,9 @@ const PosterItem = ({ poster, rad, conferenceId }) => {
         </div>
         {zoomedIn && (
             <div className='zoom-in'>
-                {poster.poster_image_link && (
+                {rad.poster_image_link && (
                     <img onClick={zoomOut}
-                    className='poster-zoom' src={poster.poster_image_link} alt='Poster preview' />
+                    className='poster-zoom' src={rad.poster_image_link} alt='Poster preview' />
                 )}
             </div>
         )}

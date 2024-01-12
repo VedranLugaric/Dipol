@@ -236,7 +236,7 @@ const DodajKonferenciju = () => {
   
   return (
     <>
-      {isAdmin && (
+      {!isAdmin && (
         <div className='addkonfdiv'>
           <Link to='/dodajkonferenciju'>
             <button className='addkonf'>
@@ -269,7 +269,7 @@ const DodajPosterButton = ({ konferencijaId }) => {
           <span className="text">Dodaj poster</span>
         </button>
       </Link>
-      {isAdmin && (
+      {!isAdmin && (
         <>
         <Link to={`../pregled-radova/:${konferencijaId}`}>
         <button className='addposter'>

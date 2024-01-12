@@ -47,7 +47,7 @@ const PregledRadova = () => {
         <>
         <FallingAnimation>
             <hr></hr>
-            {isAdmin && (
+            {!isAdmin && (
                 <div className="rad-container">
                 {radovi && 
                     radovi.map((rad, index) => (
@@ -72,7 +72,7 @@ const PregledRadova = () => {
                     ))}
             </div>
             )}
-            {!isAdmin && (
+            {isAdmin && (
                 <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

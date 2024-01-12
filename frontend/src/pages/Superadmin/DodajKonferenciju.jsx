@@ -54,7 +54,7 @@ const DodajKonferenciju = () => {
         <>
         <FallingAnimation>
             <hr></hr>
-        {isAdmin && (
+        {!isAdmin && (
             <div className='formcontainer'>
                 <h2 className='headertext'>Dodavanje konferencije</h2>
                 <div className='formdiv'>
@@ -138,7 +138,7 @@ const DodajKonferenciju = () => {
                 </div>
             </div>
         )}
-        {!isAdmin && (
+        {isAdmin && (
             <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
         const korisnikData = await response.json();
 
         setKorisnik(korisnikData);
-        // localStorage.setItem('korisnik', JSON.stringify(korisnikData));
+        localStorage.setItem('korisnik', JSON.stringify(korisnikData));
 
         setIsAuthenticated(true);
         // setIsAdmin(korisnikData.role.includes('admin'));

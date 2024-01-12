@@ -1,6 +1,6 @@
 from google.cloud import storage, secretmanager
 from app import db, app
-from app.models import Posteri, Rad, Rad_se_predstavlja_na, Sudionik, Konferencija, Prezentacija
+from app.models import Rad, Sudionik, Konferencija
 import os
 import uuid
 from flask_mail import Mail, Message
@@ -18,7 +18,7 @@ def generate_unique_filename(filename):
     return unique_filename
 
 def upload_to_gcs(file, bucket_name, destination_blob_name):
-    key_file_path = "D:\\PROJEKT_PROGI\\progi-key.json"
+    key_file_path = "C:\\Users\\Lukas\\Desktop\\FER\\progi-key.json"
     client = storage.Client.from_service_account_json(key_file_path)
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
@@ -42,35 +42,15 @@ def save_to_database(naslov_rad, image_link, pdf_link, ppt_link, conference_id, 
     if naslov_rad is None or naslov_rad.strip() == "":
         raise ValueError("Invalid title provided")
 
-    new_poster = Posteri(poster=image_link)
-
-    new_rad = Rad(naslov=naslov_rad, id_sud=user_id)
-    if pdf_link:
-        new_rad.pdf = pdf_link
+    new_rad = Rad(naslov=naslov_rad, id_sud=user_id, poster=image_link, pdf=pdf_link, id_konf=conference_id)
 
     new_prez = None
     if ppt_link:
-        new_prez = Prezentacija(prez=ppt_link)
+        new_prez = Rad(prez=ppt_link)
         db.session.add(new_prez)
         db.session.flush()
 
-    db.session.add(new_poster)
     db.session.add(new_rad)
-
-    db.session.commit()
-
-    id_poster = new_poster.id_poster
-    id_rad = new_rad.id_rad
-    id_prez = new_prez.id_prez if new_prez else None
-
-    new_poster_entry = Rad_se_predstavlja_na(
-        id_poster=id_poster,
-        id_prez=id_prez,
-        id_rad=id_rad,
-        id_konf=conference_id,
-    )
-
-    db.session.add(new_poster_entry)
 
     db.session.commit()
 
@@ -86,9 +66,9 @@ mail = Mail(app)
 def send_email_to_top_poster_users(conference_id):
     with app.app_context():
         # SQLAlchemy query to get top 3 users
-        top_users = db.session.query(Sudionik.email).join(Rad).join(Rad_se_predstavlja_na).filter(
-            Rad_se_predstavlja_na.id_konf == conference_id).group_by(Sudionik.email).order_by(
-            func.sum(Rad_se_predstavlja_na.br_glasova).desc()).limit(3).all()
+        top_users = db.session.query(Sudionik.email).join(Rad).filter(
+            Rad.id_konf == conference_id).group_by(Sudionik.email).order_by(
+            func.sum(Rad.br_glasova).desc()).limit(3).all()
 
 
         # Prepare email

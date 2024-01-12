@@ -8,7 +8,6 @@ import ReCAPTCHA from 'react-google-recaptcha';
 const Login = () => {
 
   const userRef = useRef();
-  const errRef = useRef();
 
   const [user, setUser] = useState('');
   const [lozinka, setLozinka] = useState('');
@@ -30,16 +29,9 @@ const Login = () => {
 
     try {
       await login(user, lozinka);
-
-      setSuccess(true);
-
-      setErrMsg('');
-
       navigate('/konferencije');
     } catch (error) {
       navigate('/login')
-      setSuccess(false);
-      setErrMsg('Pogrešan e-mail.');
     }
   };
 
