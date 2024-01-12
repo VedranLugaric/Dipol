@@ -153,13 +153,32 @@ const PosterItem = ({ rad, conferenceId }) => {
   };
 
   const handleDownloadPDF = (pdfLink) => {
-    const pdfUrl = pdfLink;
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.download = "document.pdf"; // specify the filename
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    var posteriContainer = document.querySelector('.posteri-container');
+    if (posteriContainer) {
+        // Create the object element
+        var pdfObject = document.createElement('object');
+        pdfObject.className = 'pdf-viewer';
+        pdfObject.setAttribute('data', pdfLink);
+        pdfObject.setAttribute('type', 'application/pdf');
+        pdfObject.setAttribute('width', '100%');
+        pdfObject.setAttribute('height', '100%');
+    
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Izlaz iz pdf-a';
+        deleteButton.className = 'exitpdf';
+        deleteButton.onclick = function () {
+            // Remove both the button and the object from the div
+            posteriContainer.removeChild(deleteButton);
+            posteriContainer.removeChild(pdfObject);
+        };
+    
+        // Append the button and the object elements to the div
+        posteriContainer.appendChild(deleteButton);
+        posteriContainer.appendChild(pdfObject);
+
+    } else {
+        console.error('Div with class name "posteri-container" not found.');
+    }
   };
 
 const handleDownloadPPT = (pptLink) => {
@@ -191,8 +210,12 @@ const handleDownloadPPT = (pptLink) => {
                 {hasVoted ? 'VOTED' : 'VOTE'}
             </button>
             <div className='pdf-ppt-buttons'>
-              <button onClick={() => handleDownloadPDF(rad.pdf_link)} className="ppt-button">pdf</button>
-              <button onClick={() => handleDownloadPPT(rad.prez_link)} className="ppt-button">ppt</button>    
+              {rad.pdf_link && (
+                <button onClick={() => handleDownloadPDF(rad.pdf_link)} className="ppt-button">pdf</button>
+              )}
+              {rad.prez_link && (
+                <button onClick={() => handleDownloadPPT(rad.prez_link)} className="ppt-button">ppt</button>
+              )}    
             </div>
                     
             </div>

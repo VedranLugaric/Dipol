@@ -97,3 +97,20 @@
     transition: background-color 0.3s ease-in;
      margin: 0.2rem;
 }
+.pdf-viewer{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+}
+.exitpdf{
+    position: fixed;
+    top: 1rem;
+    left: 25%;
+    z-index: 2;
+    background-color: transparent;
+    border: 2px white solid;
+    padding: 0.2rem 1rem;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+}
