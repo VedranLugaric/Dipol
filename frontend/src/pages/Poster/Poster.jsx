@@ -63,9 +63,9 @@ const Poster = ({ conferenceId }) => {
     <FallingAnimation>
       <hr></hr>
       <div className='poster-container'>
-        {isAdmin && (
+        {!isAdmin && (
           <div className='add-pok-div'>
-            <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/:${konferencijaId}`)}>
+            <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
               <span className="circle1"></span>
               <span className="circle2"></span>
               <span className="circle3"></span>
@@ -73,7 +73,7 @@ const Poster = ({ conferenceId }) => {
               <span className="circle5"></span>
               <span className="text">Dodaj pokrovitelja</span>
             </button>
-            <button className='addkonf' onClick={() => navigate(`/dodaj-fotografije/:${konferencijaId}`)}>
+            <button className='addkonf' onClick={() => navigate(`/dodaj-fotografije/${konferencijaId}`)}>
               <span className="circle1"></span>
               <span className="circle2"></span>
               <span className="circle3"></span>

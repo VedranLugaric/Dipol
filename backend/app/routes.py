@@ -103,7 +103,7 @@ def upload_file():
     unique_pdf_filename = generate_unique_filename(pdf_file.filename)
     unique_ppt_filename = generate_unique_filename(ppt_file.filename) if ppt_file else None
 
-    image_blob_name = f'images/{unique_image_filename}'
+    image_blob_name = f'images/posters/{unique_image_filename}'
     pdf_blob_name = f'pdfs/{unique_pdf_filename}'
     ppt_blob_name = f'ppts/{unique_ppt_filename}' if ppt_file else None
 
@@ -349,3 +349,28 @@ def get_pictures(konferencijaId):
     }
 
     return jsonify(response_data), 200
+
+
+@app.route('/api/dodaj_foto/<int:konferencijaId>', methods=['POST'])
+def dodaj_foto(konferencijaId):
+    if 'file' not in request.files:
+        return 'No file part', 400
+    files = request.files.getlist('file')
+    filenames = []
+    for file in files:
+        if file.filename == '':
+            return 'No selected file', 400
+        if file:
+            unique_filename = generate_unique_filename(file.filename)
+            image_blob_name = f'images/gallery/{unique_filename}'
+            upload_to_gcs(file, 'progi', image_blob_name)
+            filenames.append(unique_filename)
+            image_link = f'https://storage.googleapis.com/progi/{image_blob_name}'
+            new_file = Galerija(slika_link=image_link, id_konf=konferencijaId)
+            db.session.add(new_file)
+    try:
+        db.session.commit()
+        return 'Files {} uploaded to GCS and saved to database successfully', 200
+    except IntegrityError:
+        db.session.rollback()
+        return 'Error saving files to database', 500

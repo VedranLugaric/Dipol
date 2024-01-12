@@ -37,7 +37,7 @@ const DodajVoditelja = () => {
         <>
         <FallingAnimation>
         <hr></hr>
-        {isAdmin && (
+        {!isAdmin && (
             <div className='dodaj-voditelja-cont'>
                 <div className='formcontainer'>
                     <h2 className='headertext'>Dodavanje voditelja</h2>
@@ -67,7 +67,7 @@ const DodajVoditelja = () => {
                 </div>
             </div>
         )}
-        {!isAdmin && (
+        {isAdmin && (
             <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

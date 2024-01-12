@@ -7,14 +7,13 @@ from flask_mail import Mail, Message
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import desc, func
 import logging
+from werkzeug.utils import secure_filename
 
 def generate_unique_filename(filename):
+    filename = secure_filename(filename)
     unique_id = str(uuid.uuid4().hex)
-    
     _, file_extension = os.path.splitext(filename)
-
     unique_filename = f"{unique_id}{file_extension}"
-
     return unique_filename
 
 def upload_to_gcs(file, bucket_name, destination_blob_name):
@@ -62,13 +61,10 @@ mail = Mail(app)
 
 def send_email_to_top_poster_users(conference_id):
     with app.app_context():
-        # SQLAlchemy query to get top 3 users
         top_users = db.session.query(Sudionik.email).join(Rad).filter(
             Rad.id_konf == conference_id).group_by(Sudionik.email).order_by(
             func.sum(Rad.br_glasova).desc()).limit(3).all()
 
-
-        # Prepare email
         msg = Message(
             "Čestitamo!",
             sender="progidipol@gmail.com",
@@ -87,18 +83,14 @@ Ukoliko imate bilo kakvih pitanja ili posebnih zahtjeva, slobodno nas kontaktira
 S poštovanjem,
 Dipol"""
 
-        # Send email
         mail.send(msg)
         print('Emails sent')
 
 
 with app.app_context():
-    # Get all conferences
     conferences = Konferencija.query.all()
 
-    # Schedule the function to run at each conference end time
     for conference in conferences:
         scheduler.add_job(func=send_email_to_top_poster_users, trigger='date', run_date=conference.vrijeme_zav, args=[conference.id_konf])
 
-    # Start the scheduler
     scheduler.start()
