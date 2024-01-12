@@ -63,8 +63,9 @@ const Poster = ({ conferenceId }) => {
     <FallingAnimation>
       <hr></hr>
       <div className='poster-container'>
-        {!isAdmin && (
           <div className='add-pok-div'>
+          {!isAdmin && (
+            <>
             <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
               <span className="circle1"></span>
               <span className="circle2"></span>
@@ -81,8 +82,6 @@ const Poster = ({ conferenceId }) => {
               <span className="circle5"></span>
               <span className="text">Dodaj fotografije</span>
             </button>
-            </>
-            )}
             <button className='button' onClick={() => navigate(`/galerija/${konferencijaId}`)}>
                 <span className='circle1'></span>
                 <span className='circle2'></span>
@@ -91,6 +90,8 @@ const Poster = ({ conferenceId }) => {
                 <span className='circle5'></span>
                 <span className='text'>Galerija fotografija</span>
               </button>
+            </>
+          )}
           </div>
         {loading ? (
           <h2>Loading...</h2>

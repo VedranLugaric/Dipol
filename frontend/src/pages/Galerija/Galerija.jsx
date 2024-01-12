@@ -11,7 +11,6 @@ const Galerija = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Conference ID:', konferencijaId);
         const response = await fetch(`http://localhost:5000/api/galerija/${konferencijaId}`);
         const data = await response.json();
         setConferenceName(data.conference_name);
