@@ -74,3 +74,10 @@
     cursor: pointer;
     background-color: rgb(160, 75, 75);
 }
+
+.rad-img{
+    max-height: 18rem;
+    max-width: 19rem;
+    margin-top: auto;
+    cursor: pointer;
+}

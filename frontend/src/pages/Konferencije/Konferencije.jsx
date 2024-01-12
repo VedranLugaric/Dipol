@@ -271,7 +271,7 @@ const DodajPosterButton = ({ konferencijaId }) => {
       </Link>
       {!isAdmin && (
         <>
-        <Link to={`../pregled-radova/:${konferencijaId}`}>
+        <Link to={`../pregled-radova/${konferencijaId}`}>
         <button className='addposter'>
           <span className="circle1"></span>
           <span className="circle2"></span>
@@ -281,7 +281,7 @@ const DodajPosterButton = ({ konferencijaId }) => {
           <span className="text">Pregledaj radove</span>
         </button>
       </Link>
-      <Link to={`../dodaj-voditelja/:${konferencijaId}`}>
+      <Link to={`../dodaj-voditelja/${konferencijaId}`}>
         <button className='addposter'>
           <span className="circle1"></span>
           <span className="circle2"></span>

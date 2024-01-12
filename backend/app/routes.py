@@ -171,6 +171,7 @@ def get_conference_posteri(konferencijaId):
             radovi_data = (
                 db.session.query(Rad)
                 .filter(Rad.id_konf == konferencijaId)
+                .filter(Rad.odobren == True)
                 .all()
             )
 
@@ -349,3 +350,58 @@ def get_pictures(konferencijaId):
     }
 
     return jsonify(response_data), 200
+
+@app.route('/api/odobravanje_radova/<int:konferencijaId>', methods=['GET'])
+def get_unapproved_papers(konferencijaId):
+    try:
+        neodobreni_radovi = Rad.query.filter_by(id_konf=konferencijaId, odobren=False).all()
+
+        neodobreni_radovi_data = [
+            {
+                'id_rad': rad.id_rad,
+                'naslov': rad.naslov,
+                'pdf_link': rad.pdf,
+                'poster_link': rad.poster,
+                'prez_link': rad.prez,
+            }
+            for rad in neodobreni_radovi
+        ]
+
+        return jsonify({'neodobreni_radovi': neodobreni_radovi_data}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@app.route('/api/potvrdi_rad/<int:radId>', methods=['POST'])
+def potvrdi_rad(radId):
+    try:
+        rad = Rad.query.filter_by(id_rad=radId).first()
+
+        if not rad:
+            return jsonify({'poruka': 'Rad nije pronađen'}), 404
+
+        rad.odobren = True
+        db.session.commit()
+
+        return jsonify({'poruka': 'Rad uspješno potvrđen'}), 200
+
+    except Exception as e:
+        app.logger.error(f'Greška pri potvrđivanju rada: {str(e)}')
+        return jsonify({'poruka': 'Pogreška prilikom potvrđivanja rada'}), 500
+    
+@app.route('/api/odbij_rad/<int:radId>', methods=['POST'])
+def odbij_rad(radId):
+    try:
+        rad = Rad.query.filter_by(id_rad=radId).first()
+
+        if not rad:
+            return jsonify({'poruka': 'Rad nije pronađen'}), 404
+
+        db.session.delete(rad)
+        db.session.commit()
+
+        return jsonify({'poruka': 'Rad uspješno potvrđen'}), 200
+
+    except Exception as e:
+        app.logger.error(f'Greška pri potvrđivanju rada: {str(e)}')
+        return jsonify({'poruka': 'Pogreška prilikom potvrđivanja rada'}), 500
