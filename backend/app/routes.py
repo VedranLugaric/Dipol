@@ -14,7 +14,12 @@ def registracija():
 
         if data.get('lozinkaPotvrda') != data.get('lozinka'):
             return jsonify({'poruka': 'Lozinke se ne podudaraju!'}), 400
+        
+        existing_user = Sudionik.query.filter_by(email=data['email']).first()
 
+        if existing_user:
+            return jsonify({'poruka': 'Email već postoji!'}), 400
+        
         lozinka = data['lozinka']
         hashed_password = pbkdf2_sha256.hash(lozinka)
 

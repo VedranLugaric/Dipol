@@ -23,6 +23,10 @@ const Registracija = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  const handleModalClose = () => {
+    setError(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,7 +56,7 @@ const Registracija = () => {
 
 
       navigate('/login')
-      
+
     } catch (error) {
 
       setError(error.response.data.poruka);
@@ -102,24 +106,24 @@ const Registracija = () => {
                 </label>
                 <label htmlFor='lozinka'>
                   <input
-                  type='password'
-                  className='registrationInputText'
-                  id='lozinka'
-                  placeholder='Lozinka'
-                  onChange={(e) => setLozinka(e.target.value)}
-                  value={lozinka}
-                  required
+                    type='password'
+                    className='registrationInputText'
+                    id='lozinka'
+                    placeholder='Lozinka'
+                    onChange={(e) => setLozinka(e.target.value)}
+                    value={lozinka}
+                    required
                   />
                 </label>
                 <label htmlFor='lozinkaPotvrda'>
                   <input
-                  type='password'
-                  className='registrationInputText'
-                  id='lozinkaPotvrda'
-                  placeholder='Potvrdi lozinku'
-                  onChange={(e) => setLozinkaPotvrda(e.target.value)}
-                  value={lozinkaPotvrda}
-                  required
+                    type='password'
+                    className='registrationInputText'
+                    id='lozinkaPotvrda'
+                    placeholder='Potvrdi lozinku'
+                    onChange={(e) => setLozinkaPotvrda(e.target.value)}
+                    value={lozinkaPotvrda}
+                    required
                   />
                 </label>
                 <button className='registrationInputSubmit'>Registriraj se</button>
@@ -127,12 +131,20 @@ const Registracija = () => {
             </form>
           </div>
           <div className='seconds'>
-            {error && <div className="error-message">{error}</div>}
+            {/*error && <div className="error-message">{error}</div>*/}
             {/* {success && <div className="success-message">Uspješna registracija!</div>} */}
             <h1 className='welcome'>Dobrodošli!</h1>
           </div>
         </div>
       </div>
+      {error && (
+        <div className='errorModal'>
+          <div className='modalContent'>
+            <span className='close' onClick={handleModalClose}>&times;</span>
+            <p>{error}</p>
+          </div>
+        </div>
+      )}
     </FallingAnimation>
   );
 };

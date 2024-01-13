@@ -24,6 +24,12 @@ const Login = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  const [error, setError] = useState(false);
+
+  const handleModalClose = () => {
+    setError(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,7 +37,8 @@ const Login = () => {
       await login(user, lozinka);
       navigate('/konferencije');
     } catch (error) {
-      navigate('/login')
+      //setError(error.response.data.poruka);
+      setError("Pogrešan e-mail ili lozinka");
     }
   };
 
@@ -73,13 +80,21 @@ const Login = () => {
               </div>
               <ReCAPTCHA
                 sitekey="6Lf3iTcpAAAAAOGZ13_kzm2WxGmzGxB9-dEaxnu8"
-                onChange={val => setCapVal(val)} 
+                onChange={val => setCapVal(val)}
               />
               <button className='loginInputSubmit' disabled={!capVal}>Log in</button>
             </form>
           </div>
         </div>
       </div>
+      {error && (
+        <div className='errorModal'>
+          <div className='modalContent'>
+            <span className='close' onClick={handleModalClose}>&times;</span>
+            <p>{error}</p>
+          </div>
+        </div>
+      )}
     </FallingAnimation>
   );
 };
