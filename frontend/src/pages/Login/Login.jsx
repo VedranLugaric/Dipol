@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import FallingAnimation from '../../FallingAnimation';
+import '../Registracija/Registracija.css';
 import './Login.css';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../AuthContext';
@@ -11,6 +12,7 @@ const Login = () => {
 
   const [user, setUser] = useState('');
   const [lozinka, setLozinka] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -24,24 +26,24 @@ const Login = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const [error, setError] = useState(false);
-
-  const handleModalClose = () => {
-    setError(null);
-  };
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setError(null);
+
+    setIsLoading(true);
 
     try {
       await login(user, lozinka);
       navigate('/konferencije');
     } catch (error) {
-      //setError(error.response.data.poruka);
       setError("Pogrešan e-mail ili lozinka");
+    } finally{
+      setIsLoading(false);
     }
   };
-
 
   return (
     <FallingAnimation>
@@ -77,28 +79,22 @@ const Login = () => {
                     required
                   ></input>
                 </label>
+                {/* Reserve space for error message or loader */}
               </div>
               <ReCAPTCHA
                 sitekey="6Lf3iTcpAAAAAOGZ13_kzm2WxGmzGxB9-dEaxnu8"
                 onChange={val => setCapVal(val)}
               />
+                <div className="errorText">
+                  {isLoading ? <div className="loader"></div> : error && <p>{error}</p>}
+                </div>
               <button className='loginInputSubmit' disabled={!capVal}>Log in</button>
             </form>
           </div>
         </div>
       </div>
-      {error && (
-        <div className='errorModal'>
-          <div className='modalContent'>
-            <span className='close' onClick={handleModalClose}>&times;</span>
-            <p>{error}</p>
-          </div>
-        </div>
-      )}
     </FallingAnimation>
   );
 };
-
-
 
 export default Login;

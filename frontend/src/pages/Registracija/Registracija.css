@@ -58,7 +58,6 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
     transition: background-color 1s ease-in;
-    
 }
 .registrationInputSubmit:hover{
     cursor: pointer;
@@ -69,7 +68,7 @@
 .registrationInputText{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin-bottom: 45px;
-    width: 100%;
+    width: 300px;
     height: 30px;
     border-radius: 10px;
     border: 1px solid rgb(189, 189, 189);
@@ -85,6 +84,30 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.errorText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    margin-top: 5px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader {
+    border: 13px solid #363636;
+    border-top: 13px solid #6d0b89;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 2s linear infinite;
+    margin-top: 10px;
+}
+  
 
 @media screen and (max-width: 800px) {
     .registrationBody{
@@ -115,35 +138,3 @@
     }
 }
 
-.errorModal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-  }
-  
-  .modalContent {
-    background-color: rgb(30, 20, 40);
-    padding: 20px;
-    width: 80%;
-    border-radius: 10px;
-}
-  
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .close:hover {
-    color: #e2e2e2;
-    ;
-  }

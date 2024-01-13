@@ -442,7 +442,6 @@ def odbij_rad(radId):
 @app.route('/api/dodaj_voditelja/<int:konferencijaId>', methods=['POST'])
 def dodaj_voditelja(konferencijaId):
     try:
-        # Get data from the request body
         data = request.get_json()
 
         if 'mail' not in data:
@@ -450,20 +449,16 @@ def dodaj_voditelja(konferencijaId):
 
         mail = data['mail']
 
-        # Check if Sudionik with provided email exists
         sudionik = Sudionik.query.filter_by(email=mail).first()
 
         if not sudionik:
             return jsonify({'error': 'Sudionik with provided email not found'}), 404
 
-        # Check if Sudionik already participates in the conference
         sudionik_sudjeluje_na = Sudionik_sudjeluje_na.query.filter_by(id_sud=sudionik.id_sud, id_konf=konferencijaId).first()
 
         if sudionik_sudjeluje_na:
-            # Sudionik already participates, update the role
             sudionik_sudjeluje_na.id_uloge = 1
         else:
-            # Sudionik doesn't participate, add to Sudionik_sudjeluje_na
             nova_uloga = Uloge.query.filter_by(naziv='voditelj').first()
             if not nova_uloga:
                 return jsonify({'error': 'Role "Voditelj" not found'}), 500
@@ -475,5 +470,5 @@ def dodaj_voditelja(konferencijaId):
         return jsonify({'message': 'Voditelj added successfully'}), 200
 
     except Exception as e:
-        print(e)  # Log the exception for debugging purposes
+        print(e)
         return jsonify({'error': 'Internal Server Error'}), 500

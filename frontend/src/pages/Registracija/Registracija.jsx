@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FallingAnimation from '../../FallingAnimation';
+import '../Login/Login.css';
 import './Registracija.css';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../AuthContext';
@@ -12,24 +13,28 @@ const Registracija = () => {
   const [prezime, setPrezime] = useState('');
   const [lozinka, setLozinka] = useState('');
   const [lozinkaPotvrda, setLozinkaPotvrda] = useState('');
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Redirect to another route if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('../konferencije'); // Change this to the route you want to redirect to
+      navigate('../konferencije');
     }
   }, [isAuthenticated, navigate]);
 
-  const handleModalClose = () => {
-    setError(null);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    setError(null);
+  
+    if (lozinka !== lozinkaPotvrda) {
+      setError("Lozinke se ne podudaraju.");
+      return;
+    }
+  
+    setIsLoading(true);
+  
     try {
       const response = await axios({
         method: 'post',
@@ -42,27 +47,21 @@ const Registracija = () => {
           lozinkaPotvrda: lozinkaPotvrda
         },
       });
-
-
-      //obriši formu za registraciju
+  
       setUser('');
       setIme('');
       setPrezime('');
       setLozinka('');
       setLozinkaPotvrda('');
-
-      setError(false)
-      //setSuccess(true);
-
-
+  
       navigate('/login')
-
+  
     } catch (error) {
-
-      setError(error.response.data.poruka);
-      setSuccess(false);
+      setError("Račun s ovim emailom već postoji.");
+    } finally {
+      setIsLoading(false);
     }
-  };
+  };  
 
   return (
     <FallingAnimation>
@@ -126,25 +125,19 @@ const Registracija = () => {
                     required
                   />
                 </label>
-                <button className='registrationInputSubmit'>Registriraj se</button>
+                {/* Reserve space for error message or loader */}
+                <div className="errorText">
+                  {isLoading ? <div className="loader"></div> : error && <p>{error}</p>}
+                </div>
               </div>
+              <button className='registrationInputSubmit'>Registriraj se</button>
             </form>
           </div>
           <div className='seconds'>
-            {/*error && <div className="error-message">{error}</div>*/}
-            {/* {success && <div className="success-message">Uspješna registracija!</div>} */}
             <h1 className='welcome'>Dobrodošli!</h1>
           </div>
         </div>
       </div>
-      {error && (
-        <div className='errorModal'>
-          <div className='modalContent'>
-            <span className='close' onClick={handleModalClose}>&times;</span>
-            <p>{error}</p>
-          </div>
-        </div>
-      )}
     </FallingAnimation>
   );
 };
