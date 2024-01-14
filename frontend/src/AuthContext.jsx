@@ -41,23 +41,23 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const korisnikData = await response.json();
-
+      
         setKorisnik(korisnikData);
         localStorage.setItem('korisnik', JSON.stringify(korisnikData));
-
+      
         setIsAuthenticated(true);
         // setIsAdmin(korisnikData.role.includes('admin'));
         // setIsAuthor(korisnikData.role.includes('autor'));
       } else {
-
         setIsAuthenticated(false);
-        throw new Error('Authentication failed');
-      }
+        const errorData = await response.json();
+        throw new Error(errorData.poruka || 'Authentication failed');
+      }      
     } catch (error) {
       console.error('Authentication error:', error.message);
       setIsAuthenticated(false);
-      throw new Error('Authentication failed');
-    }
+      throw error;
+    }    
   };
 
   const logout = async () => {

@@ -8,6 +8,7 @@ const Galerija = () => {
   const { konferencijaId } = useParams();
   const [conferenceName, setConferenceName] = useState('');
   const [images, setImages] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,23 +25,24 @@ const Galerija = () => {
     fetchData();
   }, [konferencijaId]);
 
-  const downloadImage = (link) => {
-    try {
-      saveAs(link, 'slika.png')
-    } catch {
+  const downloadImage = async (url, index) => {
+    const response = await fetch(`http://localhost:5000/downloadImage?url=${url}`);
+    const blob = await response.blob();
+    const timestamp = new Date().getTime();
+    saveAs(blob, `slika_${timestamp}_${index}.png`);
+  }
+  
+  const downloadSelectedImages = () => {
+    selectedImages.forEach((image, index) => {
+      downloadImage(image, index);
+    });
+  }  
 
-    }
-    try {
-      saveAs(link, 'slika.jpg')
-    }
-    catch {
-
-    }
-    try {
-      saveAs(link, 'slika.jpeg')
-    } 
-    catch {
-
+  const toggleSelectImage = (image) => {
+    if (selectedImages.includes(image)) {
+      setSelectedImages(selectedImages.filter(i => i !== image));
+    } else {
+      setSelectedImages([...selectedImages, image]);
     }
   }
 
@@ -51,16 +53,27 @@ const Galerija = () => {
         <h2 className='galerija'>Galerija konferencije '{conferenceName}'</h2>
         <div className='conf-button-galerija'></div>
         <div className='galerija-container'>
-          {images.map((image, index) => (
-            <div className='btn-foto-div'>
-              <div className='fotografija' key={index}>
-                <img className='foto' src={image} alt={`Slika ${index + 1}`} />
-              </div>
-              <a className='btn-a'>
-                  <button className='download-button' onClick={() => downloadImage(image)}>Preuzmi</button>
-                </a>
+        {images.map((image, index) => (
+          <div className='btn-foto-div' key={index}>
+            <div className='fotografija'>
+              <img 
+                className={`foto ${selectedImages.includes(image) ? 'selected' : ''}`} 
+                src={image} 
+                alt={`Slika ${index + 1}`} 
+                onClick={() => toggleSelectImage(image)} 
+              />
+              <input 
+                type="checkbox" 
+                checked={selectedImages.includes(image)} 
+                onChange={() => toggleSelectImage(image)} 
+              />
             </div>
-          ))}
+            <a className='btn-a'>
+              <button className='download-button' onClick={() => downloadImage(image)}>Preuzmi</button>
+            </a>
+          </div>
+        ))}
+          <button onClick={downloadSelectedImages}>Download Selected Images</button>
         </div>
       </FallingAnimation>
     </>

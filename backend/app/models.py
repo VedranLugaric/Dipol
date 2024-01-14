@@ -1,7 +1,7 @@
 from app import db
 import secrets
 from flask_principal import RoleNeed, UserNeed
-
+from datetime import datetime
 class Uloge(db.Model):
     id_uloge = db.Column(db.Integer, primary_key=True)
     naziv = db.Column(db.String(50), unique=True, nullable=False)
@@ -24,6 +24,9 @@ class Sudionik(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     lozinka = db.Column(db.String(128))
     admin = db.Column(db.Boolean)
+    token = db.Column(db.String(255), unique=True)
+    token_vrijeme = db.Column(db.DateTime, default=datetime.utcnow)
+    verified = db.Column(db.Boolean, default=False)
 
     def get_id(self):
         return str(self.id_sud)
@@ -63,15 +66,6 @@ class Sudionik_sudjeluje_na(db.Model):
 
     id_uloge = db.Column(db.Integer, db.ForeignKey('uloge.id_uloge'), primary_key=True)
     uloge = db.relationship('Uloge')
-
-class Sudionik_je_administrator(db.Model):
-    __tablename__ = 'sudionik_je_administrator'
-
-    id_konf = db.Column(db.Integer, db.ForeignKey('konferencija.id_konf'), primary_key=True)
-    konferencija = db.relationship('Konferencija')
-    
-    id_sud = db.Column(db.Integer, db.ForeignKey('sudionik.id_sud'), primary_key=True)
-    sudionik = db.relationship('Sudionik')
 
 class Pokrovitelj(db.Model):
     __tablename__ = 'pokrovitelj' 

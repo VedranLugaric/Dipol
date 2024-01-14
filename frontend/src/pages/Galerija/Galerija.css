@@ -56,3 +56,6 @@
     text-decoration: none;
     margin-top: 0.3rem;
 }
+.foto.selected {
+    border: 2px solid red;
+}

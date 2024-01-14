@@ -108,3 +108,8 @@
     justify-items: center;
     width: 10rem;
 }
+
+.pokrovitelj-logo {
+    max-width: 100px; /* Adjust the max-width as needed */
+    height: auto;
+}

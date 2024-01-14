@@ -54,14 +54,14 @@ const Registracija = () => {
       setLozinka('');
       setLozinkaPotvrda('');
   
-      navigate('/login')
-  
+      setError("Poslana pošta za verifikaciju na email: " + user);
     } catch (error) {
       setError("Račun s ovim emailom već postoji.");
     } finally {
       setIsLoading(false);
     }
   };  
+  
 
   return (
     <FallingAnimation>

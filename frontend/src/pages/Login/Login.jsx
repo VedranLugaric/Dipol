@@ -30,20 +30,24 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     setError(null);
-
+  
     setIsLoading(true);
-
+  
     try {
       await login(user, lozinka);
       navigate('/konferencije');
     } catch (error) {
-      setError("Pogrešan e-mail ili lozinka");
+      if (error.message === 'Korisnik nije verificiran') {
+        setError("Korisnik nije verificiran");
+      } else {
+        setError(error.message);
+      }
     } finally{
       setIsLoading(false);
     }
-  };
+  };  
 
   return (
     <FallingAnimation>
@@ -79,16 +83,15 @@ const Login = () => {
                     required
                   ></input>
                 </label>
-                {/* Reserve space for error message or loader */}
               </div>
-              <ReCAPTCHA
+              {/* <ReCAPTCHA
                 sitekey="6Lf3iTcpAAAAAOGZ13_kzm2WxGmzGxB9-dEaxnu8"
                 onChange={val => setCapVal(val)}
-              />
+              /> */}
                 <div className="errorText">
                   {isLoading ? <div className="loader"></div> : error && <p>{error}</p>}
                 </div>
-              <button className='loginInputSubmit' disabled={!capVal}>Log in</button>
+              <button className='loginInputSubmit'>Log in</button>
             </form>
           </div>
         </div>

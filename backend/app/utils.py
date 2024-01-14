@@ -8,6 +8,25 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import desc, func
 import logging
 from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
+from apscheduler.triggers.interval import IntervalTrigger
+
+scheduler = BackgroundScheduler()
+logging.getLogger('apscheduler').setLevel(logging.ERROR)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'progidipol@gmail.com'
+app.config['MAIL_PASSWORD'] = 'goad jyux xwvs tadx'
+mail = Mail(app)
+
+def generate_token():
+    return str(uuid.uuid4())
+
+def send_verification_email(email, token):
+    msg = Message('Verify Your Email Address', sender='progidipol@gmail.com', recipients=[email])
+    msg.body = f'Please verify your email address by clicking on the following link: http://localhost:5000/verify/{token}'
+    mail.send(msg)
 
 def generate_unique_filename(filename):
     filename = secure_filename(filename)
@@ -17,7 +36,7 @@ def generate_unique_filename(filename):
     return unique_filename
 
 def upload_to_gcs(file, bucket_name, destination_blob_name):
-    key_file_path = "D:\\PROJEKT_PROGI\\progi-key.json"
+    key_file_path = "C:\\Users\\Lukas\\Desktop\\FER\\progi-key.json"
     client = storage.Client.from_service_account_json(key_file_path)
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
@@ -50,14 +69,6 @@ def save_to_database(naslov_rad, image_link, pdf_link, ppt_link, conference_id, 
 
     db.session.commit()
 
-scheduler = BackgroundScheduler()
-logging.getLogger('apscheduler').setLevel(logging.ERROR)
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'progidipol@gmail.com'
-app.config['MAIL_PASSWORD'] = 'goad jyux xwvs tadx'
-mail = Mail(app)
 
 def send_email_to_top_poster_users(conference_id):
     with app.app_context():
@@ -86,11 +97,29 @@ Dipol"""
         mail.send(msg)
         print('Emails sent')
 
+def cleanup():
+    try:
+        now = datetime.utcnow()
+
+        unverified_users = Sudionik.query.filter_by(verified=False).all()
+
+        for user in unverified_users:
+            if now - user.token_vrijeme > timedelta(minutes=10):
+                db.session.delete(user)
+
+        db.session.commit()
+
+        print('Cleanup successful')
+    except Exception as e:
+        print(f'Error during cleanup: {str(e)}')
+
 
 with app.app_context():
     conferences = Konferencija.query.all()
 
     for conference in conferences:
         scheduler.add_job(func=send_email_to_top_poster_users, trigger='date', run_date=conference.vrijeme_zav, args=[conference.id_konf])
+
+    scheduler.add_job(func=cleanup, trigger=IntervalTrigger(hours=1))
 
     scheduler.start()

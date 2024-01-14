@@ -18,6 +18,13 @@ const Poster = ({ conferenceId }) => {
   const { isAdmin } = useAuth()
   const navigate = useNavigate();
 
+  const addProtocol = (url) => {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        return `http://${url}`;
+    }
+    return url;
+  };
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -105,9 +112,10 @@ const Poster = ({ conferenceId }) => {
             <div className='pokrovitelji-container'>
               <h2>Pokrovitelji</h2>
               {data.pokrovitelji.map((pokrovitelj) => (
-                <div key={pokrovitelj.id} className='pokrovitelj-item' onClick={() => window.open(pokrovitelj.stranica, '_blank')}>
-                  <p>{pokrovitelj.ime}</p>
-                </div>
+              <div key={pokrovitelj.id_pokrovitelj} className='pokrovitelj-item' onClick={() => window.open(addProtocol(pokrovitelj.stranica), '_blank')}>
+                <img src={pokrovitelj.logo} alt={`${pokrovitelj.ime} Logo`} className='pokrovitelj-logo' />
+                <p>{pokrovitelj.ime}</p>
+              </div>
               ))}
             </div>
           </>

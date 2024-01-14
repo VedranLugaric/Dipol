@@ -1,11 +1,13 @@
-from datetime import datetime, timezone
-from flask import request, jsonify, make_response, render_template
+from datetime import datetime, timezone, timedelta
+from flask import request, jsonify, make_response, send_file
 from passlib.hash import pbkdf2_sha256
 from app import app, db
 from app.models import generate_session_id, Konferencija, Sudionik, Sudionik_sudjeluje_na, Rad, Pokrovitelj, Pokrovitelj_sponzorira, Galerija, Uloge
-from app.utils import upload_to_gcs, save_to_database, generate_unique_filename
+from app.utils import upload_to_gcs, save_to_database, generate_unique_filename, generate_token, send_verification_email
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
+import requests
+from io import BytesIO
 
 @app.route('/api/registracija/', methods=['POST'])
 def registracija():
@@ -23,22 +25,42 @@ def registracija():
         lozinka = data['lozinka']
         hashed_password = pbkdf2_sha256.hash(lozinka)
 
+        token = generate_token()
+
         novi_sudionik = Sudionik(
             ime=data['ime'],
             prezime=data['prezime'],
             email=data['email'],
             lozinka=hashed_password,
-            admin=False
+            admin=False,
+            token=token,
+            token_vrijeme=datetime.utcnow()
         )
 
         db.session.add(novi_sudionik)
         db.session.commit()
 
+        send_verification_email(data['email'], token)
+
         return jsonify({'poruka': 'Registracija uspješna'}), 201
     except Exception as e:
         print(f'Greška pri registraciji: {str(e)}')
         return jsonify({'poruka': 'Pogreška prilikom registracije'}), 500
+    
+@app.route('/verify/<token>', methods=['GET'])
+def verify_email(token):
+    user = Sudionik.query.filter_by(token=token).first()
 
+    if user:
+        if datetime.utcnow() - user.token_vrijeme > timedelta(minutes=10):
+            return jsonify({'poruka': 'Token has expired'}), 400
+
+        user.verified = True
+        db.session.commit()
+        return jsonify({'poruka': 'Email verified successfully'}), 200
+    else:
+        return jsonify({'poruka': 'Invalid token'}), 400
+    
 @app.route('/api/login', methods=['POST'])
 def login():
     try:
@@ -50,6 +72,9 @@ def login():
         korisnik = Sudionik.query.filter_by(email=email).first()
 
         if korisnik and pbkdf2_sha256.verify(lozinka, korisnik.lozinka):
+            if not korisnik.verified:
+                return jsonify({'poruka': 'Korisnik nije verificiran'}), 401
+
             session_id = generate_session_id()
             korisnik_info = {
                 'id': korisnik.id_sud,
@@ -342,7 +367,7 @@ def get_past_conference(conference_id):
 @app.route('/api/pokrovitelj/<int:konferencijaId>', methods = ['GET'])
 def pokrovitelj_za_konf(konferencijaId):
     rez = db.session.query(Pokrovitelj).join(Pokrovitelj_sponzorira).filter(Pokrovitelj_sponzorira.id_konf == konferencijaId).all()
-    podaci = [{'id' : pokrovitelj.id_pokrovitelj, 'ime' : pokrovitelj.ime, 'stranica' : pokrovitelj.stranica} for pokrovitelj in rez]
+    podaci = [{'id' : pokrovitelj.id_pokrovitelj, 'ime' : pokrovitelj.ime, 'stranica' : pokrovitelj.stranica, 'logo' : pokrovitelj.logo} for pokrovitelj in rez]
     return jsonify({'pokrovitelj': podaci}), 200
 
 @app.route('/api/galerija/<int:konferencijaId>', methods = ['GET'])
@@ -472,3 +497,46 @@ def dodaj_voditelja(konferencijaId):
     except Exception as e:
         print(e)
         return jsonify({'error': 'Internal Server Error'}), 500
+
+@app.route('/api/dodaj_pokrovitelja/<int:konferencijaId>', methods=['POST'])
+def dodaj_pokrovitelja(konferencijaId):
+    if 'logo' not in request.files:
+        return {'error': 'No logo provided'}, 400
+
+    file = request.files['logo']
+
+    if file.filename == '':
+        return {'error': 'No selected file'}, 400
+
+    if file:
+        unique_filename = generate_unique_filename(file.filename)
+        logo_blob_name = f'images/sponsors/{unique_filename}'
+
+        upload_to_gcs(file, 'progi', logo_blob_name)
+        logo_link = f'https://storage.googleapis.com/progi/{logo_blob_name}'
+
+        pokrovitelj = Pokrovitelj(
+            ime=request.form['naziv'],
+            stranica=request.form['url'],
+            logo=logo_link
+        )
+
+        db.session.add(pokrovitelj)
+        db.session.commit()
+
+        pokrovitelj_sponzorira = Pokrovitelj_sponzorira(
+            id_pokrovitelj=pokrovitelj.id_pokrovitelj,
+            id_konf=konferencijaId
+        )
+
+        db.session.add(pokrovitelj_sponzorira)
+        db.session.commit()
+
+        return {'message': 'Pokrovitelj successfully added'}, 200
+
+@app.route('/downloadImage', methods=['GET'])
+def download_image():
+    url = request.args.get('url')
+    response = requests.get(url)
+    img = BytesIO(response.content)
+    return send_file(img, mimetype='image/png')
