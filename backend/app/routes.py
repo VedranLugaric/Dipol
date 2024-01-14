@@ -496,6 +496,7 @@ def dodaj_voditelja(konferencijaId):
 
     except Exception as e:
         print(e)
+<<<<<<< Updated upstream
         return jsonify({'error': 'Internal Server Error'}), 500
 
 @app.route('/api/dodaj_pokrovitelja/<int:konferencijaId>', methods=['POST'])
@@ -540,3 +541,6 @@ def download_image():
     response = requests.get(url)
     img = BytesIO(response.content)
     return send_file(img, mimetype='image/png')
+=======
+        return jsonify({'error': 'Internal Server Error'}), 500
+>>>>>>> Stashed changes
