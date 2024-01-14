@@ -5,11 +5,16 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 
 const DodajFotografije = () => {
-    const { isAdmin } = useAuth();
     const navigate = useNavigate();
     const { konferencijaId } = useParams();
     
     const [files, setFiles] = useState([]);
+
+    const storedKorisnik = JSON.parse(localStorage.getItem('korisnik'));
+    const isVoditeljNaKonf = storedKorisnik
+      ? storedKorisnik.voditelj_na_konf.includes(parseInt(konferencijaId, 10))
+      : false;
+    const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
 
     const handleFileChange = (e) => {
         setFiles(e.target.files);
@@ -47,7 +52,7 @@ const DodajFotografije = () => {
         <>
         <FallingAnimation>
         <hr></hr>
-        {!isAdmin && (
+        {(isAdmin ||isVoditeljNaKonf) && (
             <div className='dodaj-voditelja-cont'>
                 <div className='formcontainer'>
                     <h2 className='headertext'>Dodavanje fotografija</h2>
@@ -68,7 +73,7 @@ const DodajFotografije = () => {
                 </div>
             </div>
         )}
-        {isAdmin && (
+        {!(isAdmin || isVoditeljNaKonf) && (
             <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

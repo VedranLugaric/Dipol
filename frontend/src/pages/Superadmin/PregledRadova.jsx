@@ -8,12 +8,18 @@ import jsPDF from 'jspdf';
 
 const PregledRadova = ({ conferenceId }) => {
 
-    const { isAdmin } = useAuth();
     const navigate = useNavigate();
 
     const { konferencijaId } = useParams();
 
     const [radovi, setRadovi] = useState([]);
+
+    const storedKorisnik = JSON.parse(localStorage.getItem('korisnik'));
+    const isVoditeljNaKonf = storedKorisnik
+      ? storedKorisnik.voditelj_na_konf.includes(parseInt(konferencijaId, 10))
+      : false;
+    const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
+
 
     useEffect(() => {
         const fetchRadovi = async () => {
@@ -133,7 +139,7 @@ const PregledRadova = ({ conferenceId }) => {
         <>
         <FallingAnimation>
             <hr></hr>
-            {!isAdmin && (
+            {(isAdmin || isVoditeljNaKonf) && (
                 <div className="posteri-container">
                 {radovi && 
                     radovi.map((rad, index) => (
@@ -163,7 +169,7 @@ const PregledRadova = ({ conferenceId }) => {
                     ))}
             </div>
             )}
-            {!isAdmin && (
+            {!(isAdmin || isVoditeljNaKonf) && (
                 <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

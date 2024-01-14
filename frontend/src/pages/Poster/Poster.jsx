@@ -15,8 +15,12 @@ const Poster = ({ conferenceId }) => {
   const [loading, setLoading] = useState(true);
   const { konferencijaId } = useParams();
   const { korisnik, isAuthenticated } = useAuth();
-  const { isAdmin } = useAuth()
   const navigate = useNavigate();
+  const storedKorisnik = JSON.parse(localStorage.getItem('korisnik'));
+  const isVoditeljNaKonf = storedKorisnik
+    ? storedKorisnik.voditelj_na_konf.includes(parseInt(konferencijaId, 10))
+    : false;
+  const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
 
   const addProtocol = (url) => {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -71,34 +75,34 @@ const Poster = ({ conferenceId }) => {
       <hr></hr>
       <div className='poster-container'>
           <div className='add-pok-div'>
-          {!isAdmin && (
+          {(isAdmin || isVoditeljNaKonf) && (
             <>
-            <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
-              <span className="circle1"></span>
-              <span className="circle2"></span>
-              <span className="circle3"></span>
-              <span className="circle4"></span>
-              <span className="circle5"></span>
-              <span className="text">Dodaj pokrovitelja</span>
-            </button>
-            <button className='addkonf' onClick={() => navigate(`/dodaj-fotografije/${konferencijaId}`)}>
-              <span className="circle1"></span>
-              <span className="circle2"></span>
-              <span className="circle3"></span>
-              <span className="circle4"></span>
-              <span className="circle5"></span>
-              <span className="text">Dodaj fotografije</span>
-            </button>
-            <button className='button' onClick={() => navigate(`/galerija/${konferencijaId}`)}>
-                <span className='circle1'></span>
-                <span className='circle2'></span>
-                <span className='circle3'></span>
-                <span className='circle4'></span>
-                <span className='circle5'></span>
-                <span className='text'>Galerija fotografija</span>
+              <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
+                <span className="circle1"></span>
+                <span className="circle2"></span>
+                <span className="circle3"></span>
+                <span className="circle4"></span>
+                <span className="circle5"></span>
+                <span className="text">Dodaj pokrovitelja</span>
+              </button>
+              <button className='addkonf' onClick={() => navigate(`/dodaj-fotografije/${konferencijaId}`)}>
+                <span className="circle1"></span>
+                <span className="circle2"></span>
+                <span className="circle3"></span>
+                <span className="circle4"></span>
+                <span className="circle5"></span>
+                <span className="text">Dodaj fotografije</span>
               </button>
             </>
           )}
+          <button className='button' onClick={() => navigate(`/galerija/${konferencijaId}`)}>
+            <span className='circle1'></span>
+            <span className='circle2'></span>
+            <span className='circle3'></span>
+            <span className='circle4'></span>
+            <span className='circle5'></span>
+            <span className='text'>Galerija fotografija</span>
+          </button>
           </div>
         {loading ? (
           <h2>Loading...</h2>

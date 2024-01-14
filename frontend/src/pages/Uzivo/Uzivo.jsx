@@ -1,66 +1,60 @@
 import YouTube from "react-youtube";
 import './Uzivo.css'
 import FallingAnimation from '../../FallingAnimation';
-
+import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { useAuth } from '../../AuthContext';
 const Uzivo = () => {
     //ovaj src se treba zamijeniti src-om iz baze
-    const src = "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4";
+    const [videoSrc, setVideoSrc] = useState("");
+    const { korisnik, isAuthenticated } = useAuth();
     
+    const { konferencijaId } = useParams();
+  
+
+    useEffect(() => {
+      const fetchVideoSrc = async () => {
+          try {
+              const response = await fetch(`http://localhost:5000/api/live/${konferencijaId}`, {
+                  method: 'GET',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+              });
+
+              if (response.ok) {
+                  const data = await response.json();
+                  setVideoSrc(data.video);
+              } else {
+                  console.error("Failed to fetch data");
+              }
+          } catch (error) {
+              console.error('Fetch error:', error.message);
+              throw new Error('Problem s dohvatom video zapisa');
+          }
+      };
+
+      fetchVideoSrc();
+  }, [konferencijaId]);
+
     return (
         <FallingAnimation>
             <hr></hr>
-            <div className="video">
-            <video controls width="100%">
-                <source src={src} type="video/mp4" />
-                Sorry, your browser doesn't support embedded videos.
-                </video>
+            {isAuthenticated && (
+            <div >
+            <YouTube className="video" videoId={videoSrc} opts={{ width: '100%' }} />
             </div>
+            )}
+            {!isAuthenticated && (
+                <div className='nemate-pristup'>
+                <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
+                <button className='return' onClick={() => navigate(-1)}>Povratak</button>
+            </div>
+            )}
         </FallingAnimation>
     )
 
 }
 
-/*const Footer = () =>{
-    const [pokrovitelji, setPokrovitelj] = useState([]);
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetch(`http://localhost:5000/api/pokrovitelj/${konferencijaId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type' : 'application/json',
-            },
-            body: JSON.stringify({id_pokrovitelj: pokrovitelji.id}),
-          });
-  
-          if (response.ok){
-            const pokrovitelji = await response.json();
-            setPokrovitelj(pokrovitelji);
-          }
-          else {
-            console.error('Failed to fetch data');
-          }
-        } catch (error) {
-          console.error('Fetch error:', error.message);
-        }
-      };
-      fetchData();
-    }, []);
-  
-    return(
-      <FallingAnimation>
-        <hr>
-        <footer>
-          <ul>
-            {pokrovitelji.map(pokrovitelj => (
-              <li key={pokrovitelj.id}>{pokrovitelj.ime}</li>
-            ))}
-          </ul>
-        </footer>
-        </hr>
-      </FallingAnimation>
-    )
-  
-  } */
 
 export default Uzivo

@@ -6,11 +6,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 
 const DodajVoditelja = () => {
-    const { isAdmin } = useAuth();
     const navigate = useNavigate();
     const { konferencijaId } = useParams();
     
     const [mail, setMail] = useState('');
+
+    const storedKorisnik = JSON.parse(localStorage.getItem('korisnik'));
+    const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +41,7 @@ const DodajVoditelja = () => {
         <>
         <FallingAnimation>
         <hr></hr>
-        {!isAdmin && (
+        {isAdmin && (
             <div className='dodaj-voditelja-cont'>
                 <div className='formcontainer'>
                     <h2 className='headertext'>Dodavanje voditelja</h2>
@@ -57,7 +59,7 @@ const DodajVoditelja = () => {
                 </div>
             </div>
         )}
-        {isAdmin && (
+        {!(isAdmin) && (
             <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

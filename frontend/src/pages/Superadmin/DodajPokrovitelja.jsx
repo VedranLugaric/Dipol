@@ -7,7 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 
 const DodajPokrovitelja = () => {
-    const { isAdmin } = useAuth();
     const navigate = useNavigate();
 
     const [naziv, setNaziv] = useState('');
@@ -15,6 +14,12 @@ const DodajPokrovitelja = () => {
     const {konferencijaId} = useParams();
     const [url, setUrl] = useState('');
     const [uploadMessage, setUploadMessage] = useState('');
+
+    const storedKorisnik = JSON.parse(localStorage.getItem('korisnik'));
+    const isVoditeljNaKonf = storedKorisnik
+      ? storedKorisnik.voditelj_na_konf.includes(parseInt(konferencijaId, 10))
+      : false;
+    const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
 
     const handleLogoChange = (event) => {
         const file = event.target.files[0];
@@ -47,7 +52,7 @@ const DodajPokrovitelja = () => {
         <>
         <FallingAnimation>
             <hr></hr>
-            {!isAdmin && (
+            {(isAdmin || isVoditeljNaKonf) && (
             <div className='dodaj-voditelja-cont'>
                 <div className='formcontainer'>
                     <h2 className='headertext'>Dodavanje pokrovitelja</h2>
@@ -88,7 +93,7 @@ const DodajPokrovitelja = () => {
                 </div>
             </div>
         )}
-        {isAdmin && (
+        {!(isAdmin || isVoditeljNaKonf) && (
             <div className='nemate-pristup'>
                 <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
                 <button className='return' onClick={() => navigate(-1)}>Povratak</button>

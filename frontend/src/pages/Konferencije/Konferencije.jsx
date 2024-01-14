@@ -8,6 +8,7 @@ import './Pass-prompt-konferencija.css'
 import GfGWeatherApp from '../WeatherApp/WeatherApp';
 
 
+
 const Konferencije = () => {
     const [konferencije, setPodaci] = useState([])
 
@@ -232,11 +233,12 @@ const Nadolazeće = ({nadolazece}) => {
 }
 
 const DodajKonferenciju = () => {
-  const { isAdmin } = useAuth();
+  const storedKorisnik = JSON.parse(localStorage.getItem('korisnik'));
+  const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
   
   return (
     <>
-      {!isAdmin && (
+      {isAdmin && (
         <div className='addkonfdiv'>
           <Link to='/dodajkonferenciju'>
             <button className='addkonf'>
@@ -255,7 +257,12 @@ const DodajKonferenciju = () => {
 };
 
 const DodajPosterButton = ({ konferencijaId }) => {
-  const { isAdmin } = useAuth()
+  const storedKorisnik = JSON.parse(localStorage.getItem('korisnik'));
+  const isVoditeljNaKonf = storedKorisnik
+    ? storedKorisnik.voditelj_na_konf.includes(konferencijaId)
+    : false;
+  const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
+
 
   return (
     <div>
@@ -269,7 +276,7 @@ const DodajPosterButton = ({ konferencijaId }) => {
           <span className="text">Dodaj poster</span>
         </button>
       </Link>
-      {!isAdmin && (
+      {(isAdmin || isVoditeljNaKonf) && (
         <>
         <Link to={`../pregled-radova/${konferencijaId}`}>
         <button className='addposter'>
@@ -281,6 +288,10 @@ const DodajPosterButton = ({ konferencijaId }) => {
           <span className="text">Pregledaj radove</span>
         </button>
       </Link>
+      </>
+      )}
+      {isAdmin && (
+        <>
       <Link to={`../dodaj-voditelja/${konferencijaId}`}>
         <button className='addposter'>
           <span className="circle1"></span>

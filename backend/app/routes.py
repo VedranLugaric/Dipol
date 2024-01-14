@@ -8,6 +8,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
 import requests
 from io import BytesIO
+import re
 
 @app.route('/api/registracija/', methods=['POST'])
 def registracija():
@@ -70,16 +71,23 @@ def login():
         lozinka = data.get('lozinka')
 
         korisnik = Sudionik.query.filter_by(email=email).first()
+        
 
         if korisnik and pbkdf2_sha256.verify(lozinka, korisnik.lozinka):
             if not korisnik.verified:
                 return jsonify({'poruka': 'Korisnik nije verificiran'}), 401
+            
+            # Retrieve id_konf values for the given korisnik and id_uloge=1
+            sudjeluje_konfs = Sudionik_sudjeluje_na.query.filter_by(id_sud=korisnik.id_sud, id_uloge=1).all()
+            voditelj_na_konf = [sudjeluje.id_konf for sudjeluje in sudjeluje_konfs]
 
             session_id = generate_session_id()
             korisnik_info = {
                 'id': korisnik.id_sud,
                 'ime': korisnik.ime,
                 'prezime': korisnik.prezime,
+                'admin': korisnik.admin,
+                'voditelj_na_konf': voditelj_na_konf
             }
 
             response = make_response(jsonify(korisnik_info))
@@ -496,7 +504,6 @@ def dodaj_voditelja(konferencijaId):
 
     except Exception as e:
         print(e)
-<<<<<<< Updated upstream
         return jsonify({'error': 'Internal Server Error'}), 500
 
 @app.route('/api/dodaj_pokrovitelja/<int:konferencijaId>', methods=['POST'])
@@ -541,6 +548,35 @@ def download_image():
     response = requests.get(url)
     img = BytesIO(response.content)
     return send_file(img, mimetype='image/png')
-=======
-        return jsonify({'error': 'Internal Server Error'}), 500
->>>>>>> Stashed changes
+
+
+@app.route('/api/live/<int:konferencijaId>', methods=['GET'])
+def get_live_video(konferencijaId):
+    try:
+        # Query the database for the conference with the specified ID
+        konferencija = Konferencija.query.filter_by(id_konf=konferencijaId).first()
+
+        # Check if the conference exists
+        if konferencija:
+            # Return the video link for the conference
+            return jsonify({'video': extract_youtube_video_id(konferencija.video)})
+        else:
+            return jsonify({'error': 'Conference not found'}), 404
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+def extract_youtube_video_id(video_url):
+    # Regular expression patterns for different YouTube URL formats
+    patterns = [
+        r'(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})',
+        r'^[a-zA-Z0-9_-]{11}$'  # Video ID alone without URL
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, video_url)
+        if match:
+            return match.group(1)
+
+    # If no match is found, return None or handle the case accordingly
+    return None
