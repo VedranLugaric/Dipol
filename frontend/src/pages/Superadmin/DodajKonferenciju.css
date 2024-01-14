@@ -106,3 +106,13 @@ form{
 .return:hover{
     background-color: rgb(59, 51, 63);
 }
+
+@media (max-width: 550px) {
+   .formcontainer{
+        max-width: 100%;
+   }
+   .label{
+        text-align: center;
+        margin-left: 0;
+   }
+}

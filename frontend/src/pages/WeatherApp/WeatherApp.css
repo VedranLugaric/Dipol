@@ -107,3 +107,30 @@
 .temp-container{
 	display: flex;
 }
+
+@media (max-width: 1016px) {
+
+	.des-wind{
+		display: none;
+	}
+	
+	.App { 
+		background-color: transparent;
+		border: none;
+		box-shadow: none;
+		margin-left: -7rem;
+	}
+	.temp-container{
+		display: flex;
+		flex-direction: column;
+	} 
+	.icon{
+		height: 4rem;
+	}
+	.num{
+		font-size: 1rem;
+	}
+	.deg{
+		font-size: 1rem;
+	}
+}

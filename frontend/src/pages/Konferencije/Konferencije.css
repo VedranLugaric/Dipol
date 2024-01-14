@@ -150,7 +150,7 @@ transition: 1.5s ease;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   color: white;
-  background-color:rgb(29, 29, 34);
+  background-color:transparent;
   width: fit-content;
   border: 2px solid rgb(65, 49, 87) ;
   border-radius: 30px;
@@ -219,7 +219,7 @@ transition: 1.5s ease;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: white;
-    background-color:rgb(29, 29, 34);
+    background-color:transparent;
     border: 2px solid rgb(65, 49, 87) ;
     border-radius: 30px;
     position: relative;
@@ -275,4 +275,68 @@ transition: 1.5s ease;
   .konferencija-button{
     display: flex;
     margin-bottom: 40px;
+  }
+  @media (max-width: 1040px) {
+    .conf-weather-cont{
+      display: flex;
+      padding: 0;
+      padding-top: 1rem;
+      justify-items: center;
+      width: 100%;
+    }
+    .konferencija{
+      box-shadow: black 5px 5px 2rem;
+      border-radius: 30px;
+      width: 100%;
+      margin-left: 0;
+      height: 8rem;
+      display: flex;
+      background-color: rgb(46, 46, 54);
+    }
+    .konfImg{
+      display: none;
+    }
+    .pristupi{
+      display: flex;
+      flex-direction: column;
+      margin-left: 15rem;
+      position: absolute;
+      align-items: center;
+      height: inherit;
+    }
+    .pristupibutton{
+      margin: auto;
+    }
+    .texts{
+      margin-left: 1rem;
+    }
+    .opis{
+      font-size: small;
+    }
+    .addposter{
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: white;
+      background-color:transparent;
+      border: 2px solid rgb(65, 49, 87) ;
+      border-radius: 30px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      font-size: 16px;
+      margin-top: 0;
+      margin: 0.2rem;
+      margin-left: 15rem;
+      width: fit-content;
+      height: 2rem;
+    }
+    .nad-buttons{
+      position: absolute;
+      display: flex;
+      width: 100%;
+      height: 8rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
   }

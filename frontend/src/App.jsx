@@ -9,11 +9,6 @@ const NavigationButton = (props) => {
   )
 }
 
-const Footer = () => {
-  return (
-    <div className='footer'>footer</div>
-  )
-}
 
 const NavBar = () => {
   const { isAuthenticated, korisnik, logout } = useAuth();
@@ -24,15 +19,17 @@ const NavBar = () => {
     logout();
   };
 
+
   return (
     <>
       <div className='navBar'>
         <Link to='/' className='logo'>
-          <a href='#' className='logo'>
-            <h2 className='logo'>dipol</h2>
+          <a href='#'>
+            <h2>dipol</h2>
           </a>
         </Link>
         <div className='navBtns'>
+          
           <Link to='/konferencije'>
             <NavigationButton name="KONFERENCIJE" />
           </Link>
@@ -62,8 +59,8 @@ const NavBar = () => {
               </Link>
             </>
           )}
+          </div>
         </div>
-      </div>
     </>
   );
 };
@@ -75,7 +72,6 @@ const App = () => {
     <>
       <NavBar />
       <Main />
-      <Footer />
     </> 
   )
 }

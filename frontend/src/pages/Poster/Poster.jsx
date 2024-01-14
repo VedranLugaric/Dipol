@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate} from 'react-router-dom';
 import FallingAnimation from '../../FallingAnimation';
-import { Document, Page, pdfjs } from 'react-pdf';
 import './Poster.css';
 import { useAuth } from '../../AuthContext';
 
@@ -75,7 +74,7 @@ const Poster = ({ conferenceId }) => {
       <hr></hr>
       <div className='poster-container'>
           <div className='add-pok-div'>
-          {(isAdmin || isVoditeljNaKonf) && (
+          {(!isAdmin || !isVoditeljNaKonf) && (
             <>
               <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
                 <span className="circle1"></span>

@@ -265,7 +265,7 @@ const DodajPosterButton = ({ konferencijaId }) => {
 
 
   return (
-    <div>
+    <div className="nad-buttons">
       <Link to={`/dodajposter?konferencijaId=${konferencijaId}`}>
         <button className='addposter'>
           <span className="circle1"></span>

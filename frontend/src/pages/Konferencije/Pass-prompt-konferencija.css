@@ -3,8 +3,8 @@
     top: 25%;
     position: sticky;
 
-    width: 50rem;
-    height: 16rem;
+    width: 80%;
+    height: 40%;
 
     border-radius: 2rem;
     box-shadow: rgb(24, 24, 29) 0 0 2rem;
@@ -32,6 +32,7 @@
     margin-top: 2rem;
     font-size: large;
     font-variant:small-caps;
+    text-align: center;
 }
 .pass-input{
     border: none;
