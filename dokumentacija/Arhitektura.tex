@@ -21,23 +21,34 @@
 	Za potrebe našeg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje konferencije. Gradivna jedinka baze je 				relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brz i jednostavan dohvat i pohrana podataka za 			daljnju obradu. Baza podataka ovog sustava sastoji se od sljedećih entiteta:
 
 \begin{itemize}
+	\item Galerija
 	\item Konferencija
-	\item Sudionik
-	\item Sudionik sudjeluje na
-	\item Posteri
-	\item Prezentacije
-	\item Rad
-	\item Rad se predstavlja na
 	\item Pokrovitelj
 	\item Pokrovitelj sponzorira
-	\item Reklama
-	\item Sudionik je administrator
-	\item Roles
-	\item Sudionik roles
+	\item Rad
+	\item Sudionik
+	\item Sudionik sudjeluje na
+	\item Uloge
 \end{itemize}
 		
 			\subsection{Opis tablica}
-			
+
+\textbf{Galerija} - Ovaj entitet sadrži popis svih fotografija u sustavu. Sadrži atribute: ID forografije, link na fotografiju i ID konferencije na kojoj je fotografirana. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Konferencija} preko identifikatora konferencije.
+
+\begin{table}[H]
+	\caption{Galerija}
+	\label{tbl:galerija}
+	\centering
+	\begin{tabular}{|l|c|l|} 
+		\hline
+		\cellcolor{lightgreen}ID slike & INT & Jedinstven identifikator slike\\ 
+		\hline
+		slika_link & VARCHAR & link na sliku koja se nalazi na udaljenom serveru\\ 
+		\hline
+		\cellcolor{lightblue}ID konferenicije & INT & Jedinstven identifikator konferencije kojoj pripada slika\\ 
+		\hline
+	\end{tabular}
+\end{table}
 
 \textbf{Konferencija} - ovaj entitet sadrži informacije o pojedinim konferencijama. Sadrži atribute: ID konferencije, naziv, mjesto, vrijeme početka i vrijeme završetka konferencije i link na video prijenos konferencije. Ovaj entitet je u vezi \textit{One-to-Many} s entitetom \textit{Sudionik sudjeluje na} preko identifikatora konferencije, u vezi \textit{One-to-Many} s entitetom \textit{Rad se predstavlja na} preko identifikatora konferencije, u vezi \textit{One-to-Many} s entitetom \textit{Pokrovitelj sponzorira} preko identifikatora konferencije te u vezi \textit{One-to-One} s entitetom \textit{Sudionik je administrator} preko identifikatora konferencije.
 
@@ -68,114 +79,6 @@
 	\end{tabular}
 \end{table}
 
-\textbf{Sudionik} – ovaj entitet sadrži informacije o svim sudionicima u sustavu. Sadrži atribute: ID sudionika, sudionikovo ime, prezime i e-mail adresu. Ovaj entitet je u vezi \textit{One-to-Many} s entitetom \textit{Sudionik sudjeluje na} preko identifikatora sudionika, u vezi \textit{One-to-Many} s entitetom \textit{Rad} preko identifikatora sudionika te u vezi \textit{One-to-One} s entitetom \textit{Sudionik je administrator} preko identifikatora sudionika.
-
-\begin{table}[H]
-	\caption{Sudionik}
-	\label{tbl:sudionik}
-	\centering
-	\begin{tabular}{|l|c|l|} 
-		\hline
-		\cellcolor{lightgreen}ID sudionika & INT & Jedinstven identifikator sudionika\\ 
-		\hline
-		Ime & VARCHAR & Ime sudionika\\ 
-		\hline
-		Prezime & VARCHAR & Prezime sudionika\\ 
-		\hline
-		E-mail & VARCHAR & E-mail sudionika\\ 
-		\hline
-		Lozika & VARCHAR & Lozinka za pristup korisničkom računu\\ 
-		\hline
-		Role & VARCHAR & Određuje ulogu odredenog korisnika user/admin\\ 
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Sudionik sudjeluje na} – Ovaj entitet sadrži informacije o odnosu sudionika i konferencije te dodatne oznake o njegovom statusu na konferenciji. Sadrži atribute: ID sudionika, ID konferencije, oznaku je li je sudionik autor rada na konferenciji, oznaku je li je sudionik glasovao za nečiji rad na konferenciji i lozinku. Ovaj entitet je u vezi \textit{Many-to-One} s entitetom \textit{Sudionik} preko identifikatora sudionika te u vezi \textit{Many-to-One} s entitetom \textit{Konferencija} preko identifikatora konferencije.
-
-\begin{table}[H]
-	\caption{Sudionik sudjeluje na}
-	\label{tbl:sudionikSudjelujeNa}
-	\centering
-	\begin{tabular}{|l|c|l|} 
-		\hline
-		\cellcolor{lightblue}ID sudionika & INT & Jedinstven identifikator sudionika\\ 
-		\hline
-		\cellcolor{lightblue}ID konferencije & INT & Jedinstven identifikator konferencije\\ 
-		\hline
-		Glasovao & INTEGER & Oznaka je li je sudionik glasao na određenoj koneferenciji ili nije\\ 
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Posteri} – Ovaj entitet sadrži popis svih digitalnih postera u sustavu. Sadrži atribute: ID postera i link na sam poster (link na .pdf datoteku). Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Rad se predstavlja na} preko identifikatora postera.
-
-\begin{table}[H]
-	\caption{Posteri}
-	\label{tbl:posteri}
-	\centering
-	\begin{tabular}{|l|c|l|} 
-		\hline
-		\cellcolor{lightgreen}ID postera & INT & Jedinstven identifikator digitalnog postera\\ 
-		\hline
-		Poster & VARCHAR & Link na digitalni poster\\ 
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Prezentacije} - Ovaj entitet sadrži popis svih prezentacija u sustavu. Sadrži atribute: ID prezentacije i link na samu prezentaciju (link na .ppt datoteku). Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Rad se predstavlja na} preko identifikatora prezentacije.
-
-\begin{table}[H]
-	\caption{Prezentacije}
-	\label{tbl:prezentacije}
-	\centering
-	\begin{tabular}{|l|c|l|} 
-		\hline
-		\cellcolor{lightgreen}ID prezentacije & INT & Jedinstven identifikator prezentacije\\ 
-		\hline
-		Prezentacija & VARCHAR & Link na prezentaciju\\ 
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Rad} - Ovaj entitet sadrži popis svih radova u sustavu. Sadrži atribute: ID rada, naslov rada te ID sudionika koji je autor tog rada. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Rad se predstavlja na} preko identifikatora rada te u vezi \textit{Many-to-One} s entitetom \textit{Sudionik} preko identifikatora sudionika.
-
-\begin{table}[H]
-	\caption{Rad}
-	\label{tbl:rad}
-	\centering
-	\begin{tabular}{|l|c|l|} 
-		\hline
-		\cellcolor{lightgreen}ID rada & INT & Jedinstven identifikator rada\\ 
-		\hline
-		Naslov & VARCHAR & Naslov rada\\ 
-		\hline
-		\cellcolor{lightblue}ID sudionika & INT & Jedinstven identifikator sudionika koji je napisao rad\\ 
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Rad se predstavlja na} – Ovaj entitet sadrži informacije o radu na određenoj konferenciji. Sadrži atribute: ID rada, ID konferencije, ID digitalnog postera i ID prezentacije (može biti prazno) koji se koriste na toj konferenciji te broj glasova koje je rad ostvario na konferenciji. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Rad} preko identifikatora rada, u vezi \textit{Many-to-One} s entitetom \textit{Konferencija} preko identifikatora konferencije, u vezi \textit{One-to-One} s entitetom \textit{Posteri} preko identifikatora postera i u vezi \textit{One-to-One} s entitetom \textit{Prezentacije} preko identifikatora prezentacije.
-
-\begin{table}[H]
-	\caption{Rad se predstavlja na}
-	\label{tbl:radSePredstavljaNa}
-	\centering
-	\begin{tabular}{|l|c|l|} 
-		\hline
-		\cellcolor{lightblue}ID rada & INT & Jedinstven identifikator rada\\ 
-		\hline
-		\cellcolor{lightblue}ID konferencije & INT & Jedinstven identifikator konferencije\\ 
-		\hline
-		\cellcolor{lightblue}ID postera & INT & Jedinstven identifikator digitalnog postera\\ 
-		\hline
-		\cellcolor{lightblue}ID prezentacije & INT & Jedinstven identifikator prezentacije\\ 
-		\hline
-		Broj glasova & INT & Broj glasova koje je rad osvojio\\ 
-		\hline
-	\end{tabular}
-\end{table}
-
 \textbf{Pokrovitelj} - Ovaj entitet sadržava popis svih pokrovitelja u sustavu. Sadrži atribute: ID pokrovitelja i ime pokrovitelja. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Pokrovitelj sponzorira} preko identifikatora pokrovitelja i u vezi \textit{One-to-Many} s entitetom \textit{Reklama} preko identifikatora pokrovitelja.
 
 \begin{table}[H]
@@ -187,6 +90,10 @@
 		\cellcolor{lightgreen}ID pokrovitelja & INT & Jedinstven identifikator pokrovitelja\\ 
 		\hline
 		Ime & VARCHAR & Ime pokrovitelja\\ 
+		\hline
+		Stranica & VARCHAR & web lokacija pokrovitelja\\ 
+		\hline
+		Logo & VARCHAR & Link na logo pokrovitelja\\ 
 		\hline
 	\end{tabular}
 \end{table}
@@ -206,28 +113,69 @@
 	\end{tabular}
 \end{table}
 
-\textbf{Reklama} - Ovaj entitet sadržava popis svih reklama u sustavu. Sadrži atribute: ID reklame, sadržaj reklame (link na .pdf ili .jpeg datoteku) i pokrovitelj čija je to reklama. Ovaj entitet je u vezi \textit{Many-to-One} s entitetom \textit{Pokrovitelj} preko identifikatora pokrovitelja.
+\textbf{Rad} - Ovaj entitet sadrži popis svih radova u sustavu. Sadrži atribute: ID rada, naslov rada te ID sudionika koji je autor tog rada. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Rad se predstavlja na} preko identifikatora rada te u vezi \textit{Many-to-One} s entitetom \textit{Sudionik} preko identifikatora sudionika.
 
 \begin{table}[H]
-	\caption{Reklama}
-	\label{tbl:reklama}
+	\caption{Rad}
+	\label{tbl:rad}
 	\centering
 	\begin{tabular}{|l|c|l|} 
 		\hline
-		\cellcolor{lightgreen}ID reklame & INT & Jedinstven identifikator reklame\\ 
+		\cellcolor{lightgreen}ID rada & INT & Jedinstven identifikator rada\\ 
 		\hline
-		Sadržaj & VARCHAR & Link na sadržaj pokrovitelja\\ 
+		Naslov & VARCHAR & Naslov rada\\ 
 		\hline
-		\cellcolor{lightblue}ID pokrovitelja & INT & Jedinstven identifikator pokrovitelja\\ 
+		\cellcolor{lightblue}ID sudionika & INT & Jedinstven identifikator sudionika koji je napisao rad\\ 
+		\hline
+		pdf & VARCHAR & link na pdf\\ 
+		\hline
+		poster & VARCHAR & link na poster\\ 
+		\hline
+		prez & VARCHAR & link na prezentaciju\\ 
+		\hline
+		br_blasova & INT & Borj glasova koje je neki rad dobio\\ 
+		\hline
+		\cellcolor{lightblue}ID konferencije & INT & Jedinstven identifikator konferencije na kojoj se rad prikazuje\\ 
+		\hline
+		Odobren & BOOLEAN & Atribut koji sprema ako je rad odobren od strane voditelja ili administratora\\ 
 		\hline
 	\end{tabular}
 \end{table}
 
-\textbf{Sudionik je administrator} – Ovaj entitet sadrži informaciju koju konferenciju nadzire koji administrator. Sadrži atribute: ID sudionika i ID konferencije koju taj sudionik nadzire. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Sudionik} preko identifikatora sudionika i u vezi \textit{One-to-One} s entitetom \textit{Konferencija} preko identifikatora konferencije.
+\textbf{Sudionik} – ovaj entitet sadrži informacije o svim sudionicima u sustavu. Sadrži atribute: ID sudionika, sudionikovo ime, prezime i e-mail adresu. Ovaj entitet je u vezi \textit{One-to-Many} s entitetom \textit{Sudionik sudjeluje na} preko identifikatora sudionika, u vezi \textit{One-to-Many} s entitetom \textit{Rad} preko identifikatora sudionika te u vezi \textit{One-to-One} s entitetom \textit{Sudionik je administrator} preko identifikatora sudionika.
 
 \begin{table}[H]
-	\caption{Sudionik je administrator}
-	\label{tbl:sudionikJeAdministrator}
+	\caption{Sudionik}
+	\label{tbl:sudionik}
+	\centering
+	\begin{tabular}{|l|c|l|} 
+		\hline
+		\cellcolor{lightgreen}ID sudionika & INT & Jedinstven identifikator sudionika\\ 
+		\hline
+		Ime & VARCHAR & Ime sudionika\\ 
+		\hline
+		Prezime & VARCHAR & Prezime sudionika\\ 
+		\hline
+		E-mail & VARCHAR & E-mail sudionika\\ 
+		\hline
+		Lozika & VARCHAR & Lozinka za pristup korisničkom računu\\ 
+		\hline
+		admin & BOOLEAN & Određuje ako je korisnik admin\\ 
+		\hline
+		token & VARCHAR & token registracije\\ 
+		\hline
+		token_vrijeme & TIMESTAMP & vrijeme dodjele tokena\\ 
+		\hline
+		verified & BOOLEAN & Određuje ako je korisnik admin\\ 
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{Sudionik sudjeluje na} – Ovaj entitet sadrži informacije o odnosu sudionika i konferencije te dodatne oznake o njegovom statusu na konferenciji. Sadrži atribute: ID sudionika, ID konferencije, oznaku je li je sudionik autor rada na konferenciji, oznaku je li je sudionik glasovao za nečiji rad na konferenciji i lozinku. Ovaj entitet je u vezi \textit{Many-to-One} s entitetom \textit{Sudionik} preko identifikatora sudionika te u vezi \textit{Many-to-One} s entitetom \textit{Konferencija} preko identifikatora konferencije.
+
+\begin{table}[H]
+	\caption{Sudionik sudjeluje na}
+	\label{tbl:sudionikSudjelujeNa}
 	\centering
 	\begin{tabular}{|l|c|l|} 
 		\hline
@@ -235,41 +183,27 @@
 		\hline
 		\cellcolor{lightblue}ID konferencije & INT & Jedinstven identifikator konferencije\\ 
 		\hline
+		\cellcolor{lightblue}ID uloge & INT & Jedinstven identifikator uloge\\ 
+		\hline
+		Glasovao & INTEGER & Oznaka je li je sudionik glasao na određenoj koneferenciji ili nije\\ 
+		\hline
 	\end{tabular}
 \end{table}
 
-\textbf{Roles} – Ovaj entitet sadrži informaciju koji id ima koja uloga. Sadrži atribute: ID Uloge i naziv uloge. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Sudionik_roles} preko identifikatora uloge.
+\textbf{Uloge} – Ovaj entitet sadrži informaciju koji id ima koja uloga. Sadrži atribute: ID Uloge i naziv uloge. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Sudionik_roles} preko identifikatora uloge.
 
 \begin{table}[H]
-	\caption{Sudionik je administrator}
-	\label{tbl:sudionikJeAdministrator}
+	\caption{Uloge}
+	\label{tbl:uloge}
 	\centering
 	\begin{tabular}{|l|c|l|} 
 		\hline
-		\cellcolor{lightblue}ID & INT & Jedinstven identifikator uloge\\ 
+		\cellcolor{lightblue}ID uloge & INT & Jedinstven identifikator uloge\\ 
 		\hline
-		Name & VARCHAR & Naziv uloge\\ 
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Sudionik_roles} – Ovaj entitet sadrži informaciju koji ID sudionika ima koju ID uloga. Sadrži atribute: ID Uloge i ID sudionika. Ovaj entitet je u vezi \textit{One-to-One} s entitetom \textit{Roles} preko identifikatora uloge i u vezi \textit{One-to-One} s entiteton \textit{Sudionik}.
-
-\begin{table}[H]
-	\caption{Sudionik je administrator}
-	\label{tbl:sudionikJeAdministrator}
-	\centering
-	\begin{tabular}{|l|c|l|} 
-		\hline
-		\cellcolor{lightblue}ID sudionika & INT & Jedinstven identifikator sudionika\\ 
-		\hline
-		\cellcolor{lightblue}ID  & INT & Jedinstven identifikator uloge\\ 
+		naziv & VARCHAR & Naziv uloge\\ 
 		\hline
 	\end{tabular}
-\end{table}
-
-		
-				
+\end{table}		
 			
 \subsection{Dijagram baze podataka}
 

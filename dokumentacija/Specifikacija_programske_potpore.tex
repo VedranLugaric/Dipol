@@ -8,7 +8,6 @@
 				
 				\item Administrator
 				\item Voditelj			
-				\item Autor
 				\item Posjetitelj
 				\item Razvojni tim
 				
@@ -52,6 +51,7 @@
 					
 					\item dodati konferenciju s kalendara
 					\item dodati i/ili izbrisati poster
+					\item dodati ulogu voditelja nekon registriranom korisniku za određenu konferenciju
 					
 				\end{packed_enum}
 
@@ -301,7 +301,7 @@
 					\noindent \underbar{\textbf{UC12 -Odabir postera}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Administrator
+						\item \textbf{Glavni sudionik: }Voditelj
 						\item  \textbf{Cilj:} odabir postera za prikaz na konferenciji
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Imati administratorka dopustenja te biti prijavljen u sustav
@@ -313,6 +313,114 @@
 							\item Odabire radove koji se mogu prikazati na konferenciji
 						\end{packed_enum}
 						
+						
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC13 -Pregled PDF-a}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Voditelj, posjetitelj, administrator
+						\item  \textbf{Cilj:} Pogledati PDF nekog postera na konferenciji
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Obavljen login i omogućen pristup konferenciji
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pristupa konferenciji
+							\item Kod postera čiji pdf želi vidjeti pritišće gumb "pdf"
+							\item Otvara se pdf postera
+						\end{packed_enum}
+						
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC14 -Preuzimanje ppt-a}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Voditelj, posjetitelj, administrator
+						\item  \textbf{Cilj:} Preuzimanje ppta-a nekog postera na konferenciji lokalno
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Obavljen login i omogućen pristup konferenciji
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pristupa konferenciji
+							\item Kod postera čiji ppt želi preuzeti pritišće gumb "ppt"
+							\item Preuzima se ppt
+						\end{packed_enum}
+						
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC15 -Dodavanje voditelja}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Dodavanje uloge voditelja nekom registriranom korisniku za određenu konferenciju
+						\item  \textbf{Sudionici:} Baza podataka, registrirani korisnik
+						\item  \textbf{Preduvjet:} Obavljen login kao administrator 
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator pristupa nadolazećim konferencijama
+							\item Kod konferencije kojoj želi dodati voditelja pritišće gumb "Dodaj voditelja"
+							\item upisuje e-mail racuna korisnika kojeg želi postaviti kao voditelja te konferencije
+						\end{packed_enum}
+						
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC16 -Dodavanje pokrovitelja}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Voditelj, administrator
+						\item  \textbf{Cilj:} Dodavanje pokrovitelja za neku konferenciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Administratorske ili voditeljske ovlasi 
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pristupa konferenciji
+							\item Unutar konferenije pritišće gumb "Dodaj pokrovitelja"
+							\item Nakon unesenih potrebnih podataka pritišće gzmb "Unesi" čime je dodan pokrovitelj u konferenciju
+						\end{packed_enum}
+						
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC17 -Pregled galerije}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Posjetitelj
+						\item  \textbf{Cilj:} Pregled slika fotografiranih na konferenciji
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} - 
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pristupa proslim konferencijma
+							\item Pritišće gumb "Galerija"
+							\item Omogućen mu je pregled svih fotografija fotografiranih na toj konferenciji
+						\end{packed_enum}
+						
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC18 -Preuzimanje forografija iz galerije}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Posjetitelj, baza podataka
+						\item  \textbf{Cilj:} Spremanje fotografija lokalno na uređaj
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} - 
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pristupa proslim konferencijma
+							\item Pritišće gumb "Galerija"
+							\item Omogućen mu je pregled svih fotografija fotografiranih na toj konferenciji te može označiti fotogracije koje želi preuzeti ili preuzimati jednu po jednu fotografiju
+						\end{packed_enum}
 						
 					\end{packed_item}
 				
