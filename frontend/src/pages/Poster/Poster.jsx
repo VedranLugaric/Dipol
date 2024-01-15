@@ -3,6 +3,7 @@ import { useParams, useNavigate} from 'react-router-dom';
 import FallingAnimation from '../../FallingAnimation';
 import './Poster.css';
 import { useAuth } from '../../AuthContext';
+import { pdfjs } from 'react-pdf'  
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
@@ -114,6 +115,7 @@ const Poster = ({ conferenceId }) => {
             </div>
             <div className='pokrovitelji-container'>
               <h2>Pokrovitelji</h2>
+              <div className='pokrovitelji-list'>
               {data.pokrovitelji.map((pokrovitelj) => (
               <div key={pokrovitelj.id_pokrovitelj} className='pokrovitelj-item' onClick={() => window.open(addProtocol(pokrovitelj.stranica), '_blank')}>
                 <img src={pokrovitelj.logo} alt={`${pokrovitelj.ime} Logo`} className='pokrovitelj-logo' />
@@ -121,9 +123,11 @@ const Poster = ({ conferenceId }) => {
               </div>
               ))}
             </div>
+            </div>
           </>
         )}
       </div>
+      
     </FallingAnimation>
   );
 };
