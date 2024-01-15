@@ -16,6 +16,9 @@
     justify-content: center;
     flex-direction: column;
 }
+.fotografija.selected {
+    border: 2px solid rgb(87, 70, 110);
+}
 .galerija{
     color: rgb(121, 108, 139);
     font-style: italic;
@@ -56,6 +59,6 @@
     text-decoration: none;
     margin-top: 0.3rem;
 }
-.foto.selected {
-    border: 2px solid red;
+.checkbox-img{
+    opacity: 0;
 }

@@ -51,21 +51,32 @@ const Galerija = () => {
       <hr />
       <FallingAnimation>
         <h2 className='galerija'>Galerija konferencije '{conferenceName}'</h2>
-        <div className='conf-button-galerija'></div>
+        <div className='conf-button-galerija'>
+        <button className='addkonf' onClick={downloadSelectedImages}>
+            <span className="circle1"></span>
+            <span className="circle2"></span>
+            <span className="circle3"></span>
+            <span className="circle4"></span>
+            <span className="circle5"></span>
+            <span className="text">Preuzmi odabrane fotografije</span>
+          </button>
+        </div>
         <div className='galerija-container'>
         {images.map((image, index) => (
           <div className='btn-foto-div' key={index}>
-            <div className='fotografija'>
+            <div
+            onClick={() => toggleSelectImage(image)} 
+            className={`fotografija ${selectedImages.includes(image) ? 'selected' : ''}`}>
               <img 
                 className={`foto ${selectedImages.includes(image) ? 'selected' : ''}`} 
                 src={image} 
                 alt={`Slika ${index + 1}`} 
-                onClick={() => toggleSelectImage(image)} 
               />
               <input 
                 type="checkbox" 
                 checked={selectedImages.includes(image)} 
-                onChange={() => toggleSelectImage(image)} 
+                onChange={() => toggleSelectImage(image)}
+                className='checkbox-img' 
               />
             </div>
             <a className='btn-a'>
@@ -73,7 +84,6 @@ const Galerija = () => {
             </a>
           </div>
         ))}
-          <button onClick={downloadSelectedImages}>Download Selected Images</button>
         </div>
       </FallingAnimation>
     </>
