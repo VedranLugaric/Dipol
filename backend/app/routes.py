@@ -553,13 +553,16 @@ def download_image():
 @app.route('/api/live/<int:konferencijaId>', methods=['GET'])
 def get_live_video(konferencijaId):
     try:
-        # Query the database for the conference with the specified ID
         konferencija = Konferencija.query.filter_by(id_konf=konferencijaId).first()
+        user_id = request.headers.get('User-Id')
 
-        # Check if the conference exists
         if konferencija:
-            # Return the video link for the conference
-            return jsonify({'video': extract_youtube_video_id(konferencija.video)})
+            user_participation = Sudionik_sudjeluje_na.query.filter_by(id_konf=konferencijaId, id_sud=user_id).first()
+
+            if user_participation:
+                return jsonify({'video': extract_youtube_video_id(konferencija.video)})
+            else:
+                return jsonify({'error': 'User not in conference'}), 403
         else:
             return jsonify({'error': 'Conference not found'}), 404
 
@@ -567,10 +570,9 @@ def get_live_video(konferencijaId):
         return jsonify({'error': str(e)}), 500
     
 def extract_youtube_video_id(video_url):
-    # Regular expression patterns for different YouTube URL formats
     patterns = [
         r'(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})',
-        r'^[a-zA-Z0-9_-]{11}$'  # Video ID alone without URL
+        r'^[a-zA-Z0-9_-]{11}$'
     ]
 
     for pattern in patterns:
@@ -578,5 +580,4 @@ def extract_youtube_video_id(video_url):
         if match:
             return match.group(1)
 
-    # If no match is found, return None or handle the case accordingly
     return None

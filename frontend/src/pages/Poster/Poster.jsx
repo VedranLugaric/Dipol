@@ -21,6 +21,7 @@ const Poster = ({ conferenceId }) => {
     ? storedKorisnik.voditelj_na_konf.includes(parseInt(konferencijaId, 10))
     : false;
   const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
+  const hasEnteredPassword = localStorage.getItem(`konferencija_${konferencijaId}_entered`);
 
   const addProtocol = (url) => {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -58,7 +59,6 @@ const Poster = ({ conferenceId }) => {
           setData({ radovi: radData.radovi, pokrovitelji: pokroviteljData.pokrovitelj });
         } else {
           console.error('Failed to fetch data');
-          navigate('../konferencije');
         }
       } catch (error) {
         console.error('Fetch error:', error.message);
@@ -72,62 +72,70 @@ const Poster = ({ conferenceId }) => {
 
   return (
     <FallingAnimation>
-      <hr></hr>
-      <div className='poster-container'>
-          <div className='add-pok-div'>
-          {(!isAdmin || !isVoditeljNaKonf) && (
-            <>
-              <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
-                <span className="circle1"></span>
-                <span className="circle2"></span>
-                <span className="circle3"></span>
-                <span className="circle4"></span>
-                <span className="circle5"></span>
-                <span className="text">Dodaj pokrovitelja</span>
-              </button>
-              <button className='addkonf' onClick={() => navigate(`/dodaj-fotografije/${konferencijaId}`)}>
-                <span className="circle1"></span>
-                <span className="circle2"></span>
-                <span className="circle3"></span>
-                <span className="circle4"></span>
-                <span className="circle5"></span>
-                <span className="text">Dodaj fotografije</span>
-              </button>
-            </>
-          )}
-          <button className='button' onClick={() => navigate(`/galerija/${konferencijaId}`)}>
-            <span className='circle1'></span>
-            <span className='circle2'></span>
-            <span className='circle3'></span>
-            <span className='circle4'></span>
-            <span className='circle5'></span>
-            <span className='text'>Galerija fotografija</span>
-          </button>
-          </div>
-        {loading ? (
-          <h2>Loading...</h2>
+        <hr></hr>
+        {hasEnteredPassword === 'true' ? (
+            <div className='poster-container'>
+                <div className='add-pok-div'>
+                    {(!isAdmin || !isVoditeljNaKonf) && (
+                        <>
+                            <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
+                                <span className="circle1"></span>
+                                <span className="circle2"></span>
+                                <span className="circle3"></span>
+                                <span className="circle4"></span>
+                                <span className="circle5"></span>
+                                <span className="text">Dodaj pokrovitelja</span>
+                            </button>
+                            <button className='addkonf' onClick={() => navigate(`/dodaj-fotografije/${konferencijaId}`)}>
+                                <span className="circle1"></span>
+                                <span className="circle2"></span>
+                                <span className="circle3"></span>
+                                <span className="circle4"></span>
+                                <span className="circle5"></span>
+                                <span className="text">Dodaj fotografije</span>
+                            </button>
+                        </>
+                    )}
+                    <button className='button' onClick={() => navigate(`/galerija/${konferencijaId}`)}>
+                        <span className='circle1'></span>
+                        <span className='circle2'></span>
+                        <span className='circle3'></span>
+                        <span className='circle4'></span>
+                        <span className='circle5'></span>
+                        <span className='text'>Galerija fotografija</span>
+                    </button>
+                </div>
+                {loading ? (
+                    <h2>Loading...</h2>
+                ) : (
+                    <>
+                        <div className='posteri-container'>
+                            {data.radovi.map((rad) => (
+                                <PosterItem key={rad.rad_id} rad={rad} />
+                            ))}
+                        </div>
+                        {data.pokrovitelji.length > 0 && (
+                          <div className='pokrovitelji-container'>
+                              <h2>Pokrovitelji</h2>
+                              <div className='pokrovitelji-list'>
+                                  {data.pokrovitelji.map((pokrovitelj) => (
+                                      <div key={pokrovitelj.id_pokrovitelj} className='pokrovitelj-item' onClick={() => window.open(addProtocol(pokrovitelj.stranica), '_blank')}>
+                                          <img src={pokrovitelj.logo} alt={`${pokrovitelj.ime} Logo`} className='pokrovitelj-logo' />
+                                          <p>{pokrovitelj.ime}</p>
+                                      </div>
+                                  ))}
+                              </div>
+                          </div>
+                      )}
+                    </>
+                )}
+            </div>
         ) : (
-          <>
-            <div className='posteri-container'>
-              {data.radovi.map((rad) => (
-                <PosterItem key={rad.rad_id} rad={rad} />
-              ))}
+            <div className='nemate-pristup'>
+                <span className='pristup-text'>Ups! Nemate pristup ovoj stranici! :/</span>
+                <button className='return' onClick={() => navigate('../konferencije')}>Povratak</button>
             </div>
-            <div className='pokrovitelji-container'>
-              <h2>Pokrovitelji</h2>
-              <div className='pokrovitelji-list'>
-              {data.pokrovitelji.map((pokrovitelj) => (
-              <div key={pokrovitelj.id_pokrovitelj} className='pokrovitelj-item' onClick={() => window.open(addProtocol(pokrovitelj.stranica), '_blank')}>
-                <img src={pokrovitelj.logo} alt={`${pokrovitelj.ime} Logo`} className='pokrovitelj-logo' />
-                <p>{pokrovitelj.ime}</p>
-              </div>
-              ))}
-            </div>
-            </div>
-          </>
         )}
-      </div>
-      
     </FallingAnimation>
   );
 };

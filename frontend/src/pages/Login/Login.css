@@ -82,6 +82,11 @@
     opacity: 0;
 }
 
+.errorText {
+    max-width: 300px;
+    word-wrap: break-word;
+    margin-top: 20px;
+}
 
 @media screen and (max-width: 800px) {
     .loginBody{

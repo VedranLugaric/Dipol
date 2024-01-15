@@ -33,6 +33,11 @@ const Login = () => {
   
     setError(null);
   
+    if (!capVal) {
+      setError("Molimo da riješite reCAPTCHA-u prije nastavka");
+      return;
+    }
+  
     setIsLoading(true);
   
     try {
@@ -47,7 +52,8 @@ const Login = () => {
     } finally{
       setIsLoading(false);
     }
-  };  
+  };
+  
 
   return (
     <FallingAnimation>
@@ -84,12 +90,12 @@ const Login = () => {
                   ></input>
                 </label>
               </div>
-              {/* <ReCAPTCHA
+              <ReCAPTCHA
                 sitekey="6Lf3iTcpAAAAAOGZ13_kzm2WxGmzGxB9-dEaxnu8"
                 onChange={val => setCapVal(val)}
-              /> */}
+              />
                 <div className="errorText">
-                  {isLoading ? <div className="loader"></div> : error && <p>{error}</p>}
+                    {isLoading ? <div className="loader"></div> : error && <p>{error}</p>}
                 </div>
               <button className='loginInputSubmit'>Log in</button>
             </form>
