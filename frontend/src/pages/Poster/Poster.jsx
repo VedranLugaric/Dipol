@@ -145,14 +145,6 @@ const PosterItem = ({ rad, conferenceId }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const { korisnik } = useAuth();
   const { konferencijaId } = useParams();
-  const [zoomedIn, setZoom] = useState('');
-
-  const zoomIn = () => {
-    setZoom(true)
-  }
-  const zoomOut = () => {
-    setZoom(false)
-  }
 
   const handleVote = async () => {
     try {
@@ -216,7 +208,7 @@ const handleDownloadPPT = (pptLink) => {
         <div className='poster-item'>
             <div className='poster-img-div'>
                 {rad.poster_image_link && (
-                    <img onClick={zoomIn}
+                    <img
                     className='poster-img' src={rad.poster_image_link} alt='Poster preview' />
                 )}
                 <div className='rad-texts'>
@@ -241,14 +233,6 @@ const handleDownloadPPT = (pptLink) => {
             </div>
             {errorMessage && <p>{errorMessage}</p>}
         </div>
-        {zoomedIn && (
-            <div className='zoom-in'>
-                {rad.poster_image_link && (
-                    <img onClick={zoomOut}
-                    className='poster-zoom' src={rad.poster_image_link} alt='Poster preview' />
-                )}
-            </div>
-        )}
     </>
     );
 };

@@ -91,9 +91,11 @@ const GfGWeatherApp = (props) => {
 								className="icon"
 								src={`https://openweathermap.org/img/wn/${weather.data.weather[0].icon}@2x.png`}
 								alt={weather.data.weather[0].description} 
-							/> 
-							<sup className='num'>{Math.round(weather.data.main.temp)} </sup>
-							<sup className="deg">°C</sup> 
+							/>
+							<div className='num-deg'> 
+								<sup className='num'>{Math.round(weather.data.main.temp)} </sup>
+								<sup className="deg">°C</sup> 
+							</div>
 						</div> 
 						<div className="des-wind"> 
 							<p className='text'>{weather.data.weather[0].description.toUpperCase()}</p> 

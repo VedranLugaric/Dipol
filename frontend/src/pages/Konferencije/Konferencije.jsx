@@ -262,7 +262,7 @@ const DodajPosterButton = ({ konferencijaId }) => {
     ? storedKorisnik.voditelj_na_konf.includes(konferencijaId)
     : false;
   const isAdmin = storedKorisnik ? storedKorisnik.admin : false;
-
+  const navigate = useNavigate()
 
   return (
     <div className="nad-buttons">
@@ -302,6 +302,14 @@ const DodajPosterButton = ({ konferencijaId }) => {
           <span className="text">Dodaj voditelja</span>
         </button>
       </Link>
+      <button className='addposter' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
+                <span className="circle1"></span>
+                <span className="circle2"></span>
+                <span className="circle3"></span>
+                <span className="circle4"></span>
+                <span className="circle5"></span>
+                <span className="text">Dodaj pokrovitelja</span>
+              </button>
       </>
       )}
     </div>

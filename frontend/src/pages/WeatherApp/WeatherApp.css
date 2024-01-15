@@ -118,7 +118,7 @@
 		background-color: transparent;
 		border: none;
 		box-shadow: none;
-		margin-left: -7rem;
+		margin-left: -26%;
 	}
 	.temp-container{
 		display: flex;
@@ -126,6 +126,9 @@
 	} 
 	.icon{
 		height: 4rem;
+	}
+	.num-deg{
+		display: flex;
 	}
 	.num{
 		font-size: 1rem;
