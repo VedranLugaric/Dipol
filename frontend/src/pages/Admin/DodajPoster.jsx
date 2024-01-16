@@ -118,7 +118,7 @@ const DodajPoster = () => {
                                 className='input'
                             />
                             <label htmlFor="pdf" className='label'>
-                                Odaberite PDF datoteku (opcionalno):
+                                Odaberite PDF datoteku:
                             </label>
                             <input
                                 type="file"

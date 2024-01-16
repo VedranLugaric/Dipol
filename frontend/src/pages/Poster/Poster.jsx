@@ -76,7 +76,7 @@ const Poster = ({ conferenceId }) => {
         {hasEnteredPassword === 'true' ? (
             <div className='poster-container'>
                 <div className='add-pok-div'>
-                    {(!isAdmin || !isVoditeljNaKonf) && (
+                    {(isAdmin || isVoditeljNaKonf) && (
                         <>
                             <button className='addkonf' onClick={() => navigate(`/dodaj-pokrovitelja/${konferencijaId}`)}>
                                 <span className="circle1"></span>

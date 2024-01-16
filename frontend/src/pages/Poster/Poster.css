@@ -110,6 +110,11 @@
     margin-top: 10px;
     color: white;
     
+    
+  }
+
+  .pokrovitelj-item:hover {
+    cursor: pointer;
   }
   
   .pokrovitelj-logo {
