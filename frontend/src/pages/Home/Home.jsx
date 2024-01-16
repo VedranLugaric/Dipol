@@ -23,12 +23,12 @@ const Home = () => {
       <div className='mid'>
         <div className='midContents'>
           <h1 className='ocijenite'>OCIJENITE RAD</h1>
-          <a className='teksthome'>Postanite član "ime organizacije" i dobijte mogućnost 
+          <span className='teksthome'>Postanite član "ime organizacije" i dobijte mogućnost
             objavljivanja, ocjenjivanja i praćenja radova. U nekoliko klikova možete pratiti
-            live prijenos bilo koje aktivne konferencije!</a>
+            live prijenos bilo koje aktivne konferencije!</span>
           <div className='midBtns'>
             <Link to='/Registracija'>
-            <button className='midBtn1'>Registriraj se</button>
+              <button className='midBtn1'>Registriraj se</button>
             </Link>
             <Link to='/Login'>
               <button className='midBtn2'>Ulogiraj se</button>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link,useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import FallingAnimation from '../../FallingAnimation';
 import { useAuth } from '../../AuthContext';
 import './DodajPoster.css'
@@ -13,7 +13,7 @@ const DodajPoster = () => {
     const [selectedPptFile, setSelectedPptFile] = useState(null);
     const [uploadMessage, setUploadMessage] = useState('');
 
-    
+
     const { isAuthenticated, korisnik } = useAuth();
     const { isAdmin } = useAuth();
 
@@ -28,28 +28,28 @@ const DodajPoster = () => {
         setSelectedImageFile(file);
         setUploadMessage('');
     };
-    
+
     const handlePdfChange = (event) => {
         const file = event.target.files[0];
         setSelectedPdfFile(file);
         setUploadMessage('');
     };
-    
+
     const handlePptChange = (event) => {
         const file = event.target.files[0];
         setSelectedPptFile(file);
         setUploadMessage('');
-    };    
+    };
 
     const handleUpload = async (event) => {
         event.preventDefault();
 
         if (!selectedImageFile) {
-            setUploadMessage('Please select an image file before submitting.');
+            setUploadMessage('Odaberite slikovnu datoteku prije dodavanja postera.');
             return;
         }
         if (!selectedPdfFile) {
-            setUploadMessage('Please select an pdf file before submitting.');
+            setUploadMessage('Odaberite pdf datoteku prije dodavanja postera.');
             return;
         }
 
@@ -71,14 +71,14 @@ const DodajPoster = () => {
             });
 
             if (response.ok) {
-                setUploadMessage('File uploaded successfully.');
+                setUploadMessage('Poster je uspješno dodan u konferenciju.');
                 console.log('File uploaded successfully');
             } else {
-                setUploadMessage('File upload failed. Please try again.');
+                setUploadMessage('Dodavanje postera nije uspjelo. Pokušajte ponovno.');
                 console.error('File upload failed');
             }
         } catch (error) {
-            setUploadMessage('Error uploading file. Please try again later.');
+            setUploadMessage('Dodavanje postera nije uspjelo. Pokušajte ponovno kasnije.');
             console.error('Error uploading file:', error);
         }
     };
@@ -135,6 +135,11 @@ const DodajPoster = () => {
                                 onChange={handlePptChange}
                                 className='input'
                             />
+                            {uploadMessage && (
+                                <p className={`error-mes ${uploadMessage.includes('Poster je uspješno') ? 'success' : 'failure'}`}>
+                                    {uploadMessage}
+                                </p>
+                            )}
                             <button type='submit' className='submitButton'>
                                 Unesi
                             </button>
@@ -143,12 +148,10 @@ const DodajPoster = () => {
                         {isAdmin && (
                             <div className='view-div'>
                                 <button className='view-pending' onClick={() => navigate(`../pregled-radova/:${konferencijaId}`)}>Pregledaj unesene radove</button>
-                            </div>                 
+                            </div>
                         )}
                     </div>
                 </div>
-                <hr></hr>
-                {uploadMessage && <p>{uploadMessage}</p>}
             </FallingAnimation>
         </>
     );

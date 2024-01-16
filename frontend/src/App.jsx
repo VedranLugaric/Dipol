@@ -24,24 +24,24 @@ const NavBar = () => {
     <>
       <div className='navBar'>
         <Link to='/' className='logo'>
-          <a href='#'>
+          <span href='#'>
             <h2>dipol</h2>
-          </a>
+          </span>
         </Link>
         <div className='navBtns'>
-          
+
           <Link to='/konferencije'>
             <NavigationButton name="KONFERENCIJE" />
           </Link>
           <Link to='/proslekonferencije'>
-                <NavigationButton name='PROŠLE KONFERENCIJE' />
-              </Link>
+            <NavigationButton name='PROŠLE KONFERENCIJE' />
+          </Link>
           <NavigationButton name="O NAMA" />
           {isAuthenticated && (
             <>
               <button className='navButton' onClick={handleLogout}>ODJAVA</button>
-              <button className='navButton' style={{ cursor: 'default'}}>
-                  {korisnik && (
+              <button className='navButton' style={{ cursor: 'default' }}>
+                {korisnik && (
                   <>
                     {korisnik.ime.toUpperCase()} {korisnik.prezime.toUpperCase()}
                   </>
@@ -59,8 +59,8 @@ const NavBar = () => {
               </Link>
             </>
           )}
-          </div>
         </div>
+      </div>
     </>
   );
 };
@@ -72,7 +72,7 @@ const App = () => {
     <>
       <NavBar />
       <Main />
-    </> 
+    </>
   )
 }
 export default App

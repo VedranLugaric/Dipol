@@ -26,3 +26,13 @@ input[type=file] {
 .view-div{
     display: flex;
 }
+.error-mes{
+    text-align: center;
+    color: white;
+}
+.success {
+    color: white;
+}
+.failure {
+    color: red;
+}
