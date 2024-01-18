@@ -4,6 +4,10 @@
   display: flex;
   font-family: Tahoma;
 }
+.navBar-responsive{
+  display: none;
+}
+
 
 .logo{
   color: white;
@@ -26,6 +30,7 @@
   justify-content: space-around;
   align-items: center;
   margin-right: 15%;
+  text-decoration: none;
 }
 
 .navButton{
@@ -34,6 +39,7 @@
   color: white;
   height: 55px;
   width: 130px;
+  text-decoration: none;
 }
 
 .mid{
@@ -102,20 +108,60 @@ body{
   color: white;
 }
 
+
 @media (max-width: 480px) {
   .navBar{
     height: 4rem;
     display: flex;
     font-family: Tahoma;
     opacity: 1;
+    display: none;
   }
-  .logo{
-    margin-left: 0;
-    font-size: 1rem;
+  .navBar-responsive{
+    display: block;
   }
-  .navButton{
-    height: 3rem;
-    width: 5rem;
-    font-size: 70%;
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidenav .navButton {
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    margin-top: 2rem;
+    color: white;
+    width: 100%;
+  }
+  
+  .sidenav .navButton:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    background-color: transparent;
+    border: none;
+    color: white;
+  }
+  .open-nav{
+    color: white;
+    cursor: pointer;
+    margin: 1rem;
+    font-size: 2rem;
   }
 }

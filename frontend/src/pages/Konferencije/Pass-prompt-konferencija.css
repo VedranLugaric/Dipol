@@ -3,8 +3,8 @@
     top: 25%;
     position: sticky;
 
-    width: 80%;
-    height: 40%;
+    width: 50%;
+    height: 30%;
 
     border-radius: 2rem;
     box-shadow: rgb(24, 24, 29) 0 0 2rem;
@@ -129,4 +129,23 @@
 .validation-message{
     color: white;
     position: sticky;
+}
+@media (max-width: 1040px) {
+    .password-prompt{
+        margin: auto;
+        top: 25%;
+        position: sticky;
+    
+        width: 80%;
+        height: 40%;
+    
+        border-radius: 2rem;
+        box-shadow: rgb(24, 24, 29) 0 0 2rem;
+        background-color: rgb(66, 66, 77);
+    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 }

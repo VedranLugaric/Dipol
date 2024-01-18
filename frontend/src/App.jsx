@@ -19,6 +19,13 @@ const NavBar = () => {
     logout();
   };
 
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+
 
   return (
     <>
@@ -30,6 +37,46 @@ const NavBar = () => {
         </Link>
         <div className='navBtns'>
 
+          <Link to='/konferencije'>
+            <NavigationButton name="KONFERENCIJE" />
+          </Link>
+          <Link to='/proslekonferencije'>
+            <NavigationButton name='PROŠLE KONFERENCIJE' />
+          </Link>
+          <NavigationButton name="O NAMA" />
+          {isAuthenticated && (
+            <>
+              <button className='navButton' onClick={handleLogout}>ODJAVA</button>
+              <button className='navButton' style={{ cursor: 'default' }}>
+                {korisnik && (
+                  <>
+                    {korisnik.ime.toUpperCase()} {korisnik.prezime.toUpperCase()}
+                  </>
+                )}
+              </button>
+            </>
+          )}
+          {!isAuthenticated && (
+            <>
+              <Link to='/registracija'>
+                <NavigationButton name="REGISTRACIJA" />
+              </Link>
+              <Link to='/login'>
+                <NavigationButton name="LOGIN" />
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
+      <div className='navBar-responsive'>
+      <span className='open-nav' onClick={openNav}>&#9776;</span>
+      <Link to='/' className='logo'>
+          <span href='#'>
+            <span>dipol</span>
+          </span>
+        </Link>
+        <div id="mySidenav" class="sidenav">
+          <button href="javascript:void(0)" class="closebtn" onClick={closeNav}>&times;</button>
           <Link to='/konferencije'>
             <NavigationButton name="KONFERENCIJE" />
           </Link>

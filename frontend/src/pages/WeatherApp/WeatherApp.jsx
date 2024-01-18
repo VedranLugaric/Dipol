@@ -79,7 +79,7 @@ const GfGWeatherApp = (props) => {
 					<br /> 
 					<span className="error-message"> 
 						<FontAwesomeIcon icon={faFrown} /> 
-						<span style={{ fontSize: '20px' }}>City not found</span> 
+						<span className='not-found'>City not found</span> 
 					</span> 
 				</> 
 			)} 

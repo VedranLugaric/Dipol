@@ -118,7 +118,9 @@
 		background-color: transparent;
 		border: none;
 		box-shadow: none;
-		margin-left: -26%;
+		position: absolute;
+		width: 6rem;
+		margin-left: 75%;
 	}
 	.temp-container{
 		display: flex;
@@ -136,4 +138,18 @@
 	.deg{
 		font-size: 1rem;
 	}
+	.error-message { 
+		display: flex; 
+		text-align: center; 
+		color: #ffffff; 
+		font-size: 24px; 
+	
+		flex-direction: column;
+		margin-bottom: auto;
+		margin-right: 1rem;
+		margin-left: 1rem;
+	}
+	.not-found{
+		font-size: 16px;
+	} 
 }
