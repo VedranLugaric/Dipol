@@ -2,7 +2,7 @@
 		
 		Svrha ovog projekta je razvoj programske potpore za web aplikaciju "Digitalni poster" koja će se koristiti u svrhe održavanja stručnih konferencija. Aplikacija će omogućiti pregled radova sudionika i dati im mogućnosti ocjenjivanja pojedinog rada. Svaki stručni rad bit će prikazan u obliku postera, koji se sastoji od stručnog rada i/ili izlaganja autora, te će autori moći dodati odgovarajuću prezentaciju za svoj rad. Svi će događaji biti fotografirani, a odabrane fotografije će tijekom konferencije biti dostupne svim registriranim korisnicima.
 
-		Prilikom prvog pokretanja aplikacije prikazuje se...
+		Prilikom prvog pokretanja aplikacije prikazuje se početna stranica koja nudio odabir registracije ili prijave ako je korisnik već prije registriran.
 
 		Za registraciju potrebni su sljedeći podaci:
 
@@ -10,13 +10,14 @@
 			\item {ime i prezime}
 			\item {e-mail adresa}
 			\item {lozinka}
-			\item {broj mobitela}
 		\end{packed_item}
-		Prilikom registracije u sustav korisniku se automatski dodjeljuje status posjetitelja te mu se naknadno može dodijeliti status autora, voditelja ili administratora. Svaki registrirani korisnik može pristupiti svojim osobnim podacima koje može mijenjati te može obrisati svoj račun.
-
+		Prilikom registracije u sustav korisniku se automatski dodjeljuje status posjetitelja te mu se naknadno može dodijeliti status voditelja. Svaki prijavljeni korisnik se u bilo kojem trenutku može odjaviti.
+		
 		\textbf{\underline{Posjetitelj}} konferencije ima minimalna prava u samoj aplikaciji, to jest posjetitelj može pregledati termine konferencija, mjesto konferencija te vremenske prilike u mjestu konferencije. U terminu konferencije posjetitelj može pristupiti samoj konferenciji prijavom za istu. Nakon prijave u konferenciju posjetitelju je dostupno direktno video praćenje trenutnih događanja u glavnoj konferencijskoj dvorani te su mu dostupni promotivni materijali pokrovitelja konferencije. Također posjetitelju je dodijeljeno pravo glasa za točno jedan poster koji predstavlja pojedinog autora. Glasovanje je moguće samo tijekom određenog razdoblja, odnosno u terminu održavanja konferencije. Kada završi sam postupak glasovanja posjetitelju kao i svim registriranim korisnicima dostupni su rezultati glasovanja. Posjetitelja će se elektroničkom poštom obavijestiti o mjestu i vremenu održavanja dodjele nagrada za prva tri mjesta. Sve dostupne fotografije s konferencije posjetitelj će moći spremati lokalno na svoj uređaj.
-
-		\textbf{\underline{Autor}} ima slična prava kao posjetitelj. Razlikuju se po tome što autor ne može glasati kako bi se izbjegli konflikti i subjektivnost. Autor sve potrebne materijale šalje voditelju putem elektroničke pošte. Autori nakon završetka glasanja dobivaju obavijest o svom rangu, a autori prva tri rangirana rada dobivaju pozivnicu za dodjelu nagrada.
+		
+		\textbf{\underline{Voditelj}} konferencije vrši prijavu autora, radova i postera za svoju konferenciju te su mu dostupni svi podaci istih. Također voditelj mora organizirati konferenciju tako da rezervira dvorane te od administratora traži unos svih podataka, datum, vrijeme i mjesto, u aplikaciju. Odabrane fotografije dostupne svim korisnicima za spremanje lokalno na uređaj ovjerene su od strane voditelja. Voditelj nakon glasanja sastavlja rang listu koju šalje adminu koji ju čini dostupnom svim korisnicima te obavijesti svakog autora o njegovom rangu. Dodjela nagrada za prva tri mjesta također je organizirana od strane voditelja koji osigurava novčane nagrade za svakog od pobjednika ovisno o samom rangu autora. Također mora rezervirati dvoranu za isti događaj.
+		
+		\textbf{\underline{Administrator}} sustava ima najveće ovlasti te definira sve uvjete za ispravan rad sustava. Dostupni su mu svi podaci svakog registriranog korisnika kojima može promijeniti ovlasti ili im obrisati račun. Admin odobrava i vrši zahtjeve koje dobije od voditelja. Zadužen je za konstantno ažuriranje kalendara događaja te mora paziti da ne dođe do konflikata, odnosno da se dvije konferencije ne održavaju u isto vrijeme na istom mjestu. Uz to admin može obrisati svaki prijavljeni poster koji nije primjeren iz bilo kojeg razloga.
 
 		\textbf{\underline{Voditelj}} konferencije vrši prijavu autora, radova i postera za svoju konferenciju te su mu dostupni svi podaci istih. Također voditelj mora organizirati konferenciju tako da rezervira dvorane te od administratora traži unos svih podataka, datum, vrijeme i mjesto, u aplikaciju. Odabrane fotografije dostupne svim korisnicima za spremanje lokalno na uređaj ovjerene su od strane voditelja. Voditelj nakon glasanja sastavlja rang listu koju šalje adminu koji ju čini dostupnom svim korisnicima te obavijesti svakog autora o njegovom rangu. Dodjela nagrada za prva tri mjesta također je organizirana od strane voditelja koji osigurava novčane nagrade za svakog od pobjednika ovisno o samom rangu autora. Također mora rezervirati dvoranu za isti događaj.
 
