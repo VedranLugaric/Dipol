@@ -43,6 +43,17 @@
 					\item dodavati postere u nadolazeće konferencije
 
 				\end{packed_enum}
+				
+				\item  \underbar{Voditelj (inicijator) može:}
+				
+				\begin{packed_enum}
+					
+					\item dodati poster u konferenciju
+					\item odobriti i/ili izbrisati poster
+					\item dodati pokrovitelje konferencije
+					\item dodavati slike u galeriju
+					
+				\end{packed_enum}
 
 
 				\item  \underbar{Administrator (inicijator) može:}
@@ -51,7 +62,7 @@
 					
 					\item dodati konferenciju s kalendara
 					\item dodati i/ili izbrisati poster
-					\item dodati ulogu voditelja nekon registriranom korisniku za određenu konferenciju
+					\item dodati ulogu voditelja nekom registriranom korisniku za određenu konferenciju
 					
 				\end{packed_enum}
 
@@ -89,7 +100,7 @@
 	
 							\item Korisnik odabere opciju za registraciju
 							\item Unosi potrebne korisničke podatke
-							\item Obavještava ga se o uspješno registracijii
+							\item Obavještava ga se o uspješno registraciji
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
@@ -101,7 +112,7 @@
 							\item[] \begin{packed_enum}
 								
 								\item Obavještavanje korisnika o neuspjeloj registraciji
-								\item Vraćanje korisnika na početak tj. ponovnu registracij
+								\item Vraćanje korisnika na početak tj. ponovnu registraciju
 								\item Korisnik mijenja podatke ili odustaje od registracije
 								
 							\end{packed_enum}
@@ -283,7 +294,7 @@
 
 					\noindent \underbar{\textbf{UC11 -Logout}}
 					\begin{packed_item}
-	
+						
 						\item \textbf{Glavni sudionik: }Autor, posjetitelj
 						\item  \textbf{Cilj:} odjava iz sustava
 						\item  \textbf{Sudionici:} Baza podataka
@@ -291,34 +302,34 @@
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
+							
 							\item Korisnik odabire opciju za odjavu
 							
 						\end{packed_enum}
 						
 					\end{packed_item}
-
+					
 					\noindent \underbar{\textbf{UC12 -Odabir postera}}
 					\begin{packed_item}
-	
+						
 						\item \textbf{Glavni sudionik: }Voditelj
 						\item  \textbf{Cilj:} odabir postera za prikaz na konferenciji
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Imati administratorka dopustenja te biti prijavljen u sustav
+						\item  \textbf{Preduvjet:} Imati administratorska dopuštenja te biti prijavljen u sustav
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
-							\item Administrator odabire opciju dodavanje potsera te ide na "Pregledaj unesene radove"
+							
+							\item Administrator odabire opciju dodavanje postera te ide na "Pregledaj unesene radove"
 							\item Odabire radove koji se mogu prikazati na konferenciji
 						\end{packed_enum}
 						
 						
 					\end{packed_item}
-
+					
 					\noindent \underbar{\textbf{UC13 -Pregled PDF-a}}
 					\begin{packed_item}
-	
+						
 						\item \textbf{Glavni sudionik: }Voditelj, posjetitelj, administrator
 						\item  \textbf{Cilj:} Pogledati PDF nekog postera na konferenciji
 						\item  \textbf{Sudionici:} Baza podataka
@@ -326,17 +337,17 @@
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
+							
 							\item Korisnik pristupa konferenciji
 							\item Kod postera čiji pdf želi vidjeti pritišće gumb "pdf"
 							\item Otvara se pdf postera
 						\end{packed_enum}
 						
 					\end{packed_item}
-
+					
 					\noindent \underbar{\textbf{UC14 -Preuzimanje ppt-a}}
 					\begin{packed_item}
-	
+						
 						\item \textbf{Glavni sudionik: }Voditelj, posjetitelj, administrator
 						\item  \textbf{Cilj:} Preuzimanje ppta-a nekog postera na konferenciji lokalno
 						\item  \textbf{Sudionici:} Baza podataka
@@ -344,17 +355,17 @@
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
+							
 							\item Korisnik pristupa konferenciji
 							\item Kod postera čiji ppt želi preuzeti pritišće gumb "ppt"
 							\item Preuzima se ppt
 						\end{packed_enum}
 						
 					\end{packed_item}
-
+					
 					\noindent \underbar{\textbf{UC15 -Dodavanje voditelja}}
 					\begin{packed_item}
-	
+						
 						\item \textbf{Glavni sudionik: }Administrator
 						\item  \textbf{Cilj:} Dodavanje uloge voditelja nekom registriranom korisniku za određenu konferenciju
 						\item  \textbf{Sudionici:} Baza podataka, registrirani korisnik
@@ -362,35 +373,35 @@
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
+							
 							\item Administrator pristupa nadolazećim konferencijama
 							\item Kod konferencije kojoj želi dodati voditelja pritišće gumb "Dodaj voditelja"
-							\item upisuje e-mail racuna korisnika kojeg želi postaviti kao voditelja te konferencije
+							\item upisuje e-mail računa korisnika kojeg želi postaviti kao voditelja te konferencije
 						\end{packed_enum}
 						
 					\end{packed_item}
-
+					
 					\noindent \underbar{\textbf{UC16 -Dodavanje pokrovitelja}}
 					\begin{packed_item}
-	
+						
 						\item \textbf{Glavni sudionik: }Voditelj, administrator
 						\item  \textbf{Cilj:} Dodavanje pokrovitelja za neku konferenciju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Administratorske ili voditeljske ovlasi 
+						\item  \textbf{Preduvjet:} Administratorske ili voditeljske ovlasti 
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
+							
 							\item Korisnik pristupa konferenciji
-							\item Unutar konferenije pritišće gumb "Dodaj pokrovitelja"
-							\item Nakon unesenih potrebnih podataka pritišće gzmb "Unesi" čime je dodan pokrovitelj u konferenciju
+							\item Unutar konferencije pritišće gumb "Dodaj pokrovitelja"
+							\item Nakon unesenih potrebnih podataka pritišće gumb "Unesi" čime je dodan pokrovitelj u konferenciju
 						\end{packed_enum}
 						
 					\end{packed_item}
-
+					
 					\noindent \underbar{\textbf{UC17 -Pregled galerije}}
 					\begin{packed_item}
-	
+						
 						\item \textbf{Glavni sudionik: }Posjetitelj
 						\item  \textbf{Cilj:} Pregled slika fotografiranih na konferenciji
 						\item  \textbf{Sudionici:} Baza podataka
@@ -398,17 +409,17 @@
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
-							\item Korisnik pristupa proslim konferencijma
+							
+							\item Korisnik pristupa prošlim konferencijama
 							\item Pritišće gumb "Galerija"
 							\item Omogućen mu je pregled svih fotografija fotografiranih na toj konferenciji
 						\end{packed_enum}
 						
 					\end{packed_item}
-
-					\noindent \underbar{\textbf{UC18 -Preuzimanje forografija iz galerije}}
+					
+					\noindent \underbar{\textbf{UC18 -Preuzimanje fotografija iz galerije}}
 					\begin{packed_item}
-	
+						
 						\item \textbf{Glavni sudionik: }Posjetitelj, baza podataka
 						\item  \textbf{Cilj:} Spremanje fotografija lokalno na uređaj
 						\item  \textbf{Sudionici:} Baza podataka
@@ -416,10 +427,10 @@
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
-							\item Korisnik pristupa proslim konferencijma
+							
+							\item Korisnik pristupa prošlim konferencijama
 							\item Pritišće gumb "Galerija"
-							\item Omogućen mu je pregled svih fotografija fotografiranih na toj konferenciji te može označiti fotogracije koje želi preuzeti ili preuzimati jednu po jednu fotografiju
+							\item Omogućen mu je pregled svih fotografija fotografiranih na toj konferenciji te može označiti fotografije koje želi preuzeti ili preuzimati jednu po jednu fotografiju
 						\end{packed_enum}
 						
 					\end{packed_item}
@@ -429,34 +440,72 @@
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
 		\begin{figure}[H]
-			\includegraphics[scale=0.55]{slike/UML1.JPG} 
+			\includegraphics[scale=0.2]{slike/UML1.JPG} 
 			\centering
-			\caption{Slika 3.1: }
+			\caption{UC dijagram}
 			\label{UML1}
-		\end{figure}		
-				
-			\subsection{Sekvencijski dijagrami}
-				
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[scale=0.2]{slike/UML2.JPG} 
+			\centering
+			\caption{UC dijagram}
+			\label{UML1}
+		\end{figure}			
+		\newpage
+		\subsection{Sekvencijski dijagrami}
+		
+		\textbf{Obrazac Uporabe UC1 - Registracija}\\Neregistrirani korisnik pristupa početnom zaslonu gdje odabire registraciju. Po pritisku gumba "Registriraj se" prebacuje ga se na stranicu za registraciju gdje upisuje potrebne podatke za registraciju. Ukoliko su svi uneseni podaci točni korisnika se prebacuje na stranicu za login no ako korisnik s tim računom već postoji ili se dvije upisane lozinke ne podudaraju na zaslonu se ispisuje greška.
+		
+		
 		\begin{figure}[H]
 			\includegraphics[scale=0.7]{slike/UC1.PNG} 
 			\centering
-			\caption{Slika 3.2: Sekvencijski dijagram za UC1}
+			\caption{Sekvencijski dijagram za UC1}
 			\label{fig:UC1}
-		\end{figure}	
-
+		\end{figure}
+		\newpage
+		\textbf{Obrazac Uporabe UC5 - Glasanje za rad}\\Prijavljeni korisnik otvara popis konferencija te odabire konferenciju kojoj želi pristup. Tada ga se traži lozinka za pristup toj konferenciji koja je jedinstvena za svaku konferenciju. Korisnik unosi lozinku te se lozinka provjerava s lozinkom zapisanom u bazi podataka. Ako se lozinke podudaraju pušta ga se u konferenciju, ali ako se lozinke ne podudaraju dolazi mu obavijest da je lozinka neispravna.
+		
 		\begin{figure}[H]
 			\includegraphics[scale=0.7]{slike/UC5.PNG} 
 			\centering
-			\caption{Slika 3.3: Sekvencijski dijagram za UC5}
+			\caption{Sekvencijski dijagram za UC5}
 			\label{fig:UC5}
-		\end{figure}	
-	
+		\end{figure}
+		\newpage
+		\textbf{Obrazac Uporabe UC4 - Prijava u konferenciju}\\Kako bi neki korisnik glasao za rad mora prvo pristupiti konferenciji. Nakon pristupa konferenciji izlistavaju mu se svi radovi koji se predstavljaju na toj konferenciji te dobiva mogućnost glasanja za njih. Ukoliko nije još glasao nakon glasanja mu se napise "voted" ispod rada za kojeg je glasao, a ako je već prije glasao onda ne može više glasati jer svoj glas može dati samo jednom radu te ga se o tome obavještava.
+		
+		\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/UC4_glas_rad.jpg} 
+			\centering
+			\caption{Sekvencijski dijagram za UC4}
+			\label{fig:UC5}
+		\end{figure}
+		\newpage
+		\textbf{Obrazac Uporabe UC6 - Otvaranje nove konferencije}\\Administrator odabire "Dodaj konferenciju" te mu se nakon toga otvara prostor za unos podataka za prijavu konferencije. Nakon unosa podataka Administrator pritišće gumb "unesi" te ako su sva obavezna polja popunjena konferencija se sprema u bazu podataka. Naprotiv ako nisu popunjena sva obavezna polja o istom se obavještava administratora koji može odabrati popuniti prazna polje ili odustati od unosa konferencije.
+		
+		\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/sek_dod_konf.jpg} 
+			\centering
+			\caption{Sekvencijski dijagram za UC6}
+			\label{fig:UC5}
+		\end{figure}		
+		
 		\section{Ostali zahtjevi}
 		
-			\textbf{\textit{dio 1. revizije}}\\
-		 
-			 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
-			 
+		
+		
+		\begin{enumerate}
+			\item Sustav mora omogućiti održavanje više konferencija u isto vrijeme
+			\item Izvršavanje dijela programa u kojem se pristupa bazi podataka ne smije trajati više od nekoliko sekundi
+			\item Neispravno korištenje korisničkog sučelja ne smije narušiti funkcionalnost i rad sustava
+			\item Sustav mora biti jednostavan za korištenje i sudionici se moraju moći koristiti njime bez uputa
+			\item Nadogradnja sustava ne smije narušavati postojeće funkcionalnosti
+			\item Veza s bazom podataka mora biti sigurna
+			\item Sustav treba biti implementiran kao web aplikacija
+			\item Pristup sustavu mora biti omogućen iz javne mreže pomoću HTTPS
+		\end{enumerate}
 			 
 			 
 	
