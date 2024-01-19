@@ -18,7 +18,7 @@ const DodajVoditelja = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:5000/api/dodaj_voditelja/${konferencijaId}`, {
+            const response = await fetch(`https://dripol.onrender.com/api/dodaj_voditelja/${konferencijaId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

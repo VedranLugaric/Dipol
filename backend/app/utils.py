@@ -25,7 +25,7 @@ def generate_token():
 
 def send_verification_email(email, token):
     msg = Message('Verify Your Email Address', sender='progidipol@gmail.com', recipients=[email])
-    msg.body = f'Please verify your email address by clicking on the following link: http://localhost:5000/verify/{token}'
+    msg.body = f'Please verify your email address by clicking on the following link: https://dripol.onrender.com/verify/{token}'
     mail.send(msg)
 
 def generate_unique_filename(filename):

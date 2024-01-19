@@ -15,7 +15,7 @@ const Konferencije = () => {
     useEffect(() => {
         const fetchKonferencije = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/konferencije', {
+                const response = await fetch('https://dripol.onrender.com/api/konferencije', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const Aktivne = ({aktivne}) => {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/create_user', {
+            const response = await fetch('https://dripol.onrender.com/api/create_user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

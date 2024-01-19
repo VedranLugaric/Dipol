@@ -13,7 +13,7 @@ const Galerija = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/galerija/${konferencijaId}`);
+        const response = await fetch(`https://dripol.onrender.com/api/galerija/${konferencijaId}`);
         const data = await response.json();
         setConferenceName(data.conference_name);
         setImages(data.pictures);
@@ -26,7 +26,7 @@ const Galerija = () => {
   }, [konferencijaId]);
 
   const downloadImage = async (url, index) => {
-    const response = await fetch(`http://localhost:5000/downloadImage?url=${url}`);
+    const response = await fetch(`https://dripol.onrender.com/downloadImage?url=${url}`);
     const blob = await response.blob();
     const timestamp = new Date().getTime();
     saveAs(blob, `slika_${timestamp}_${index}.png`);

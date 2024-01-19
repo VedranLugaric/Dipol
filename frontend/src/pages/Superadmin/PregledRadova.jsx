@@ -24,7 +24,7 @@ const PregledRadova = ({ conferenceId }) => {
     useEffect(() => {
         const fetchRadovi = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/odobravanje_radova/${konferencijaId}`, {
+                const response = await fetch(`https://dripol.onrender.com/api/odobravanje_radova/${konferencijaId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const PregledRadova = ({ conferenceId }) => {
     const handleAccept = async (id) => {
         //u bazi polje odobren stavlja u True
         try {
-            const response = await fetch(`http://localhost:5000/api/potvrdi_rad/${id}`, {
+            const response = await fetch(`https://dripol.onrender.com/api/potvrdi_rad/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const PregledRadova = ({ conferenceId }) => {
         //kod koji brise rad iz baze
         try {
             // Make a DELETE request to the Flask route for deleting the rad
-            const response = await fetch(`http://localhost:5000/api/odbij_rad/${id}`, {
+            const response = await fetch(`https://dripol.onrender.com/api/odbij_rad/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

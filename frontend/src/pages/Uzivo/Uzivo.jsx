@@ -16,7 +16,7 @@ const Uzivo = () => {
         const fetchVideoSrc = async () => {
             setIsLoading(true);
             try {
-                const response = await fetch(`http://localhost:5000/api/live/${konferencijaId}`, {
+                const response = await fetch(`https://dripol.onrender.com/api/live/${konferencijaId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

@@ -38,7 +38,7 @@ const Registracija = () => {
     try {
       const response = await axios({
         method: 'post',
-        url: 'http://localhost:5000/api/registracija/',
+        url: 'https://dripol.onrender.com/api/registracija/',
         data: {
           ime: ime,
           prezime: prezime,

@@ -12,7 +12,7 @@ const StariRadovi = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/past_conference/${id}`);
+        const response = await fetch(`https://dripol.onrender.com/api/past_conference/${id}`);
         const data = await response.json();
         setConferenceDetails(data);
       } catch (error) {

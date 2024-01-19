@@ -36,7 +36,7 @@ const DodajPokrovitelja = () => {
         formData.append('logo', logo);
     
         try {
-            const response = await axios.post(`http://localhost:5000/api/dodaj_pokrovitelja/${konferencijaId}`, formData);
+            const response = await axios.post(`https://dripol.onrender.com/api/dodaj_pokrovitelja/${konferencijaId}`, formData);
     
             if (response.status === 200) {
                 navigate(-1);

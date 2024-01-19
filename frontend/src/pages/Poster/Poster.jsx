@@ -148,7 +148,7 @@ const PosterItem = ({ rad, conferenceId }) => {
 
   const handleVote = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/vote/${rad.rad_id}`, {
+      const response = await fetch(`https://dripol.onrender.com/api/vote/${rad.rad_id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

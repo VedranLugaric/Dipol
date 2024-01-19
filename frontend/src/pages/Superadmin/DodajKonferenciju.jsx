@@ -41,7 +41,7 @@ const DodajKonferenciju = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:5000/api/dodaj_konf', formData);
+            const response = await axios.post('https://dripol.onrender.com/api/dodaj_konf', formData);
             if (response.status === 200) {
                 navigate('/konferencije');
             } else {
