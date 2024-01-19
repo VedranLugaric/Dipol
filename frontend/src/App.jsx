@@ -21,9 +21,11 @@ const NavBar = () => {
 
   function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("close-div").style.width = "100%";
   }
   function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("close-div").style.width = "0"
   }
 
 
@@ -106,6 +108,9 @@ const NavBar = () => {
               </Link>
             </>
           )}
+        </div>
+        <div id="close-div" className='close-div' onClick={closeNav}>
+
         </div>
       </div>
     </>
