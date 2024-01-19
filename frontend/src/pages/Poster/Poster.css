@@ -1,0 +1,129 @@
+.poster-img{
+    max-height: 18rem;
+    max-width: 19rem;
+    margin-top: auto;
+    cursor: pointer;
+}
+.poster-item{
+    height: 30rem;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+    
+    border: 4px solid rgb(46, 46, 54);
+    border-radius: 1.5rem;
+    background-color: rgb(46, 46, 54);
+    box-shadow: rgb(28, 23, 43) 0 0 1rem;
+}
+.posteri-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+.rad-texts{
+    color: white;
+    text-align: center;
+    margin-top: auto;
+    font-size: 1rem;
+    font-family: system-ui, -apple-system;
+    font-style: italic;
+}
+.vote-button{
+    margin-top: auto;
+    margin-bottom: 0.3rem;
+    width: 100%;
+    padding: 0.3rem;
+    border-radius: 1rem;
+    border: rgb(65, 49, 87) solid 2px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: small;
+    transition: background-color 0.3s ease-in;
+    font-weight: bold;
+}
+
+.vote-button:hover{
+    background-color: rgb(65, 49, 87);
+}
+.poster-img-div{
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+}
+.autor{
+    color: rgb(121, 108, 139);
+    text-align: center;
+    margin-top: auto;
+    font-size: 0.8rem;
+    font-family: system-ui, -apple-system;
+    font-style: italic;
+}
+.rad-title{
+    color: white;
+}
+
+.vote-button:disabled{
+    background-color: rgb(65, 49, 87);
+    color: rgb(143, 143, 143);
+    cursor: default;
+}
+
+.add-pok-div{
+    display: flex;
+    align-items: center;
+    flex-flow: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.buttons-poster{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    justify-items: center;
+    width: 10rem;
+}
+
+.pokrovitelji-container {
+    text-align: center; 
+    color: white;
+    background-color: rgb(46, 46, 54);
+    padding: 5px;
+    margin-top: 30px;
+    border-top: 15px solid rgb(65, 49, 87);
+  }
+  
+  .pokrovitelji-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .pokrovitelj-item {
+    text-align: center;
+    margin-left: 100px;
+    margin-top: 10px;
+    color: white;
+    
+    
+  }
+
+  .pokrovitelj-item:hover {
+    cursor: pointer;
+  }
+  
+  .pokrovitelj-logo {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+  }
+  .add-btn-div{
+    display: flex;
+    flex-flow: wrap;
+  }

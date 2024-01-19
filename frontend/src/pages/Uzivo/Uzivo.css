@@ -1,0 +1,11 @@
+.video{
+    display: flex;
+    margin: auto;
+    margin-top: 2rem;
+    justify-content: center;
+    width: 700px;
+    height: 500px;
+    align-items: center;
+    box-shadow: rgb(62, 46, 85) 0 0 3rem;
+    border-radius: 20px;
+}

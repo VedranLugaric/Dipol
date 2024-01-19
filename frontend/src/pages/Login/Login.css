@@ -1,0 +1,118 @@
+.background{
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 780px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginBody{
+    background-color: rgb(65, 49, 87);
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin-top: -100px;
+    height: 550px;
+    box-shadow: rgb(37, 28, 51) 0 0 5rem ;
+    border-radius: 30px;
+}
+
+.firsts{
+    width: 40%;
+}
+
+
+.welcome{
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    margin-top: 10%;
+}
+.second{
+    width: 60%;
+    background-color: white;
+    margin-left: auto;
+    display: flex;
+    justify-content: center ;
+    border-radius: 30px;
+}
+.loginForm{
+    margin-top: -30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.loginInputSubmit{
+    margin-top: 20px;
+    height: 35px;
+    width: 250px;
+    background-color: rgb(65, 49, 87);
+    color: white;
+    border: rgb(65, 49, 87) solid 3px;
+    border-radius: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    transition: background-color 1s ease-in;
+    
+}
+.loginInputSubmit:hover{
+    cursor: pointer;
+    background-color: rgb(40, 30, 54);
+    border: rgb(40, 30, 54) solid 3px;
+}
+
+.loginInputText{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 45px;
+    width: 100%;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid rgb(189, 189, 189);
+}
+
+.loginInputText::placeholder{
+    font-style: italic;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.offscreen{
+    opacity: 0;
+}
+
+.errorText {
+    max-width: 300px;
+    word-wrap: break-word;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 800px) {
+    .loginBody{
+        flex-direction: column;
+        width: 85%;
+    }
+    .welcome{
+        font-size: 35px;
+        justify-self: center;
+        width: 100%;
+    }
+    .second{
+        height: 75%;
+        width: 100%;
+        margin-top: auto;
+    }
+    .loginInputText{
+        width: 100%;
+    }
+    .textInputs{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .firsts{
+        width: 100%;
+    }
+}

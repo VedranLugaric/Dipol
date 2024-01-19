@@ -1,0 +1,155 @@
+/* App.css */
+* { 
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, 
+		Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+} 
+
+.App { 
+	display: flex; 
+	flex-direction: column; 
+	justify-content: center;
+	align-items: center;
+
+	box-shadow: black 5px 5px 2rem;
+  	border-radius: 60px;
+
+	background-color: rgb(46, 46, 54);
+	text-align: center; 
+
+	height: 8rem;
+	margin-left: 2rem;
+} 
+
+.city-name { 
+	font-size: 1.5rem; 
+	color: #444; 
+	margin-bottom: 8px; 
+} 
+
+.date { 
+	font-size: 1em;
+	margin-top: 8px; 
+	font-weight: 500; 
+	color: #777; 
+} 
+
+.icon-temp { 
+	font-size: 2rem; 
+	font-weight: 700; 
+	color: #796591; 
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+	height: min-content
+} 
+.icon{
+	margin: auto;
+}
+.deg { 
+	font-size: 1.3rem; 
+	vertical-align: super;
+} 
+
+.des-wind {
+	display: flex;
+	flex-direction: column;
+	font-weight: 500; 
+	color: #666;
+	margin: auto;
+} 
+.text{
+	margin: auto;
+	font-size: 16px;
+	margin-right: 1rem;
+	margin-left: 1rem;
+}
+.num{
+	font-size: 2.7rem;
+}
+
+.error-message { 
+	display: flex; 
+	text-align: center; 
+	color: #ffffff; 
+	font-size: 24px;  
+
+	flex-direction: column;
+	margin-bottom: auto;
+	margin-right: 1rem;
+	margin-left: 1rem;
+} 
+
+.Loader { 
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
+	height: 100%; 
+} 
+
+.Loader>div { 
+	margin: 0 auto; 
+} 
+
+.weather-icon { 
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
+} 
+
+.weather-icon img { 
+	width: 100px; 
+	height: 100px; 
+	border-radius: 50%; 
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+.temp-container{
+	display: flex;
+}
+
+@media (max-width: 1016px) {
+
+	.des-wind{
+		display: none;
+	}
+	
+	.App { 
+		background-color: transparent;
+		border: none;
+		box-shadow: none;
+		position: absolute;
+		width: 6rem;
+		margin-left: 75%;
+	}
+	.temp-container{
+		display: flex;
+		flex-direction: column;
+	} 
+	.icon{
+		height: 4rem;
+	}
+	.num-deg{
+		display: flex;
+	}
+	.num{
+		font-size: 1rem;
+	}
+	.deg{
+		font-size: 1rem;
+	}
+	.error-message { 
+		display: flex; 
+		text-align: center; 
+		color: #ffffff; 
+		font-size: 24px; 
+	
+		flex-direction: column;
+		margin-bottom: auto;
+		margin-right: 1rem;
+		margin-left: 1rem;
+	}
+	.not-found{
+		font-size: 16px;
+	} 
+}

@@ -1,0 +1,141 @@
+.background{
+    background-image: url(/slike/office-1516329_1280.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 780px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.registrationBody{
+    background-color: rgb(65, 49, 87);
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin-top: -100px;
+    height: 550px;
+    box-shadow: rgb(37, 28, 51) 0 0 5rem ;
+    border-radius: 30px;
+}
+.first{
+    width: 60%;
+    background-color: white;
+    margin-right: auto;
+    display: flex;
+    justify-content: center ;
+    border-radius: 30px;
+    height: 100%;
+}
+
+.seconds{
+    width: 40%;
+}
+
+.welcome{
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    margin-top: 10%;
+}
+
+.registrationForm{
+    margin-top: -30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.registrationInputSubmit{
+    margin-top: 20px;
+    height: 35px;
+    width: 250px;
+    background-color: rgb(65, 49, 87);
+    color: white;
+    border: rgb(65, 49, 87) solid 3px;
+    border-radius: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    transition: background-color 1s ease-in;
+}
+.registrationInputSubmit:hover{
+    cursor: pointer;
+    background-color: rgb(40, 30, 54);
+    border: rgb(40, 30, 54) solid 3px;
+}
+
+.registrationInputText{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 45px;
+    width: 300px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid rgb(189, 189, 189);
+}
+
+.registrationInputText::placeholder{
+    font-style: italic;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.textInputs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.errorText {
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    margin-top: 5px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader {
+    border: 13px solid #363636;
+    border-top: 13px solid #6d0b89;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 2s linear infinite;
+    margin-top: 10px;
+}
+  
+
+@media screen and (max-width: 800px) {
+    .registrationBody{
+        flex-direction: column;
+        width: 85%;
+    }
+    .welcome{
+        font-size: 35px;
+        justify-self: center;
+        width: 100%;
+    }
+    .seconds{
+        height: 20%;
+        width: 100%;
+        margin-top: auto;
+    }
+    .registrationInputText{
+        width: 100%;
+    }
+    .textInputs{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .first{
+        width: 100%;
+    }
+}
+
