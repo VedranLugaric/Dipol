@@ -1,17 +1,42 @@
 {
-  "name": "projekt-progi-front",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "name": "progi-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.9",
-    "express": "^4.18.2"
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@react-spring/web": "^9.7.3",
+    "@typeform/embed-react": "^3.9.0",
+    "axios": "^1.6.5",
+    "date-fns": "^3.1.0",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-google-recaptcha": "^3.1.0",
+    "react-loader-spinner": "^6.1.6",
+    "react-pdf": "^7.6.0",
+    "react-router-dom": "^6.20.1",
+    "react-spring": "^9.7.3",
+    "react-youtube": "^10.1.0",
+    "reactjs-popup": "^2.0.6"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "vite": "^5.0.7"
   }
 }
